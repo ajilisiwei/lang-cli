@@ -22,6 +22,10 @@ type Config struct {
 	Sentences SentencesConfig `mapstructure:"sentences"`
 	// 文章练习配置
 	Articles ArticlesConfig `mapstructure:"articles"`
+	// v0.2 新增：正确性匹配模式，可选值：exact_match（完全匹配）、word_match（单词匹配）
+	CorrectnessMatchMode string `mapstructure:"correctness_match_mode"`
+	// v0.2 新增：全局下一个资源的出现顺序，可选值：random（随机）、sequential（顺序）
+	NextOneOrder string `mapstructure:"next_one_order"`
 }
 
 // WordsConfig 表示单词练习的配置
@@ -102,12 +106,14 @@ func LoadConfig() error {
 func SaveConfig() error {
 	// 将结构体的内容写入到配置文件中
 	for k, v := range map[string]interface{}{
-		"languages":        AppConfig.Languages,
-		"current_language": AppConfig.CurrentLanguage,
-		"words":            AppConfig.Words,
-		"phrases":          AppConfig.Phrases,
-		"sentences":        AppConfig.Sentences,
-		"articles":         AppConfig.Articles,
+		"languages":               AppConfig.Languages,
+		"current_language":        AppConfig.CurrentLanguage,
+		"words":                   AppConfig.Words,
+		"phrases":                 AppConfig.Phrases,
+		"sentences":               AppConfig.Sentences,
+		"articles":                AppConfig.Articles,
+		"correctness_match_mode":  AppConfig.CorrectnessMatchMode,
+		"next_one_order":          AppConfig.NextOneOrder,
 	} {
 		viper.Set(k, v)
 	}

@@ -13,3 +13,6 @@ sentences:
 words:
     nextoneorder: ""
     showtranslation: false
+# v0.2 新增配置
+correctness_match_mode: exact_match  # exact_match 或 word_match
+next_one_order: random  # random 或 sequential

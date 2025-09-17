@@ -2,12 +2,15 @@ package ui
 
 import (
 	"fmt"
+	"math/rand"
+	"regexp"
 	"strings"
 	"time"
 
 	"github.com/charmbracelet/bubbles/progress"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/daiweiwei/lang-cli/internal/config"
 	"github.com/daiweiwei/lang-cli/internal/practice"
 )
 
@@ -28,6 +31,13 @@ type PracticeSession struct {
 	state        string          // 状态："practicing", "finished"
 	result       string          // 结果信息
 	quitting     bool
+	// v0.2 新增：错误状态跟踪
+	lastInputWrong bool   // 上次输入是否错误
+	wrongInput     string // 错误的输入内容
+	expectedText   string // 期望的正确文本
+	// v0.2 新增：随机顺序支持
+	practiceOrder []int // 练习顺序索引列表
+	completedCount int   // 已完成的项目数量
 }
 
 // 创建新的练习会话
@@ -48,15 +58,35 @@ func NewPracticeSession(resourceType, fileName string) *PracticeSession {
 	// 创建进度条
 	p := progress.New(progress.WithDefaultGradient())
 
+	// 初始化练习顺序
+	practiceOrder := make([]int, len(items))
+	for i := range practiceOrder {
+		practiceOrder[i] = i
+	}
+
+	// 根据配置决定是否打乱顺序
+	orderMode := config.AppConfig.NextOneOrder
+	if orderMode == "" {
+		orderMode = "random" // 默认随机
+	}
+	if orderMode == "random" {
+		rand.Seed(time.Now().UnixNano())
+		rand.Shuffle(len(practiceOrder), func(i, j int) {
+			practiceOrder[i], practiceOrder[j] = practiceOrder[j], practiceOrder[i]
+		})
+	}
+
 	return &PracticeSession{
-		resourceType: resourceType,
-		fileName:     fileName,
-		items:        items,
-		currentIndex: 0,
-		textInput:    ti,
-		progress:     p,
-		startTime:    time.Now(),
-		state:        "practicing",
+		resourceType:  resourceType,
+		fileName:      fileName,
+		items:         items,
+		currentIndex:  0,
+		textInput:     ti,
+		progress:      p,
+		startTime:     time.Now(),
+		state:         "practicing",
+		practiceOrder: practiceOrder,
+		completedCount: 0,
 	}
 }
 
@@ -106,22 +136,33 @@ func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			currentItem := m.getCurrentItem()
 			expectedInput := m.getExpectedInput(currentItem)
 
-			if userInput == expectedInput {
+			if m.isInputCorrect(userInput, expectedInput) {
+				// 输入正确
 				m.correct++
+				m.lastInputWrong = false
+				m.wrongInput = ""
+				m.expectedText = ""
+
+				// 清空输入
+				m.textInput.SetValue("")
+
+				// 移动到下一项
+				m.completedCount++
+				if m.completedCount >= len(m.items) {
+					// 练习结束
+					m.state = "finished"
+					m.endTime = time.Now()
+					m.result = m.calculateResult()
+				}
 			} else {
+				// 输入错误
 				m.incorrect++
-			}
+				m.lastInputWrong = true
+				m.wrongInput = userInput
+				m.expectedText = expectedInput
 
-			// 清空输入
-			m.textInput.SetValue("")
-
-			// 移动到下一项
-			m.currentIndex++
-			if m.currentIndex >= len(m.items) {
-				// 练习结束
-				m.state = "finished"
-				m.endTime = time.Now()
-				m.result = m.calculateResult()
+				// 清空输入，让用户重新输入
+				m.textInput.SetValue("")
 			}
 
 			return m, nil
@@ -153,8 +194,8 @@ func (m PracticeSession) View() string {
 
 	if m.state == "practicing" {
 		// 显示当前进度
-		progressValue := float64(m.currentIndex) / float64(len(m.items))
-		progressText := fmt.Sprintf("进度: %d/%d", m.currentIndex+1, len(m.items))
+		progressValue := float64(m.completedCount) / float64(len(m.items))
+		progressText := fmt.Sprintf("进度: %d/%d", m.completedCount+1, len(m.items))
 		s.WriteString(RenderText(progressText) + "\n")
 		s.WriteString(m.progress.ViewAs(progressValue) + "\n\n")
 
@@ -166,6 +207,12 @@ func (m PracticeSession) View() string {
 		// 显示输入框
 		s.WriteString(RenderHighlight("请输入:") + "\n")
 		s.WriteString(m.textInput.View() + "\n\n")
+
+		// 显示错误信息（如果有）
+		if m.lastInputWrong {
+			s.WriteString(RenderError("❌ 输入错误！") + "\n")
+			s.WriteString(m.renderWordLevelError() + "\n\n")
+		}
 
 		// 显示提示
 		s.WriteString(RenderText("按 Enter 提交，按 Esc 退出练习") + "\n")
@@ -181,10 +228,13 @@ func (m PracticeSession) View() string {
 
 // 获取当前项目
 func (m PracticeSession) getCurrentItem() string {
-	if m.currentIndex < 0 || m.currentIndex >= len(m.items) {
-		return ""
+	if m.completedCount < len(m.practiceOrder) {
+		actualIndex := m.practiceOrder[m.completedCount]
+		if actualIndex < len(m.items) {
+			return m.items[actualIndex]
+		}
 	}
-	return m.items[m.currentIndex]
+	return ""
 }
 
 // 获取期望输入
@@ -197,6 +247,82 @@ func (m PracticeSession) getExpectedInput(item string) string {
 		}
 	}
 	return item
+}
+
+// 检查输入是否正确
+func (m PracticeSession) isInputCorrect(userInput, expectedInput string) bool {
+	// 获取匹配模式
+	matchMode := config.AppConfig.CorrectnessMatchMode
+	if matchMode == "" {
+		matchMode = "exact_match" // 默认值
+	}
+
+	switch matchMode {
+	case "exact_match":
+		// 完全匹配
+		return userInput == expectedInput
+	case "word_match":
+		// 单词匹配，忽略大小写和标点符号
+		return m.normalizeForWordMatch(userInput) == m.normalizeForWordMatch(expectedInput)
+	default:
+		// 默认使用完全匹配
+		return userInput == expectedInput
+	}
+}
+
+// 标准化文本用于单词匹配
+func (m PracticeSession) normalizeForWordMatch(text string) string {
+	// 转换为小写
+	text = strings.ToLower(text)
+	// 移除标点符号，只保留字母、数字和空格
+	reg := regexp.MustCompile(`[^a-zA-Z0-9\s]`)
+	text = reg.ReplaceAllString(text, "")
+	// 移除多余的空格
+	text = strings.TrimSpace(text)
+	reg = regexp.MustCompile(`\s+`)
+	text = reg.ReplaceAllString(text, " ")
+	return text
+}
+
+// 渲染单词级别的错误高亮
+func (m PracticeSession) renderWordLevelError() string {
+	userWords := strings.Fields(m.wrongInput)
+	expectedWords := strings.Fields(m.expectedText)
+	
+	var result strings.Builder
+	result.WriteString(RenderError("你的输入: "))
+	
+	// 逐个比较单词
+	maxLen := len(userWords)
+	if len(expectedWords) > maxLen {
+		maxLen = len(expectedWords)
+	}
+	
+	for i := 0; i < maxLen; i++ {
+		if i > 0 {
+			result.WriteString(" ")
+		}
+		
+		if i < len(userWords) {
+			userWord := userWords[i]
+			expectedWord := ""
+			if i < len(expectedWords) {
+				expectedWord = expectedWords[i]
+			}
+			
+			// 如果单词不匹配，用红色高亮
+			if userWord != expectedWord {
+				result.WriteString(RenderError(userWord))
+			} else {
+				result.WriteString(userWord)
+			}
+		}
+	}
+	
+	result.WriteString("\n")
+	result.WriteString(RenderSuccess("正确答案: " + m.expectedText))
+	
+	return result.String()
 }
 
 // 计算练习结果

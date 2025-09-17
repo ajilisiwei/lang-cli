@@ -45,6 +45,11 @@ func NewMainMenu() *MainMenu {
 			action:      func() (tea.Model, error) { return NewManageMenu(), nil },
 		},
 		MenuItem{
+			title:       "设置",
+			description: "配置匹配模式和练习顺序等设置",
+			action:      func() (tea.Model, error) { return NewSettingMenu(), nil },
+		},
+		MenuItem{
 			title:       "退出",
 			description: "退出程序",
 			action:      func() (tea.Model, error) { return nil, fmt.Errorf("quit") },
