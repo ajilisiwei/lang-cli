@@ -1,6 +1,0 @@
-apple ->> 苹果
-banana ->> 香蕉
-cherry ->> 樱桃
-dog ->> 狗
-elephant ->> 大象
-frog ->> 青蛙

@@ -1,5 +1,7 @@
 # 语言学习终端
 
+## v0.1
+
 ###  描述
 
 这是一个支持多种语言的打字学习终端工具，用户可以在终端中进行不同语言的单词、短语、句子、文章等的打字练习。
@@ -109,6 +111,22 @@
 8. 用户确认导入后，会将文件中的内容导入到对应资源的列表中。
 9. 导入完成后，会提示用户导入成功。并且导出成功的资源列表会被保存到项目的对应语言的资源列表文件中。
 10. 如果导入失败，会提示用户导入失败。
+
+
+## v0.2
+
+### setting 模块功能
+
+#### 匹配模式
+
+1. 增加正确性匹配模式设置。读取 config.yaml 中的 correctness_match_mode 参数，需要有两种模式：第一种是需要完全匹配，第二种只需要匹配单词，忽略大小写和标点符号，两种模式的名称分别为：exact_match 和 word_match。
+2. 如果 correctness_match_mode 配置为 exact_match，那么用户输入的必须完全匹配才能被认为是正确的。针对 words、phrases、sentences、articles 所有资源类型，都需要根据 correctness_match_mode 来判断用户输入是否正确。
+3. 如果 correctness_match_mode 配置为 word_match，那么用户输入的只要包含单词就被认为是正确的，忽略大小写和标点符号。针对 words、phrases、sentences、articles 等所有资源类型。
+
+
+
+
+
 
 
 

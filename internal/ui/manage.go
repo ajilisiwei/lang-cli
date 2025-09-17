@@ -261,8 +261,12 @@ func NewManageResourceMenu(resourceType, action string) *ManageResourceMenu {
 			description: getActionTitle(action) + fileName,
 			action: func() (tea.Model, error) {
 				if action == "delete" {
-					// 删除资源
-					manage.DeleteResource(resourceType, fileName)
+					// 删除资源 - 使用不需要用户确认的版本
+					err := manage.DeleteResourceForTest(resourceType, fileName)
+					if err != nil {
+						// 如果删除失败，可以在这里处理错误
+						// 暂时忽略错误，继续刷新菜单
+					}
 					// 刷新菜单
 					return NewManageResourceMenu(resourceType, action), nil
 				}
@@ -399,17 +403,21 @@ func (m ImportView) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, nil
 			}
 
-			// 导入资源
-			err := manage.ImportResource(m.resourceType, filePath)
+			// 导入资源 - 使用不需要用户确认的版本
+			err := manage.ImportResourceForTest(m.resourceType, filePath)
 			if err != nil {
 				m.message = "导入失败: " + err.Error()
+				return m, nil
 			} else {
-				m.message = "导入成功"
-				// 清空输入
-				m.textInput.SetValue("")
+				// 导入成功，自动返回到资源类型菜单
+				newModel := NewResourceTypeMenu("import")
+				// 传递当前窗口大小给新模型
+				if m.width > 0 && m.height > 0 {
+					updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+					return updatedModel, nil
+				}
+				return newModel, nil
 			}
-
-			return m, nil
 		}
 	}
 

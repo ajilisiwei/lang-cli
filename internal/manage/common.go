@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/daiweiwei/lang-cli/internal/config"
 )
@@ -19,6 +20,10 @@ const (
 // GetResourcePath 获取资源文件路径
 func GetResourcePath(resourceType string, fileName string) string {
 	currentLanguage := config.AppConfig.CurrentLanguage
+	// 如果文件名没有.txt后缀，自动添加
+	if !strings.HasSuffix(fileName, ".txt") {
+		fileName = fileName + ".txt"
+	}
 	return filepath.Join("resources", currentLanguage, resourceType, fileName)
 }
 
@@ -41,11 +46,16 @@ func GetResourceFiles(resourceType string) ([]string, error) {
 		return nil, fmt.Errorf("读取目录失败: %w", err)
 	}
 
-	// 提取文件名
+	// 提取文件名（去掉.txt后缀）
 	var fileNames []string
 	for _, file := range files {
 		if !file.IsDir() {
-			fileNames = append(fileNames, file.Name())
+			fileName := file.Name()
+			// 去掉.txt后缀
+			if strings.HasSuffix(fileName, ".txt") {
+				fileName = strings.TrimSuffix(fileName, ".txt")
+			}
+			fileNames = append(fileNames, fileName)
 		}
 	}
 
