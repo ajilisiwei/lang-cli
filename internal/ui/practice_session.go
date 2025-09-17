@@ -202,7 +202,8 @@ func (m PracticeSession) View() string {
 		// 显示当前项目
 		currentItem := m.getCurrentItem()
 		s.WriteString(RenderHighlight("当前项目:") + "\n")
-		s.WriteString(RenderText(currentItem) + "\n\n")
+		wrappedText := m.wrapText(currentItem, m.width-4) // 减去边距
+		s.WriteString(RenderText(wrappedText) + "\n\n")
 
 		// 显示输入框
 		s.WriteString(RenderHighlight("请输入:") + "\n")
@@ -354,4 +355,43 @@ func (m PracticeSession) calculateResult() string {
 		"练习时间: %s\n正确数量: %d\n错误数量: %d\n正确率: %.1f%%\n打字速度: %.1f CPM (每分钟字符数)",
 		durationStr, m.correct, m.incorrect, accuracy, cpm,
 	)
+}
+
+// wrapText 将文本按指定宽度换行
+func (m PracticeSession) wrapText(text string, width int) string {
+	if width <= 0 {
+		return text
+	}
+
+	words := strings.Fields(text)
+	if len(words) == 0 {
+		return text
+	}
+
+	var lines []string
+	currentLine := ""
+
+	for _, word := range words {
+		// 如果当前行为空，直接添加单词
+		if currentLine == "" {
+			currentLine = word
+		} else {
+			// 检查添加新单词后是否超过宽度
+			testLine := currentLine + " " + word
+			if len(testLine) <= width {
+				currentLine = testLine
+			} else {
+				// 超过宽度，将当前行添加到结果中，开始新行
+				lines = append(lines, currentLine)
+				currentLine = word
+			}
+		}
+	}
+
+	// 添加最后一行
+	if currentLine != "" {
+		lines = append(lines, currentLine)
+	}
+
+	return strings.Join(lines, "\n")
 }
