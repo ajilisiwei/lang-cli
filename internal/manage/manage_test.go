@@ -119,7 +119,7 @@ func TestListResourceFiles(t *testing.T) {
 	// 验证文件列表包含测试文件
 	found := false
 	for _, file := range files {
-		if file == "test_manage_words.txt" {
+		if file == "test_manage_words" {
 			found = true
 			break
 		}

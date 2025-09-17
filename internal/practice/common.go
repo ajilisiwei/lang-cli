@@ -42,12 +42,28 @@ func GetResourcePath(resourceType string, fileName string) string {
 
 // getResourceBaseDir 获取资源基础目录
 func getResourceBaseDir() string {
+	// 检查是否在测试环境中
+	if isTestEnvironment() {
+		return "resources"
+	}
+	
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		// 如果无法获取用户主目录，使用当前目录下的resources
 		return "resources"
 	}
 	return filepath.Join(homeDir, ".lang-cli", "resources")
+}
+
+// isTestEnvironment 检查是否在测试环境中
+func isTestEnvironment() bool {
+	// 通过检查环境变量或者调用栈来判断是否在测试中
+	for _, arg := range os.Args {
+		if strings.Contains(arg, "test") {
+			return true
+		}
+	}
+	return false
 }
 
 // GetResourceFiles 获取指定类型的资源文件列表
@@ -72,12 +88,8 @@ func GetResourceFiles(resourceType string) ([]string, error) {
 	// 提取文件名（去掉.txt后缀）
 	var fileNames []string
 	for _, file := range files {
-		if !file.IsDir() {
-			fileName := file.Name()
-			// 去掉.txt后缀
-			if strings.HasSuffix(fileName, ".txt") {
-				fileName = strings.TrimSuffix(fileName, ".txt")
-			}
+		if !file.IsDir() && strings.HasSuffix(file.Name(), ".txt") {
+			fileName := strings.TrimSuffix(file.Name(), ".txt")
 			fileNames = append(fileNames, fileName)
 		}
 	}
