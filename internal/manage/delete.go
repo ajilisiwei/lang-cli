@@ -42,6 +42,29 @@ func DeleteResource(resourceType, fileName string) error {
 	return nil
 }
 
+// DeleteResourceWithoutConfirm 删除资源（不需要用户确认，用于UI界面）
+func DeleteResourceWithoutConfirm(resourceType, fileName string) error {
+	// 验证资源类型
+	if !ValidateResourceType(resourceType) {
+		return fmt.Errorf("无效的资源类型: %s", resourceType)
+	}
+
+	// 获取资源文件路径
+	filePath := GetResourcePath(resourceType, fileName)
+
+	// 检查文件是否存在
+	if _, err := os.Stat(filePath); os.IsNotExist(err) {
+		return fmt.Errorf("文件不存在: %s", filePath)
+	}
+
+	// 直接删除文件
+	if err := os.Remove(filePath); err != nil {
+		return fmt.Errorf("删除文件失败: %w", err)
+	}
+
+	return nil
+}
+
 // DeleteResourceForTest 删除资源（用于测试，不需要用户确认）
 func DeleteResourceForTest(resourceType, fileName string) error {
 	// 验证资源类型

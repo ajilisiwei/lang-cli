@@ -64,6 +64,13 @@ func LoadConfig() error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 
+	// 获取用户主目录下的配置路径
+	homeDir, err := os.UserHomeDir()
+	if err == nil {
+		configDir := filepath.Join(homeDir, ".lang-cli")
+		viper.AddConfigPath(configDir)
+	}
+
 	// 获取当前执行文件的目录
 	execPath, err := os.Executable()
 	if err != nil {

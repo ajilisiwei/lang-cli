@@ -24,13 +24,23 @@ func GetResourcePath(resourceType string, fileName string) string {
 	if !strings.HasSuffix(fileName, ".txt") {
 		fileName = fileName + ".txt"
 	}
-	return filepath.Join("resources", currentLanguage, resourceType, fileName)
+	return filepath.Join(getResourceBaseDir(), currentLanguage, resourceType, fileName)
+}
+
+// getResourceBaseDir 获取资源基础目录
+func getResourceBaseDir() string {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		// 如果无法获取用户主目录，使用当前目录下的resources
+		return "resources"
+	}
+	return filepath.Join(homeDir, ".lang-cli", "resources")
 }
 
 // GetResourceFiles 获取指定类型的资源文件列表
 func GetResourceFiles(resourceType string) ([]string, error) {
 	currentLanguage := config.AppConfig.CurrentLanguage
-	resourcePath := filepath.Join("resources", currentLanguage, resourceType)
+	resourcePath := filepath.Join(getResourceBaseDir(), currentLanguage, resourceType)
 
 	// 检查目录是否存在
 	if _, err := os.Stat(resourcePath); os.IsNotExist(err) {

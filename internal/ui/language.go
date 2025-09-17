@@ -109,7 +109,14 @@ func (m LanguageMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				// 切换语言
 				lang.SwitchLanguage(i.language)
 				// 刷新菜单
-				return NewLanguageMenu(), nil
+				newModel := NewLanguageMenu()
+				// 传递当前窗口大小
+				width, height := m.list.Width(), m.list.Height()+4
+				if width > 0 && height > 4 {
+					updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: width, Height: height})
+					return updatedModel, nil
+				}
+				return newModel, nil
 			}
 		}
 	}

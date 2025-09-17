@@ -82,17 +82,13 @@ func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case "esc":
-			if m.state == "finished" {
-				// 返回练习菜单并传递窗口大小
-				practiceMenu := NewPracticeMenu()
-				if m.width > 0 && m.height > 4 {
-					updatedModel, _ := practiceMenu.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
-					return updatedModel, nil
-				}
-				return practiceMenu, nil
+			// 无论在什么状态下，ESC键都应该退出练习并返回练习菜单
+			practiceMenu := NewPracticeMenu()
+			if m.width > 0 && m.height > 4 {
+				updatedModel, _ := practiceMenu.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+				return updatedModel, nil
 			}
-			// 确认是否要退出练习
-			return m, nil
+			return practiceMenu, nil
 
 		case "enter":
 			if m.state == "finished" {

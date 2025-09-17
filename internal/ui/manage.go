@@ -261,14 +261,8 @@ func NewManageResourceMenu(resourceType, action string) *ManageResourceMenu {
 			description: getActionTitle(action) + fileName,
 			action: func() (tea.Model, error) {
 				if action == "delete" {
-					// 删除资源 - 使用不需要用户确认的版本
-					err := manage.DeleteResourceForTest(resourceType, fileName)
-					if err != nil {
-						// 如果删除失败，可以在这里处理错误
-						// 暂时忽略错误，继续刷新菜单
-					}
-					// 刷新菜单
-					return NewManageResourceMenu(resourceType, action), nil
+					// 显示删除确认对话框
+					return NewDeleteConfirmView(resourceType, fileName), nil
 				}
 				return nil, nil
 			},
@@ -454,6 +448,97 @@ func (m ImportView) View() string {
 
 	// 显示提示
 	s.WriteString(RenderText("按 Enter 导入，按 Esc 返回") + "\n")
+
+	return s.String()
+}
+
+// DeleteConfirmView 删除确认视图模型
+type DeleteConfirmView struct {
+	resourceType string
+	fileName     string
+	message      string
+	width        int
+	height       int
+	quitting     bool
+}
+
+// 创建新的删除确认视图
+func NewDeleteConfirmView(resourceType, fileName string) *DeleteConfirmView {
+	return &DeleteConfirmView{
+		resourceType: resourceType,
+		fileName:     fileName,
+	}
+}
+
+// Init 初始化模型
+func (m DeleteConfirmView) Init() tea.Cmd {
+	return nil
+}
+
+// Update 更新模型
+func (m DeleteConfirmView) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
+		return m, nil
+
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c":
+			m.quitting = true
+			return m, tea.Quit
+
+		case "y", "Y":
+			// 确认删除
+			err := manage.DeleteResourceWithoutConfirm(m.resourceType, m.fileName)
+			if err != nil {
+				m.message = "删除失败: " + err.Error()
+				return m, nil
+			}
+			// 删除成功，返回资源列表
+			newModel := NewManageResourceMenu(m.resourceType, "delete")
+			// 传递当前窗口大小
+			if m.width > 0 && m.height > 0 {
+				updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+				return updatedModel, nil
+			}
+			return newModel, nil
+
+		case "n", "N", "esc":
+			// 取消删除，返回资源列表
+			newModel := NewManageResourceMenu(m.resourceType, "delete")
+			// 传递当前窗口大小
+			if m.width > 0 && m.height > 0 {
+				updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+				return updatedModel, nil
+			}
+			return newModel, nil
+		}
+	}
+
+	return m, nil
+}
+
+// View 渲染视图
+func (m DeleteConfirmView) View() string {
+	if m.quitting {
+		return "再见！"
+	}
+
+	var s strings.Builder
+	s.WriteString("\n")
+	s.WriteString(TitleStyle.Render("确认删除"))
+	s.WriteString("\n\n")
+	s.WriteString("确认删除以下资源吗？\n\n")
+	s.WriteString("资源类型: " + getResourceTypeTitle(m.resourceType) + "\n")
+	s.WriteString("文件名: " + m.fileName + "\n\n")
+	s.WriteString("按 Y 确认删除，按 N 或 Esc 取消\n")
+
+	if m.message != "" {
+		s.WriteString("\n")
+		s.WriteString(m.message)
+	}
 
 	return s.String()
 }
