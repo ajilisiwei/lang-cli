@@ -40,7 +40,7 @@
 1. 是 words 的意思。
 2. 单词练习功能。
 3. 从项目的对应语言的 words 文件夹里读取单词列表，以文件名作为单词列表的标识。
-4. 单词列表文件的内容格式为：单词 ->> 翻译，每个单词占一行。分隔符为" ->> "，左边是单词，右边是翻译。
+4. 单词列表文件的内容格式为：单词 ->> 注释及发音等信息，每个单词占一行。分隔符为" ->> "，左边是单词，右边是单词的注释及发音等信息。
 5. 单词列表文件的内容可以为空，即没有单词和翻译的情况。
 6. 选中 words 后，会从当前日期的单词列表文件里读取单词列表。
 7. 如果单词列表文件不存在，会提示用户创建一个新的单词列表文件。
@@ -122,6 +122,14 @@
 1. 增加正确性匹配模式设置。读取 config.yaml 中的 correctness_match_mode 参数，需要有两种模式：第一种是需要完全匹配，第二种只需要匹配单词，忽略大小写和标点符号，两种模式的名称分别为：exact_match 和 word_match。
 2. 如果 correctness_match_mode 配置为 exact_match，那么用户输入的必须完全匹配才能被认为是正确的。针对 words、phrases、sentences、articles 所有资源类型，都需要根据 correctness_match_mode 来判断用户输入是否正确。
 3. 如果 correctness_match_mode 配置为 word_match，那么用户输入的只要包含单词就被认为是正确的，忽略大小写和标点符号。针对 words、phrases、sentences、articles 等所有资源类型。
+4. 不论是上面的 exact_match 还是 word_match 匹配模式，如果用户输入不正确，都需要提示用户重新输入，并且需要使用高亮颜色标识出错的地方。
+
+#### 顺序设置
+
+1. 增加顺序设置。读取 config.yaml 中的 next_one_order 参数，需要有两种模式：第一种是随机顺序，第二种是顺序出现。
+2. 如果 next_one_order 配置为 random，那么练习时，资源的下一句出现的顺序是随机的。针对 words、phrases、sentences 等所有资源类型，不包括 articles 资源。
+3. 如果 next_one_order 配置为 sequential，那么练习时，资源的下一个出现的顺序是顺序的。针对 words、phrases、sentences 等所有资源类型，不包括 articles 资源。
+
 
 
 

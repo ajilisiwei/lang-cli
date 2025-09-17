@@ -1,0 +1,114 @@
+I’ll look into it and get back to you. ->> 我会调查一下，然后回复你。
+I’ll check and let you know. ->> 我查一下再告知你。
+I’ll find out and get back to you. ->> 我了解一下再回复你。
+Let me look into it and I’ll get back to you as soon as possible. ->> 让我查一下，我会尽快回复你
+Do you have any updates on this? ->> 这个有最新进展吗？
+Let me know if anything changes. ->> 有变化请告诉我。
+Could you please update me on this? ->> 能否请你告知一下这件事的最新情况？（更礼貌/正式一些）
+Is there any progress on this? ->> 这件事有进展吗？
+I’ll keep you posted. ->> 我会及时通知你。
+I’ll keep you informed. ->> 我会让你及时了解情况。
+Please let me know your thoughts. ->> 请告诉我你的想法。
+I’m looping in [Name] for further input. ->> 我把[某人]拉进来一起讨论。
+I’ve brought [Name] into the conversation for additional input. ->> 我已把[某人]带入讨论，请他/她补充。
+I’m adding [Name] to the thread for further input. ->> 我把[某人]加到这个邮件链里，寻求更多意见。
+Could you clarify what you mean? ->> 你能具体说明一下吗？
+Sorry for the late reply. ->> 抱歉回复晚了。
+I’m cc’ing [Name] on this email. ->> 我把[某人]抄送在这封邮件里。
+Let’s touch base tomorrow. ->> 明天我们再联系一下。
+Let’s catch up tomorrow. ->> 我们明天再聊聊/沟通一下。
+Let’s check in tomorrow. ->> 我们明天对接一下。
+Let’s have a catch-up next week. ->> 我们下周碰一下
+I received a carbon copy of the email. ->> 我收到了这封邮件的抄送。
+Who is taking ownership of this task? ->> 谁负责这个任务？
+Please assign this to [Name]. ->> 请把这个分配给[某人]。
+Just a gentle reminder about the deadline. ->> 温馨提醒一下截止日期。
+Can you give me an ETA? (Estimated Time of Arrival) ->> 你能给我一个预计完成时间吗？
+Please follow up on this. ->> 请跟进这件事。
+Don’t forget to update the Jira ticket. ->> 别忘了更新Jira工单。
+I’ll assign this task to you. ->> 我会把这个任务分配给你。
+This task has been assigned to [Name]. ->> 这个任务已经分配给[某人]了。
+Who will take ownership of this task? ->> 谁来负责这个任务？
+Could you take care of this? ->> 你能负责这件事吗？
+Please handle this as a priority. ->> 请优先处理这件事。
+Let’s delegate this to the right person. ->> 我们把这个任务分配给合适的人吧。
+Please add this to your to-do list. ->> 请把这个加到你的待办事项中。
+Just checking in on the status of this task. ->> 过来问一下这个任务的进展。
+Any updates on this item? ->> 这个事项有进展吗？
+How’s this going so far? ->> 目前进展如何？
+Is there anything blocking your progress? ->> 有什么阻碍你的进展吗？
+Do you need any help with this task? ->> 这个任务需要帮忙吗？
+Please keep me updated on your progress. ->> 请随时更新你的进度。
+Let me know if you run into any issues. ->> 有问题请及时告诉我。
+Just a friendly reminder about this task. ->> 温馨提醒一下这个任务。
+Please remember to finish this by Friday. ->> 请记得在周五之前完成。
+Don’t forget to update the status in Jira/Asana/Trello. ->> 别忘了在Jira/Asana/Trello里更新状态。
+Let’s try to complete this before the deadline. ->> 我们尽量在截止日期前完成。
+Please confirm once this is done. ->> 完成后请确认一下。
+Let me know when this is finished. ->> 完成时告诉我一声。
+Task completed, please review. ->> 任务已完成，请审核。
+The deliverable is ready for your review. ->> 交付物已准备好，请审核。
+Thanks for completing this so quickly. ->> 感谢你这么快完成这个任务。
+Who’s the main point of contact for this task? ->> 这个任务的主要联系人是谁？
+Please make sure everyone knows their responsibilities. ->> 请确保每个人都清楚自己的职责。
+Let’s clarify the ownership for each task. ->> 我们明确每个任务的负责人吧。
+If you’re unavailable, please hand this over to [Name]. ->> 如果你不在，请把这个任务交接给[某人]。
+Let’s break this down into smaller tasks. ->> 我们把这个拆分成更小的任务吧。
+Please update the checklist as you go. ->> 做的过程中请随时更新检查表。
+Let’s track the progress on the project board. ->> 我们在项目看板上跟踪进展吧。
+Let’s brainstorm some ideas. ->> 我们来头脑风暴一下吧。
+Can we have a quick call to discuss this? ->> 我们能语音快速讨论一下吗？
+I’ll share my screen. ->> 我来共享一下屏幕。
+Please check the shared folder for the files. ->> 请在共享文件夹里查收文件。
+Is everyone on the same page? ->> 大家都理解一致了吗？
+Let’s align on the next steps. ->> 我们统一一下接下来的步骤。
+The project is on track. ->> 项目进展顺利。
+We are ahead of schedule. ->> 我们进度超前。
+We are slightly behind schedule, but we’re catching up. ->> 我们进度有点落后，但正在赶上。
+The current status is as follows: ->> 当前状态如下：
+We’ve completed 60% of the task so far. ->> 目前我们已完成60%的任务。
+The next milestone is expected to be reached by the end of this month. ->> 下一个里程碑预计本月底达成。
+Who is responsible for this deliverable? ->> 谁负责这个交付物？
+[Name] is in charge of this module. ->> [某人]负责这个模块。
+Please make sure all tasks are assigned. ->> 请确保所有任务都已分配。
+We’ve encountered an unexpected issue. ->> 我们遇到了一个意外问题。
+There is a risk of delay due to resource constraints. ->> 由于资源有限，有可能会延误。
+The main blocker right now is… ->> 目前的主要障碍是……
+We need additional support to resolve this. ->> 需要额外支持来解决这个问题。
+If this problem persists, the timeline may shift. ->> 如果这个问题持续，时间表可能会调整。
+Let’s schedule a meeting for tomorrow afternoon. ->> 咱们安排一下明天下午的会议吧。
+Can we book a meeting room? ->> 我们能预定一个会议室吗？
+Please send out a calendar invite. ->> 请发一下日历邀请。
+I’d like to set up a quick sync-up. ->> 我想安排一个快速同步会。
+Who will be attending the meeting? ->> 谁会参加这次会议？
+Let’s get started. ->> 我们开始吧。
+Thank you all for joining today. ->> 感谢大家今天参加会议。
+Today’s agenda is as follows. ->> 今天的议程如下。
+Let’s go over the main topics. ->> 让我们过一下主要议题。
+Please make sure your microphone is on mute unless you’re speaking. ->> 请大家不发言时静音。
+Does anyone have any updates to share? ->> 有人有最新进展要分享吗？
+Let’s discuss this item in detail. ->> 我们详细讨论一下这个事项。
+What’s your opinion on this? ->> 你怎么看？
+I’d like to add something here. ->> 我想补充一点。
+Could you clarify what you mean? ->> 你能解释一下你的意思吗？
+I agree with you on this point. ->> 这一点我同意你的看法。
+I see it differently. ->> 我有不同看法。
+Who will take the lead on this task? ->> 谁来负责这项任务？
+Let’s assign action items. ->> 我们分配一下行动事项。
+[Name] is in charge of this module. ->> [某人] 负责这个模块。
+Please update us on your progress next time. ->> 下次请汇报一下进展。
+Can we set a deadline for this? ->> 这个事情能定个截止日期吗？
+To sum up, here are today’s key takeaways. ->> 总结一下，以下是今天的主要要点。
+Let’s align on the next steps. ->> 让我们统一一下下一步怎么做。
+Are we all on the same page? ->> 我们都理解一致了吗？
+Please confirm if I missed anything. ->> 如果我有遗漏，请补充。
+I’ll send out the meeting minutes after this call. ->> 会后我会发会议纪要。
+Any updates since our last meeting? ->> 上次会议后有什么进展吗？
+Let’s follow up on the open issues. ->> 跟进一下未解决的问题。
+Please reach out if you have any questions. ->> 有问题随时联系。
+Looking forward to our next meeting. ->> 期待下次会议。
+FYI (For Your Information) ->> 供参考
+TBD (To Be Decided/Determined) ->> 待定
+ASAP (As Soon As Possible) ->> 尽快
+ETA (Estimated Time of Arrival) ->> 预计完成时间
+BR (Best Regards) ->> 此致敬礼（邮件结尾）
