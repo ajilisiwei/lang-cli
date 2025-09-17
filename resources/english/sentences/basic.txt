@@ -1,0 +1,4 @@
+This is a book. ->> 这是一本书。
+I like to read books. ->> 我喜欢读书。
+She is a student. ->> 她是一名学生。
+Where are you going? ->> 你要去哪里？

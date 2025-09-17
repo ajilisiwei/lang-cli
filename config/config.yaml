@@ -1,0 +1,15 @@
+articles:
+    showtranslation: false
+current_language: english
+languages:
+    - english
+    - japanese
+phrases:
+    nextoneorder: ""
+    showtranslation: false
+sentences:
+    nextoneorder: ""
+    showtranslation: false
+words:
+    nextoneorder: ""
+    showtranslation: false

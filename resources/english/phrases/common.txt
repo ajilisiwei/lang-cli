@@ -1,0 +1,4 @@
+good morning ->> 早上好
+how are you ->> 你好吗
+nice to meet you ->> 很高兴认识你
+thank you very much ->> 非常感谢你
