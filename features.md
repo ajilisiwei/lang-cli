@@ -130,6 +130,13 @@
 2. 如果 next_one_order 配置为 random，那么练习时，资源的下一句出现的顺序是随机的。针对 words、phrases、sentences 等所有资源类型，不包括 articles 资源。
 3. 如果 next_one_order 配置为 sequential，那么练习时，资源的下一个出现的顺序是顺序的。针对 words、phrases、sentences 等所有资源类型，不包括 articles 资源。
 
+## v0.3
+
+### 增加输入键盘模拟声
+
+1. 在 setting 模块增加 input_keyboard_sound 配置项，默认值为 false。
+2. 如果 input_keyboard_sound 配置为 true，那么在用户输入时，会模拟键盘的按键声。
+
 
 
 

@@ -42,3 +42,6 @@ __debug_bin*
 
 # Log files
 *.log
+
+# Binary files
+lang-cli

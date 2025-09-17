@@ -66,6 +66,16 @@ func (m ManageMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.quitting = true
 			return m, tea.Quit
 
+		case "esc":
+			// 返回到主菜单
+			mainMenu := NewMainMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := mainMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return mainMenu, nil
+
 		case "enter":
 			i, ok := m.list.SelectedItem().(MenuItem)
 			if ok && i.action != nil {
@@ -203,6 +213,16 @@ func (m ResourceTypeMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.quitting = true
 			return m, tea.Quit
 
+		case "esc":
+			// 返回到管理菜单
+			manageMenu := NewManageMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := manageMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return manageMenu, nil
+
 		case "enter":
 			i, ok := m.list.SelectedItem().(MenuItem)
 			if ok && i.action != nil {
@@ -308,6 +328,16 @@ func (m ManageResourceMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.quitting = true
 			return m, tea.Quit
 
+		case "esc":
+			// 返回到资源类型菜单
+			resourceTypeMenu := NewResourceTypeMenu(m.action)
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := resourceTypeMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return resourceTypeMenu, nil
+
 		case "enter":
 			i, ok := m.list.SelectedItem().(MenuItem)
 			if ok && i.action != nil {
@@ -387,7 +417,14 @@ func (m ImportView) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case "esc":
-			return NewResourceTypeMenu("import"), nil
+			// 返回到资源类型菜单
+			newModel := NewResourceTypeMenu("import")
+			// 传递当前窗口大小给新模型
+			if m.width > 0 && m.height > 0 {
+				updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+				return updatedModel, nil
+			}
+			return newModel, nil
 
 		case "enter":
 			// 获取文件路径
