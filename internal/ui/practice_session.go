@@ -293,17 +293,14 @@ func (m PracticeSession) renderWordLevelError() string {
 	var result strings.Builder
 	result.WriteString(RenderError("你的输入: "))
 	
-	// 逐个比较单词
+	// 构建用户输入的高亮文本
+	var userInputParts []string
 	maxLen := len(userWords)
 	if len(expectedWords) > maxLen {
 		maxLen = len(expectedWords)
 	}
 	
 	for i := 0; i < maxLen; i++ {
-		if i > 0 {
-			result.WriteString(" ")
-		}
-		
 		if i < len(userWords) {
 			userWord := userWords[i]
 			expectedWord := ""
@@ -313,15 +310,24 @@ func (m PracticeSession) renderWordLevelError() string {
 			
 			// 如果单词不匹配，用红色高亮
 			if userWord != expectedWord {
-				result.WriteString(RenderError(userWord))
+				userInputParts = append(userInputParts, RenderError(userWord))
 			} else {
-				result.WriteString(userWord)
+				userInputParts = append(userInputParts, userWord)
 			}
 		}
 	}
 	
+	// 将用户输入拼接并换行
+	userInputText := strings.Join(userInputParts, " ")
+	wrappedUserInput := m.wrapText(userInputText, m.width-4) // 减去边距
+	result.WriteString(wrappedUserInput)
+	
 	result.WriteString("\n")
-	result.WriteString(RenderSuccess("正确答案: " + m.expectedText))
+	
+	// 正确答案也需要换行
+	correctAnswerText := "正确答案: " + m.expectedText
+	wrappedCorrectAnswer := m.wrapText(correctAnswerText, m.width-4) // 减去边距
+	result.WriteString(RenderSuccess(wrappedCorrectAnswer))
 	
 	return result.String()
 }
