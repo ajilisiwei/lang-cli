@@ -1,4 +1,0 @@
-Hello World ->> 你好世界
-This is my first article. ->> 这是我的第一篇文章。
-I am learning to type in English. ->> 我正在学习英语打字。
-Practice makes perfect. ->> 熟能生巧。

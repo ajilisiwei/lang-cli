@@ -1,103 +1,237 @@
-computer ->> 计算机
-software ->> 软件
-hardware ->> 硬件
-server ->> 服务器
-client ->> 客户端
-network ->> 网络
-database ->> 数据库
-algorithm ->> 算法
-function ->> 函数
-variable ->> 变量
-constant ->> 常量
-array ->> 数组
-list ->> 列表
-object ->> 对象
-class ->> 类
-method ->> 方法
-module ->> 模块
-package ->> 包
-parameter ->> 参数
-argument ->> 参数（实参）
-return ->> 返回
-input ->> 输入
-output ->> 输出
-integer ->> 整数
-float ->> 浮点数
-string ->> 字符串
-boolean ->> 布尔值
-loop ->> 循环
-condition ->> 条件
-statement ->> 语句
-expression ->> 表达式
-operator ->> 运算符
-exception ->> 异常
-error ->> 错误
-debug ->> 调试
-compile ->> 编译
-execute ->> 执行
-deploy ->> 部署
-framework ->> 框架
-library ->> 库
-interface ->> 接口
-protocol ->> 协议
-encryption ->> 加密
-decryption ->> 解密
-authentication ->> 认证
-authorization ->> 授权
-permission ->> 权限
-access ->> 访问
-resource ->> 资源
-thread ->> 线程
-process ->> 进程
-queue ->> 队列
-stack ->> 栈
-cache ->> 缓存
-memory ->> 内存
-storage ->> 存储
-disk ->> 磁盘
-file ->> 文件
-folder ->> 文件夹
-directory ->> 目录
-path ->> 路径
-link ->> 链接
-socket ->> 套接字
-port ->> 端口
-domain ->> 域
-host ->> 主机
-IP address ->> IP地址
-URL ->> 网址
-request ->> 请求
-response ->> 响应
-timeout ->> 超时
-session ->> 会话
-cookie ->> Cookie（小型数据文件）
-token ->> 令牌
-API ->> 应用程序接口
-SDK ->> 软件开发工具包
-GUI ->> 图形用户界面
-CLI ->> 命令行界面
-shell ->> Shell（命令行解释器）
-script ->> 脚本
-command ->> 命令
-version ->> 版本
-update ->> 更新
-upgrade ->> 升级
-rollback ->> 回滚
-backup ->> 备份
-restore ->> 恢复
-log ->> 日志
-monitor ->> 监控
-alert ->> 告警
-issue ->> 问题
-bug ->> 缺陷/漏洞
-feature ->> 功能
-release ->> 发布
-patch ->> 补丁
-merge ->> 合并
-branch ->> 分支
-commit ->> 提交
-repository ->> 代码仓库
-clone ->> 克隆
-pull ->> 拉取
-push ->> 推送
-fork ->> 派生
+computer ->> /kəmˈpjuːtər/ n. 计算机，电脑；电子计算装置
+software ->> /ˈsɒftweər/ n. 软件
+hardware ->> /ˈhɑːrdweər/ n. 硬件
+server ->> /ˈsɜːrvər/ n. 服务器；服务者
+client ->> /ˈklaɪənt/ n. 客户端；客户
+network ->> /ˈnetwɜːrk/ n. 网络；网状系统
+database ->> /ˈdeɪtəbeɪs/ n. 数据库
+algorithm ->> /ˈælɡəˌrɪðəm/ n. 算法
+program ->> /ˈproʊɡræm/ n. 程序； v. 编程
+function ->> /ˈfʌŋkʃən/ n. 函数；功能
+variable ->> /ˈveriəbl/ n. 变量；adj. 可变的
+constant ->> /ˈkɑːnstənt/ n. 常量；adj. 不变的
+array ->> /əˈreɪ/ n. 数组；排列
+list ->> /lɪst/ n. 列表；清单
+object ->> /ˈɑːbdʒɪkt/ n. 对象；物体
+class ->> /klæs/ n. 类；班级
+method ->> /ˈmeθəd/ n. 方法；方式
+module ->> /ˈmɑːdʒuːl/ n. 模块；组件
+package ->> /ˈpækɪdʒ/ n. 包；软件包
+parameter ->> /pəˈræmɪtər/ n. 参数
+argument ->> /ˈɑːrɡjumənt/ n. 参数（实参）；争论
+return ->> /rɪˈtɜːrn/ v. 返回；归还；n. 返回值
+input ->> /ˈɪnpʊt/ n. 输入；v. 输入
+output ->> /ˈaʊtpʊt/ n. 输出；v. 输出
+integer ->> /ˈɪntɪdʒər/ n. 整数
+float ->> /floʊt/ n. 浮点数；v. 浮动
+string ->> /strɪŋ/ n. 字符串；绳子
+boolean ->> /ˈbuːliən/ n. 布尔值
+loop ->> /luːp/ n. 循环；环路；v. 循环
+condition ->> /kənˈdɪʃən/ n. 条件；状况
+statement ->> /ˈsteɪtmənt/ n. 语句；声明
+expression ->> /ɪkˈspreʃən/ n. 表达式；表情
+operator ->> /ˈɑːpəreɪtər/ n. 运算符；操作员
+exception ->> /ɪkˈsepʃən/ n. 异常；例外
+error ->> /ˈerər/ n. 错误
+debug ->> /ˌdiːˈbʌɡ/ v. 调试，排错
+compile ->> /kəmˈpaɪl/ v. 编译；汇编
+execute ->> /ˈeksɪkjuːt/ v. 执行；实行
+deploy ->> /dɪˈplɔɪ/ v. 部署；展开
+framework ->> /ˈfreɪmwɜːrk/ n. 框架；体系
+library ->> /ˈlaɪbreri/ n. 库；图书馆
+interface ->> /ˈɪntərfeɪs/ n. 接口；界面
+protocol ->> /ˈproʊtəkɑːl/ n. 协议；规程
+encryption ->> /ɪnˈkrɪpʃən/ n. 加密
+decryption ->> /diːˈkrɪpʃən/ n. 解密
+authentication ->> /ɔːˌθentɪˈkeɪʃən/ n. 认证；鉴别
+authorization ->> /ˌɔːθərəˈzeɪʃən/ n. 授权；批准
+permission ->> /pərˈmɪʃən/ n. 权限；许可
+access ->> /ˈækses/ n. 访问；通路；v. 访问
+resource ->> /rɪˈsɔːrs/ n. 资源
+thread ->> /θred/ n. 线程；线索
+process ->> /ˈproʊses/ n. 进程；过程；v. 处理
+queue ->> /kjuː/ n. 队列；行列
+stack ->> /stæk/ n. 栈；堆叠
+cache ->> /kæʃ/ n. 缓存；贮藏
+memory ->> /ˈmeməri/ n. 内存；记忆
+storage ->> /ˈstɔːrɪdʒ/ n. 存储；保管
+disk ->> /dɪsk/ n. 磁盘；圆盘
+file ->> /faɪl/ n. 文件；档案
+folder ->> /ˈfoʊldər/ n. 文件夹；折叠物
+directory ->> /dəˈrektəri/ n. 目录；人名录
+path ->> /pæθ/ n. 路径；路线
+link ->> /lɪŋk/ n. 链接；联系
+socket ->> /ˈsɑːkɪt/ n. 套接字；插座
+port ->> /pɔːrt/ n. 端口；港口
+domain ->> /doʊˈmeɪn/ n. 域；领域
+host ->> /hoʊst/ n. 主机；主持人
+IP address ->> /ˌaɪˈpiː əˈdres/ n. IP地址
+URL ->> /ˌjuː ɑːr ˈel/ n. 网址；统一资源定位符
+request ->> /rɪˈkwest/ n. 请求；v. 请求
+response ->> /rɪˈspɑːns/ n. 响应；答复
+timeout ->> /ˈtaɪmaʊt/ n. 超时
+session ->> /ˈseʃən/ n. 会话；会议
+cookie ->> /ˈkʊki/ n. Cookie（小型数据文件）；曲奇
+token ->> /ˈtoʊkən/ n. 令牌；记号
+API ->> /ˌeɪ piː ˈaɪ/ n. 应用程序接口
+SDK ->> /ˌes diː ˈkeɪ/ n. 软件开发工具包
+GUI ->> /ˌdʒiː juː ˈaɪ/ n. 图形用户界面
+CLI ->> /ˌsiː el ˈaɪ/ n. 命令行界面
+shell ->> /ʃel/ n. Shell；壳；外壳程序
+script ->> /skrɪpt/ n. 脚本；手稿
+command ->> /kəˈmænd/ n. 命令；指挥
+version ->> /ˈvɜːrʒən/ n. 版本；译本
+update ->> /ʌpˈdeɪt/ v. 更新；n. 更新
+upgrade ->> /ʌpˈɡreɪd/ v. 升级；n. 升级
+rollback ->> /ˈroʊlbæk/ n. 回滚；恢复
+backup ->> /ˈbækʌp/ n. 备份；v. 备份
+restore ->> /rɪˈstɔːr/ v. 恢复；修复
+log ->> /lɔːɡ/ n. 日志；v. 记录
+monitor ->> /ˈmɑːnɪtər/ n. 监控器；v. 监控
+alert ->> /əˈlɜːrt/ n. 警报；提醒
+issue ->> /ˈɪʃuː/ n. 问题；发行
+bug ->> /bʌɡ/ n. 缺陷；漏洞
+feature ->> /ˈfiːtʃər/ n. 功能；特征
+release ->> /rɪˈliːs/ v. 发布；释放；n. 版本
+patch ->> /pætʃ/ n. 补丁；v. 修补
+merge ->> /mɜːrdʒ/ v. 合并；融合
+branch ->> /bræntʃ/ n. 分支；树枝
+commit ->> /kəˈmɪt/ v. 提交；n. 提交记录
+repository ->> /rɪˈpɑːzɪtɔːri/ n. 代码仓库；贮藏所
+clone ->> /kloʊn/ v. 克隆；复制
+pull ->> /pʊl/ v. 拉取（代码）；拉
+push ->> /pʊʃ/ v. 推送（代码）；推动
+fork ->> /fɔːrk/ v. 派生（代码）；分叉
+merge conflict ->> /mɜːrdʒ ˈkɑːnflɪkt/ n. 合并冲突
+dependency ->> /dɪˈpendənsi/ n. 依赖；从属
+build ->> /bɪld/ v. 构建；n. 构建版本
+compile error ->> /kəmˈpaɪl ˈerər/ n. 编译错误
+runtime ->> /ˈrʌntaɪm/ n. 运行时
+runtime error ->> /ˈrʌntaɪm ˈerər/ n. 运行时错误
+virtual machine ->> /ˈvɜːrtʃuəl məˈʃiːn/ n. 虚拟机
+container ->> /kənˈteɪnər/ n. 容器
+docker ->> /ˈdɑːkər/ n. Docker（容器平台）；码头工人
+kubernetes ->> /ˌkuːbərˈnetiːz/ n. Kubernetes（容器管理系统）
+cloud ->> /klaʊd/ n. 云；云计算
+private cloud ->> /ˈpraɪvət klaʊd/ n. 私有云
+public cloud ->> /ˈpʌblɪk klaʊd/ n. 公有云
+hybrid cloud ->> /ˈhaɪbrɪd klaʊd/ n. 混合云
+infrastructure ->> /ˈɪnfrəstrʌktʃər/ n. 基础设施
+platform ->> /ˈplætfɔːrm/ n. 平台
+service ->> /ˈsɜːrvɪs/ n. 服务
+microservice ->> /ˈmaɪkroʊˌsɜːrvɪs/ n. 微服务
+architecture ->> /ˈɑːrkɪtektʃər/ n. 架构
+scalability ->> /ˌskeɪləˈbɪləti/ n. 可扩展性
+availability ->> /əˌveɪləˈbɪləti/ n. 可用性
+reliability ->> /rɪˌlaɪəˈbɪləti/ n. 可靠性
+performance ->> /pərˈfɔːrməns/ n. 性能，表现
+throughput ->> /ˈθruːˌpʊt/ n. 吞吐量
+latency ->> /ˈleɪtənsi/ n. 延迟
+bandwidth ->> /ˈbændwɪdθ/ n. 带宽
+load balancing ->> /loʊd ˈbælənsɪŋ/ n. 负载均衡
+proxy ->> /ˈprɑːksi/ n. 代理服务器
+firewall ->> /ˈfaɪərwɔːl/ n. 防火墙
+gateway ->> /ˈɡeɪtweɪ/ n. 网关
+router ->> /ˈraʊtər/ n. 路由器
+switch ->> /swɪtʃ/ n. 交换机；开关
+hub ->> /hʌb/ n. 集线器
+bridge ->> /brɪdʒ/ n. 桥接器
+SSID ->> /ˌes es aɪ ˈdiː/ n. 服务集标识符（无线网络名）
+DNS ->> /ˌdiː en ˈes/ n. 域名系统
+DHCP ->> /ˌdiː eɪtʃ siː ˈpiː/ n. 动态主机配置协议
+HTTP ->> /ˌeɪtʃ tiː tiː ˈpiː/ n. 超文本传输协议
+HTTPS ->> /ˌeɪtʃ tiː tiː piː ˈes/ n. 安全超文本传输协议
+FTP ->> /ˌef tiː ˈpiː/ n. 文件传输协议
+SSH ->> /ˌes es ˈeɪtʃ/ n. 安全外壳协议
+SMTP ->> /ˌes em tiː ˈpiː/ n. 简单邮件传输协议
+POP3 ->> /ˌpiː oʊ piː ˈθriː/ n. 邮局协议3
+IMAP ->> /ˈaɪmæp/ n. 网络邮件协议
+JSON ->> /ˈdʒeɪsən/ n. JavaScript对象表示法
+XML ->> /ˌeks em ˈel/ n. 可扩展标记语言
+YAML ->> /ˈjæməl/ n. 一种数据序列化格式
+HTML ->> /ˌeɪtʃ tiː em ˈel/ n. 超文本标记语言
+CSS ->> /ˌsiː es ˈes/ n. 层叠样式表
+JavaScript ->> /ˈdʒɑːvə skrɪpt/ n. JavaScript语言
+TypeScript ->> /ˈtaɪp skrɪpt/ n. TypeScript语言
+Python ->> /ˈpaɪθɑːn/ n. Python（编程语言）
+Java ->> /ˈdʒɑːvə/ n. Java（编程语言）
+C++ ->> /siː plʌs plʌs/ n. C++语言
+C# ->> /siː ʃɑːrp/ n. C#语言
+PHP ->> /ˌpiː eɪtʃ ˈpiː/ n. PHP语言
+Ruby ->> /ˈruːbi/ n. Ruby（编程语言）
+Go ->> /ɡoʊ/ n. Go语言
+Swift ->> /swɪft/ n. Swift（编程语言）
+Kotlin ->> /ˈkɑːtlɪn/ n. Kotlin（编程语言）
+Rust ->> /rʌst/ n. Rust（编程语言）
+Perl ->> /pɜːrl/ n. Perl（编程语言）
+Scala ->> /ˈskɑːlə/ n. Scala（编程语言）
+Objective-C ->> /əbˈdʒektɪv siː/ n. Objective-C（编程语言）
+assembly ->> /əˈsembli/ n. 汇编语言；程序集
+binary ->> /ˈbaɪnəri/ n. 二进制；二进制文件
+hexadecimal ->> /ˌheksəˈdesɪməl/ n. 十六进制
+octal ->> /ˈɑːktl/ n. 八进制
+decimal ->> /ˈdesɪməl/ n. 十进制
+bit ->> /bɪt/ n. 位；比特
+byte ->> /baɪt/ n. 字节
+kilobyte ->> /ˈkɪləbaɪt/ n. 千字节
+megabyte ->> /ˈmeɡəbaɪt/ n. 兆字节
+gigabyte ->> /ˈɡɪɡəbaɪt/ n. 吉字节
+terabyte ->> /ˈterəbaɪt/ n. 太字节
+petabyte ->> /ˈpetəbaɪt/ n. 拍字节
+bandwidth ->> /ˈbændwɪdθ/ n. 带宽
+latency ->> /ˈleɪtənsi/ n. 延迟
+throughput ->> /ˈθruːˌpʊt/ n. 吞吐量
+firewall ->> /ˈfaɪərwɔːl/ n. 防火墙
+encryption ->> /ɪnˈkrɪpʃən/ n. 加密
+malware ->> /ˈmælwer/ n. 恶意软件
+virus ->> /ˈvaɪrəs/ n. 病毒
+worm ->> /wɜːrm/ n. 蠕虫
+trojan ->> /ˈtroʊdʒən/ n. 特洛伊木马
+phishing ->> /ˈfɪʃɪŋ/ n. 网络钓鱼
+spam ->> /spæm/ n. 垃圾邮件
+adware ->> /ˈædwer/ n. 广告软件
+ransomware ->> /ˈrænsəmwer/ n. 勒索软件
+spyware ->> /ˈspaɪwer/ n. 间谍软件
+rootkit ->> /ˈruːtkɪt/ n. Rootkit（根工具包）
+patch ->> /pætʃ/ n. 补丁
+hotfix ->> /ˈhɑːt fɪks/ n. 紧急修复补丁
+release ->> /rɪˈliːs/ n. 版本；发布
+version control ->> /ˈvɜːrʒən kənˈtroʊl/ n. 版本控制
+repository ->> /rɪˈpɑːzɪtɔːri/ n. 代码仓库
+commit ->> /kəˈmɪt/ n. 提交
+pull request ->> /pʊl rɪˈkwest/ n. 拉取请求
+issue tracker ->> /ˈɪʃuː ˈtrækər/ n. 问题追踪器
+workflow ->> /ˈwɜːrkfloʊ/ n. 工作流
+pipeline ->> /ˈpaɪplaɪn/ n. 流水线
+deployment ->> /dɪˈplɔɪmənt/ n. 部署
+integration ->> /ˌɪntɪˈɡreɪʃən/ n. 集成
+continuous integration ->> /kənˈtɪnjuəs ˌɪntɪˈɡreɪʃən/ n. 持续集成
+continuous delivery ->> /kənˈtɪnjuəs dɪˈlɪvəri/ n. 持续交付
+continuous deployment ->> /kənˈtɪnjuəs dɪˈplɔɪmənt/ n. 持续部署
+unit test ->> /ˈjuːnɪt test/ n. 单元测试
+integration test ->> /ˌɪntɪˈɡreɪʃən test/ n. 集成测试
+regression test ->> /rɪˈɡreʃən test/ n. 回归测试
+test case ->> /test keɪs/ n. 测试用例
+test coverage ->> /test ˈkʌvərɪdʒ/ n. 测试覆盖率
+mock ->> /mɑːk/ n. 模拟对象；v. 模拟
+stub ->> /stʌb/ n. 存根；短桩
+dependency injection ->> /dɪˈpendənsi ɪnˈdʒekʃən/ n. 依赖注入
+singleton ->> /ˈsɪŋɡəltən/ n. 单例
+factory ->> /ˈfæktəri/ n. 工厂模式
+observer ->> /əbˈzɜːrvər/ n. 观察者模式
+strategy ->> /ˈstrætədʒi/ n. 策略模式
+adapter ->> /əˈdæptər/ n. 适配器模式
+decorator ->> /ˈdekəreɪtər/ n. 装饰器模式
+proxy ->> /ˈprɑːksi/ n. 代理模式
+MVC ->> /ˌem viː ˈsiː/ n. 模型-视图-控制器
+MVVM ->> /ˌem viː viː ˈem/ n. 模型-视图-视图模型
+RESTful ->> /restfʊl/ adj. REST风格的
+SOAP ->> /soʊp/ n. 简单对象访问协议
+OAuth ->> /ˈoʊˌɔːθ/ n. 开放授权协议
+JWT ->> /ˌdʒeɪ dʌbəljuː ˈtiː/ n. JSON Web令牌
+SAML ->> /ˈsæməl/ n. 安全断言标记语言
+CI/CD ->> /siː aɪ siː diː/ n. 持续集成/持续部署
+SaaS ->> /sæs/ n. 软件即服务
+PaaS ->> /pæs/ n. 平台即服务
+IaaS ->> /ˈaɪæs/ n. 基础设施即服务
+DevOps ->> /ˈdevɒps/ n. 开发运维一体化
