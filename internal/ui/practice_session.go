@@ -133,8 +133,22 @@ func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 			// 检查输入是否正确
 			userInput := m.textInput.Value()
-			currentItem := m.getCurrentItem()
-			expectedInput := m.getExpectedInput(currentItem)
+			// 如果用户输入包含翻译文本，只截取正文部分
+			if strings.Contains(userInput, " ->> ") {
+				parts := strings.Split(userInput, " ->> ")
+				if len(parts) > 0 {
+					userInput = strings.TrimSpace(parts[0])
+				}
+			}
+			// 获取原始项目（包含翻译）用于提取期望输入
+			var originalItem string
+			if m.completedCount < len(m.practiceOrder) {
+				actualIndex := m.practiceOrder[m.completedCount]
+				if actualIndex < len(m.items) {
+					originalItem = m.items[actualIndex]
+				}
+			}
+			expectedInput := m.getExpectedInput(originalItem)
 
 			if m.isInputCorrect(userInput, expectedInput) {
 				// 输入正确
@@ -232,10 +246,68 @@ func (m PracticeSession) getCurrentItem() string {
 	if m.completedCount < len(m.practiceOrder) {
 		actualIndex := m.practiceOrder[m.completedCount]
 		if actualIndex < len(m.items) {
-			return m.items[actualIndex]
+			item := m.items[actualIndex]
+			// 根据资源类型和配置决定是否显示翻译
+			if m.resourceType == practice.Words || m.resourceType == practice.Phrases {
+				parts := strings.Split(item, practice.Separator)
+				if len(parts) > 0 {
+					// 检查是否显示翻译
+					showTranslation := m.getShowTranslationConfig()
+					if showTranslation && len(parts) > 1 {
+						// 显示完整内容（包含翻译）
+						return item
+					} else {
+						// 只显示正文部分
+						return strings.TrimSpace(parts[0])
+					}
+				}
+			} else if m.resourceType == practice.Sentences {
+				// 句子类型根据配置决定是否显示翻译
+				parts := strings.Split(item, practice.Separator)
+				if len(parts) > 1 {
+					showTranslation := m.getShowTranslationConfig()
+					if showTranslation {
+						// 显示完整内容（包含翻译）
+						return item
+					} else {
+						// 只显示正文部分
+						return strings.TrimSpace(parts[0])
+					}
+				}
+			} else if m.resourceType == practice.Articles {
+				// 文章类型根据配置决定是否显示翻译
+				parts := strings.Split(item, practice.Separator)
+				if len(parts) > 1 {
+					showTranslation := m.getShowTranslationConfig()
+					if showTranslation {
+						// 显示完整内容（包含翻译）
+						return item
+					} else {
+						// 只显示正文部分
+						return strings.TrimSpace(parts[0])
+					}
+				}
+			}
+			return item
 		}
 	}
 	return ""
+}
+
+// 获取翻译显示配置
+func (m PracticeSession) getShowTranslationConfig() bool {
+	switch m.resourceType {
+	case practice.Words:
+		return config.AppConfig.Words.ShowTranslation
+	case practice.Phrases:
+		return config.AppConfig.Phrases.ShowTranslation
+	case practice.Sentences:
+		return config.AppConfig.Sentences.ShowTranslation
+	case practice.Articles:
+		return config.AppConfig.Articles.ShowTranslation
+	default:
+		return false
+	}
 }
 
 // 获取期望输入
@@ -324,7 +396,7 @@ func (m PracticeSession) renderWordLevelError() string {
 	
 	result.WriteString("\n")
 	
-	// 正确答案也需要换行
+	// 正确答案也需要换行，只显示正文部分
 	correctAnswerText := "正确答案: " + m.expectedText
 	wrappedCorrectAnswer := m.wrapText(correctAnswerText, m.width-4) // 减去边距
 	result.WriteString(RenderSuccess(wrappedCorrectAnswer))

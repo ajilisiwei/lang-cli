@@ -1,18 +1,17 @@
 articles:
-    showtranslation: false
+    show_translation: true
+correctness_match_mode: exact_match
 current_language: english
 languages:
     - english
     - japanese
+next_one_order: random
 phrases:
-    nextoneorder: ""
-    showtranslation: false
+    next_one_order: ""
+    show_translation: true
 sentences:
-    nextoneorder: ""
-    showtranslation: false
+    next_one_order: ""
+    show_translation: true
 words:
-    nextoneorder: ""
-    showtranslation: false
-# v0.2 新增配置
-correctness_match_mode: exact_match  # exact_match 或 word_match
-next_one_order: random  # random 或 sequential
+    next_one_order: ""
+    show_translation: true

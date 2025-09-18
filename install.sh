@@ -46,14 +46,11 @@ echo "正在初始化用户配置和资源文件..."
 echo "创建目录: $LANG_CLI_DIR"
 mkdir -p "$LANG_CLI_DIR"
 
-# 复制配置文件
+# 复制配置文件（强制覆盖以确保配置文件是最新的）
 if [ -f "config/config.yaml" ]; then
-    if [ ! -f "$LANG_CLI_DIR/config.yaml" ]; then
-        echo "复制配置文件..."
-        cp "config/config.yaml" "$LANG_CLI_DIR/"
-    else
-        echo "配置文件已存在，跳过复制以保护用户设置"
-    fi
+    echo "复制配置文件..."
+    cp "config/config.yaml" "$LANG_CLI_DIR/"
+    echo "配置文件已更新到最新版本"
 else
     echo "警告: 配置文件 config/config.yaml 不存在"
 fi

@@ -62,32 +62,37 @@ type ArticlesConfig struct {
 var AppConfig Config
 
 // LoadConfig 加载配置文件
-// LoadConfig 加载配置文件
+// 开发阶段读取项目内配置文件，生产环境读取用户目录配置文件
 func LoadConfig() error {
 	// 设置配置文件的名称和路径
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 
-	// 获取用户主目录下的配置路径
-	homeDir, err := os.UserHomeDir()
-	if err == nil {
+	// 判断是否为开发环境
+	isDevMode := isInDevelopmentMode()
+
+	if isDevMode {
+		// 开发环境：优先读取项目内的配置文件
+		viper.AddConfigPath("./config")
+		viper.AddConfigPath(".")
+		// 添加测试环境下的配置文件路径
+		viper.AddConfigPath("../../config")
+	} else {
+		// 生产环境：读取用户目录下的配置文件
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			return fmt.Errorf("获取用户主目录失败: %w", err)
+		}
 		configDir := filepath.Join(homeDir, ".lang-cli")
 		viper.AddConfigPath(configDir)
-	}
 
-	// 获取当前执行文件的目录
-	execPath, err := os.Executable()
-	if err != nil {
-		return fmt.Errorf("获取执行文件路径失败: %w", err)
+		// 获取当前执行文件的目录作为备用路径
+		execPath, err := os.Executable()
+		if err == nil {
+			execDir := filepath.Dir(execPath)
+			viper.AddConfigPath(filepath.Join(execDir, "config"))
+		}
 	}
-	execDir := filepath.Dir(execPath)
-
-	// 添加配置文件的搜索路径
-	viper.AddConfigPath(filepath.Join(execDir, "config"))
-	viper.AddConfigPath("./config")
-	viper.AddConfigPath(".")
-	// 添加测试环境下的配置文件路径
-	viper.AddConfigPath("../../config")
 
 	// 读取配置文件
 	if err := viper.ReadInConfig(); err != nil {
@@ -100,6 +105,19 @@ func LoadConfig() error {
 	}
 
 	return nil
+}
+
+// isInDevelopmentMode 判断是否为开发模式
+// 通过检查项目根目录是否存在go.mod文件来判断
+func isInDevelopmentMode() bool {
+	// 检查当前目录及上级目录是否存在go.mod文件
+	paths := []string{"./go.mod", "../go.mod", "../../go.mod"}
+	for _, path := range paths {
+		if _, err := os.Stat(path); err == nil {
+			return true
+		}
+	}
+	return false
 }
 
 // SaveConfig 保存配置到文件
