@@ -27,8 +27,8 @@ func SentencePractice(fileName string) error {
 	fmt.Println("输入 'q' 退出练习。")
 
 	// 获取配置
-	nextOneOrder := config.AppConfig.Sentences.NextOneOrder
-	showTranslation := config.AppConfig.Sentences.ShowTranslation
+	nextOneOrder := config.AppConfig.NextOneOrder
+	showTranslation := config.AppConfig.ShowTranslation
 
 	// 开始练习
 	index := 0

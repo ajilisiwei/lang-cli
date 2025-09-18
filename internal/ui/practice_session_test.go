@@ -22,58 +22,16 @@ func TestGetShowTranslationConfig(t *testing.T) {
 	// 创建测试会话
 	session := &PracticeSession{}
 
-	// 测试单词类型
-	session.resourceType = practice.Words
-	config.AppConfig.Words.ShowTranslation = true
+	// 测试全局翻译设置为true
+	config.AppConfig.ShowTranslation = true
 	if !session.getShowTranslationConfig() {
-		t.Error("单词类型应该显示翻译")
+		t.Error("全局设置为true时应该显示翻译")
 	}
 
-	config.AppConfig.Words.ShowTranslation = false
+	// 测试全局翻译设置为false
+	config.AppConfig.ShowTranslation = false
 	if session.getShowTranslationConfig() {
-		t.Error("单词类型不应该显示翻译")
-	}
-
-	// 测试短语类型
-	session.resourceType = practice.Phrases
-	config.AppConfig.Phrases.ShowTranslation = true
-	if !session.getShowTranslationConfig() {
-		t.Error("短语类型应该显示翻译")
-	}
-
-	config.AppConfig.Phrases.ShowTranslation = false
-	if session.getShowTranslationConfig() {
-		t.Error("短语类型不应该显示翻译")
-	}
-
-	// 测试句子类型
-	session.resourceType = practice.Sentences
-	config.AppConfig.Sentences.ShowTranslation = true
-	if !session.getShowTranslationConfig() {
-		t.Error("句子类型应该显示翻译")
-	}
-
-	config.AppConfig.Sentences.ShowTranslation = false
-	if session.getShowTranslationConfig() {
-		t.Error("句子类型不应该显示翻译")
-	}
-
-	// 测试文章类型
-	session.resourceType = practice.Articles
-	config.AppConfig.Articles.ShowTranslation = true
-	if !session.getShowTranslationConfig() {
-		t.Error("文章类型应该显示翻译")
-	}
-
-	config.AppConfig.Articles.ShowTranslation = false
-	if session.getShowTranslationConfig() {
-		t.Error("文章类型不应该显示翻译")
-	}
-
-	// 测试未知类型
-	session.resourceType = "unknown"
-	if session.getShowTranslationConfig() {
-		t.Error("未知类型不应该显示翻译")
+		t.Error("全局设置为false时不应该显示翻译")
 	}
 }
 
@@ -135,10 +93,10 @@ func TestGetExpectedInput(t *testing.T) {
 		t.Errorf("短语类型 getExpectedInput() = %v, want %v", result, expected)
 	}
 
-	// 测试句子类型（不应该分离翻译）
+	// 测试句子类型（应该分离翻译）
 	session.resourceType = practice.Sentences
 	result = session.getExpectedInput("How are you? ->> 你好吗？")
-	expected = "How are you? ->> 你好吗？"
+	expected = "How are you?"
 	if result != expected {
 		t.Errorf("句子类型 getExpectedInput() = %v, want %v", result, expected)
 	}
@@ -294,7 +252,7 @@ func TestGetCurrentItem(t *testing.T) {
 	}
 
 	// 测试不显示翻译的情况
-	config.AppConfig.Words.ShowTranslation = false
+	config.AppConfig.ShowTranslation = false
 	tests := []struct {
 		name           string
 		completedCount int
@@ -328,7 +286,7 @@ func TestGetCurrentItem(t *testing.T) {
 	}
 
 	// 测试显示翻译的情况
-	config.AppConfig.Words.ShowTranslation = true
+	config.AppConfig.ShowTranslation = true
 	session.completedCount = 0
 	result := session.getCurrentItem()
 	expected := "apple ->> 苹果"
@@ -340,7 +298,7 @@ func TestGetCurrentItem(t *testing.T) {
 	session.resourceType = practice.Phrases
 	session.items = []string{"good morning ->> 早上好", "good afternoon ->> 下午好"}
 	session.completedCount = 0
-	config.AppConfig.Phrases.ShowTranslation = false
+	config.AppConfig.ShowTranslation = false
 	result = session.getCurrentItem()
 	expected = "good morning"
 	if result != expected {
@@ -348,7 +306,7 @@ func TestGetCurrentItem(t *testing.T) {
 	}
 
 	// 测试短语类型 - 显示翻译
-	config.AppConfig.Phrases.ShowTranslation = true
+	config.AppConfig.ShowTranslation = true
 	result = session.getCurrentItem()
 	expected = "good morning ->> 早上好"
 	if result != expected {
@@ -359,7 +317,7 @@ func TestGetCurrentItem(t *testing.T) {
 	session.resourceType = practice.Sentences
 	session.items = []string{"How are you? ->> 你好吗？"}
 	session.completedCount = 0
-	config.AppConfig.Sentences.ShowTranslation = false
+	config.AppConfig.ShowTranslation = false
 	result = session.getCurrentItem()
 	expected = "How are you?"
 	if result != expected {
@@ -367,7 +325,7 @@ func TestGetCurrentItem(t *testing.T) {
 	}
 
 	// 测试句子类型 - 显示翻译
-	config.AppConfig.Sentences.ShowTranslation = true
+	config.AppConfig.ShowTranslation = true
 	result = session.getCurrentItem()
 	expected = "How are you? ->> 你好吗？"
 	if result != expected {
@@ -378,7 +336,7 @@ func TestGetCurrentItem(t *testing.T) {
 	session.resourceType = practice.Articles
 	session.items = []string{"This is a test. ->> 这是一个测试。"}
 	session.completedCount = 0
-	config.AppConfig.Articles.ShowTranslation = false
+	config.AppConfig.ShowTranslation = false
 	result = session.getCurrentItem()
 	expected = "This is a test."
 	if result != expected {
@@ -386,7 +344,7 @@ func TestGetCurrentItem(t *testing.T) {
 	}
 
 	// 测试文章类型 - 显示翻译
-	config.AppConfig.Articles.ShowTranslation = true
+	config.AppConfig.ShowTranslation = true
 	result = session.getCurrentItem()
 	expected = "This is a test. ->> 这是一个测试。"
 	if result != expected {

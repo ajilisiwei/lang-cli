@@ -26,36 +26,30 @@ type Config struct {
 	CorrectnessMatchMode string `mapstructure:"correctness_match_mode"`
 	// v0.2 新增：全局下一个资源的出现顺序，可选值：random（随机）、sequential（顺序）
 	NextOneOrder string `mapstructure:"next_one_order"`
+	// v0.3 新增：是否启用键盘按键声音
+	InputKeyboardSound bool `mapstructure:"input_keyboard_sound"`
+	// v0.3 新增：全局是否显示翻译
+	ShowTranslation bool `mapstructure:"show_translation"`
 }
 
 // WordsConfig 表示单词练习的配置
 type WordsConfig struct {
-	// 下一个单词的出现顺序，可选值：random（随机）、sequential（顺序）
-	NextOneOrder string `mapstructure:"next_one_order"`
-	// 输入正确后是否显示翻译
-	ShowTranslation bool `mapstructure:"show_translation"`
+	// 单词练习配置（目前为空，预留扩展）
 }
 
 // PhrasesConfig 表示短语练习的配置
 type PhrasesConfig struct {
-	// 下一个短语的出现顺序，可选值：random（随机）、sequential（顺序）
-	NextOneOrder string `mapstructure:"next_one_order"`
-	// 输入正确后是否显示翻译
-	ShowTranslation bool `mapstructure:"show_translation"`
+	// 短语练习配置（目前为空，预留扩展）
 }
 
 // SentencesConfig 表示句子练习的配置
 type SentencesConfig struct {
-	// 下一个句子的出现顺序，可选值：random（随机）、sequential（顺序）
-	NextOneOrder string `mapstructure:"next_one_order"`
-	// 输入正确后是否显示翻译
-	ShowTranslation bool `mapstructure:"show_translation"`
+	// 句子练习配置（目前为空，预留扩展）
 }
 
 // ArticlesConfig 表示文章练习的配置
 type ArticlesConfig struct {
-	// 输入正确后是否显示翻译
-	ShowTranslation bool `mapstructure:"show_translation"`
+	// 文章练习配置（目前为空，预留扩展）
 }
 
 // 全局配置实例
@@ -132,6 +126,8 @@ func SaveConfig() error {
 		"articles":                AppConfig.Articles,
 		"correctness_match_mode":  AppConfig.CorrectnessMatchMode,
 		"next_one_order":          AppConfig.NextOneOrder,
+		"input_keyboard_sound":    AppConfig.InputKeyboardSound,
+		"show_translation":        AppConfig.ShowTranslation,
 	} {
 		viper.Set(k, v)
 	}

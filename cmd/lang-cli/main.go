@@ -298,6 +298,177 @@ var manageImportCmd = &cobra.Command{
 	},
 }
 
+// settingCmd 表示setting子命令
+var settingCmd = &cobra.Command{
+	Use:   "setting",
+	Short: "设置模块",
+	Long:  `设置模块，用于配置匹配模式、练习顺序、键盘声音和翻译显示等设置。`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("设置模块")
+		fmt.Println("使用 'lang-cli setting --help' 查看可用的设置选项")
+	},
+}
+
+// settingMatchModeCmd 表示setting match-mode子命令
+var settingMatchModeCmd = &cobra.Command{
+	Use:   "match-mode [mode]",
+	Short: "设置匹配模式",
+	Long:  `设置正确性匹配模式，可选值：exact_match（完全匹配）、word_match（单词匹配）。`,
+	Args:  cobra.MaximumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			// 显示当前匹配模式
+			fmt.Printf("当前匹配模式: %s\n", config.AppConfig.CorrectnessMatchMode)
+			fmt.Println("可用的匹配模式:")
+			fmt.Println("  exact_match - 完全匹配")
+			fmt.Println("  word_match  - 单词匹配")
+			return
+		}
+
+		mode := args[0]
+		if mode != "exact_match" && mode != "word_match" {
+			fmt.Printf("无效的匹配模式: %s\n", mode)
+			fmt.Println("可用的匹配模式: exact_match, word_match")
+			return
+		}
+
+		config.AppConfig.CorrectnessMatchMode = mode
+		if err := config.SaveConfig(); err != nil {
+			fmt.Printf("保存配置失败: %s\n", err)
+			return
+		}
+		fmt.Printf("匹配模式已设置为: %s\n", mode)
+	},
+	ValidArgs: []string{"exact_match", "word_match"},
+}
+
+// settingOrderCmd 表示setting order子命令
+var settingOrderCmd = &cobra.Command{
+	Use:   "order [order]",
+	Short: "设置练习顺序",
+	Long:  `设置练习资源的出现顺序，可选值：random（随机）、sequential（顺序）。`,
+	Args:  cobra.MaximumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			// 显示当前顺序设置
+			fmt.Printf("当前练习顺序: %s\n", config.AppConfig.NextOneOrder)
+			fmt.Println("可用的顺序设置:")
+			fmt.Println("  random     - 随机")
+			fmt.Println("  sequential - 顺序")
+			return
+		}
+
+		order := args[0]
+		if order != "random" && order != "sequential" {
+			fmt.Printf("无效的顺序设置: %s\n", order)
+			fmt.Println("可用的顺序设置: random, sequential")
+			return
+		}
+
+		config.AppConfig.NextOneOrder = order
+		if err := config.SaveConfig(); err != nil {
+			fmt.Printf("保存配置失败: %s\n", err)
+			return
+		}
+		fmt.Printf("练习顺序已设置为: %s\n", order)
+	},
+	ValidArgs: []string{"random", "sequential"},
+}
+
+// settingKeyboardSoundCmd 表示setting keyboard-sound子命令
+var settingKeyboardSoundCmd = &cobra.Command{
+	Use:   "keyboard-sound [enable|disable]",
+	Short: "设置键盘声音",
+	Long:  `设置是否启用键盘按键声音，可选值：enable（启用）、disable（禁用）。`,
+	Args:  cobra.MaximumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			// 显示当前键盘声音设置
+			status := "禁用"
+			if config.AppConfig.InputKeyboardSound {
+				status = "启用"
+			}
+			fmt.Printf("当前键盘声音设置: %s\n", status)
+			fmt.Println("可用的设置:")
+			fmt.Println("  enable  - 启用")
+			fmt.Println("  disable - 禁用")
+			return
+		}
+
+		setting := args[0]
+		var enable bool
+		switch setting {
+		case "enable":
+			enable = true
+		case "disable":
+			enable = false
+		default:
+			fmt.Printf("无效的设置: %s\n", setting)
+			fmt.Println("可用的设置: enable, disable")
+			return
+		}
+
+		config.AppConfig.InputKeyboardSound = enable
+		if err := config.SaveConfig(); err != nil {
+			fmt.Printf("保存配置失败: %s\n", err)
+			return
+		}
+		status := "禁用"
+		if enable {
+			status = "启用"
+		}
+		fmt.Printf("键盘声音已设置为: %s\n", status)
+	},
+	ValidArgs: []string{"enable", "disable"},
+}
+
+// settingTranslationCmd 表示setting translation子命令
+var settingTranslationCmd = &cobra.Command{
+	Use:   "translation [show|hide]",
+	Short: "设置翻译显示",
+	Long:  `设置是否显示翻译内容，可选值：show（显示）、hide（隐藏）。`,
+	Args:  cobra.MaximumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			// 显示当前翻译显示设置
+			status := "隐藏"
+			if config.AppConfig.ShowTranslation {
+				status = "显示"
+			}
+			fmt.Printf("当前翻译显示设置: %s\n", status)
+			fmt.Println("可用的设置:")
+			fmt.Println("  show - 显示")
+			fmt.Println("  hide - 隐藏")
+			return
+		}
+
+		setting := args[0]
+		var show bool
+		switch setting {
+		case "show":
+			show = true
+		case "hide":
+			show = false
+		default:
+			fmt.Printf("无效的设置: %s\n", setting)
+			fmt.Println("可用的设置: show, hide")
+			return
+		}
+
+		config.AppConfig.ShowTranslation = show
+		if err := config.SaveConfig(); err != nil {
+			fmt.Printf("保存配置失败: %s\n", err)
+			return
+		}
+		status := "隐藏"
+		if show {
+			status = "显示"
+		}
+		fmt.Printf("翻译显示已设置为: %s\n", status)
+	},
+	ValidArgs: []string{"show", "hide"},
+}
+
 func init() {
 	// 加载配置文件
 	if err := config.LoadConfig(); err != nil {
@@ -309,6 +480,7 @@ func init() {
 	rootCmd.AddCommand(langCmd)
 	rootCmd.AddCommand(practiceCmd)
 	rootCmd.AddCommand(manageCmd)
+	rootCmd.AddCommand(settingCmd)
 
 	// 添加lang子命令
 	langCmd.AddCommand(langLsCmd)
@@ -323,6 +495,12 @@ func init() {
 	// 添加manage子命令
 	manageCmd.AddCommand(manageDeleteCmd)
 	manageCmd.AddCommand(manageImportCmd)
+
+	// 添加setting子命令
+	settingCmd.AddCommand(settingMatchModeCmd)
+	settingCmd.AddCommand(settingOrderCmd)
+	settingCmd.AddCommand(settingKeyboardSoundCmd)
+	settingCmd.AddCommand(settingTranslationCmd)
 }
 
 func main() {

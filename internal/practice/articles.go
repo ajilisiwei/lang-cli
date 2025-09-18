@@ -27,7 +27,7 @@ func ArticlePractice(fileName string) error {
 	fmt.Println("输入 'q' 退出练习。")
 
 	// 获取配置
-	showTranslation := config.AppConfig.Articles.ShowTranslation
+	showTranslation := config.AppConfig.ShowTranslation
 
 	// 开始练习
 	reader := bufio.NewReader(os.Stdin)

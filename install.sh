@@ -98,6 +98,16 @@ else
     echo "警告: 资源目录 resources 不存在"
 fi
 
+# 复制assets文件（强制覆盖以确保assets文件是最新的）
+if [ -d "assets" ]; then
+    echo "复制assets文件..."
+    mkdir -p "$LANG_CLI_DIR/assets"
+    cp -r assets/* "$LANG_CLI_DIR/assets/"
+    echo "assets文件已更新到最新版本"
+else
+    echo "警告: assets目录不存在"
+fi
+
 echo ""
 echo "安装和初始化完成！"
 echo "Installation and initialization completed!"

@@ -7,11 +7,13 @@ import (
 	"strings"
 	"time"
 
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/bubbles/progress"
 	"github.com/charmbracelet/bubbles/textinput"
-	tea "github.com/charmbracelet/bubbletea"
+
 	"github.com/daiweiwei/lang-cli/internal/config"
 	"github.com/daiweiwei/lang-cli/internal/practice"
+	"github.com/daiweiwei/lang-cli/internal/sound"
 )
 
 // PracticeSession 练习会话模型
@@ -65,15 +67,18 @@ func NewPracticeSession(resourceType, fileName string) *PracticeSession {
 	}
 
 	// 根据配置决定是否打乱顺序
-	orderMode := config.AppConfig.NextOneOrder
-	if orderMode == "" {
-		orderMode = "random" // 默认随机
-	}
-	if orderMode == "random" {
-		rand.Seed(time.Now().UnixNano())
-		rand.Shuffle(len(practiceOrder), func(i, j int) {
-			practiceOrder[i], practiceOrder[j] = practiceOrder[j], practiceOrder[i]
-		})
+	// 注意：文章练习始终使用顺序模式，不受全局配置影响
+	if resourceType != practice.Articles {
+		orderMode := config.AppConfig.NextOneOrder
+		if orderMode == "" {
+			orderMode = "random" // 默认随机
+		}
+		if orderMode == "random" {
+			rand.Seed(time.Now().UnixNano())
+			rand.Shuffle(len(practiceOrder), func(i, j int) {
+				practiceOrder[i], practiceOrder[j] = practiceOrder[j], practiceOrder[i]
+			})
+		}
 	}
 
 	return &PracticeSession{
@@ -109,10 +114,14 @@ func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "ctrl+c":
 			m.quitting = true
+			// 停止所有声音播放
+			sound.StopAllSounds()
 			return m, tea.Quit
 
 		case "esc":
 			// 无论在什么状态下，ESC键都应该退出练习并返回练习菜单
+			// 停止所有声音播放
+			sound.StopAllSounds()
 			practiceMenu := NewPracticeMenu()
 			if m.width > 0 && m.height > 4 {
 				updatedModel, _ := practiceMenu.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
@@ -123,6 +132,8 @@ func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter":
 			if m.state == "finished" {
 				// 返回练习菜单并传递窗口大小
+				// 停止所有声音播放
+				sound.StopAllSounds()
 				practiceMenu := NewPracticeMenu()
 				if m.width > 0 && m.height > 4 {
 					updatedModel, _ := practiceMenu.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
@@ -167,6 +178,8 @@ func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.state = "finished"
 					m.endTime = time.Now()
 					m.result = m.calculateResult()
+					// 停止所有声音播放
+					sound.StopAllSounds()
 				}
 			} else {
 				// 输入错误
@@ -190,7 +203,21 @@ func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	// 处理文本输入
 	var cmd tea.Cmd
+	oldValue := m.textInput.Value()
 	m.textInput, cmd = m.textInput.Update(msg)
+	newValue := m.textInput.Value()
+	
+	// v0.3 新增：如果输入内容发生变化，播放键盘声音
+	if len(newValue) != len(oldValue) {
+		if len(newValue) > len(oldValue) {
+			// 用户输入了新字符
+			if len(newValue) > 0 {
+				lastChar := rune(newValue[len(newValue)-1])
+				sound.PlayTypingSound(lastChar)
+			}
+		}
+	}
+	
 	return m, cmd
 }
 
@@ -296,28 +323,16 @@ func (m PracticeSession) getCurrentItem() string {
 
 // 获取翻译显示配置
 func (m PracticeSession) getShowTranslationConfig() bool {
-	switch m.resourceType {
-	case practice.Words:
-		return config.AppConfig.Words.ShowTranslation
-	case practice.Phrases:
-		return config.AppConfig.Phrases.ShowTranslation
-	case practice.Sentences:
-		return config.AppConfig.Sentences.ShowTranslation
-	case practice.Articles:
-		return config.AppConfig.Articles.ShowTranslation
-	default:
-		return false
-	}
+	// v0.3 优化：使用全局翻译设置
+	return config.AppConfig.ShowTranslation
 }
 
 // 获取期望输入
 func (m PracticeSession) getExpectedInput(item string) string {
-	// 对于单词和短语，可能有翻译，需要分离
-	if m.resourceType == practice.Words || m.resourceType == practice.Phrases {
-		parts := strings.Split(item, practice.Separator)
-		if len(parts) > 0 {
-			return strings.TrimSpace(parts[0])
-		}
+	// 对于所有资源类型，如果包含翻译分隔符，只返回正文部分
+	parts := strings.Split(item, practice.Separator)
+	if len(parts) > 0 {
+		return strings.TrimSpace(parts[0])
 	}
 	return item
 }

@@ -27,8 +27,8 @@ func PhrasePractice(fileName string) error {
 	fmt.Println("输入 'q' 退出练习。")
 
 	// 获取配置
-	nextOneOrder := config.AppConfig.Phrases.NextOneOrder
-	showTranslation := config.AppConfig.Phrases.ShowTranslation
+	nextOneOrder := config.AppConfig.NextOneOrder
+	showTranslation := config.AppConfig.ShowTranslation
 
 	// 开始练习
 	index := 0

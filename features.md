@@ -137,7 +137,19 @@
 1. 在 setting 模块增加 input_keyboard_sound 配置项，默认值为 false。
 2. 如果 input_keyboard_sound 配置为 true，那么在用户输入时，会模拟键盘的按键声。
 
+### 增加是否显示翻译的设置
 
+1. 在 setting 模块增加 show_translation 配置项，默认值为 true。
+2. 如果 show_translation 配置为 true，则在 words、phrases、sentences、articles 等资源的练习中，会展示单词的翻译；如果配置为 false，则不会展示单词的翻译。
+3. 如果 show_translation 配置为 false，那么在 words、phrases、sentences、articles 等资源的练习中，会展示单词的拼写，而不会展示翻译文本。
+
+## v0.4
+
+### 增加单词发音
+
+1. 增加单词发音功能。
+2. 当用户在各类资源的练习中输入时，会根据单词的拼写，获取对应单词并调用有道词典的 API 来获取单词的发音。(https://dict.youdao.com/dictvoice?audio=dream)
+3. 如果获取到了单词的发音，会播放该发音。
 
 
 

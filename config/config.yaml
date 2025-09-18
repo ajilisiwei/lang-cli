@@ -1,17 +1,12 @@
-articles:
-    show_translation: true
-correctness_match_mode: exact_match
+articles: {}
+correctness_match_mode: word_match
 current_language: english
+input_keyboard_sound: true
 languages:
     - english
     - japanese
 next_one_order: random
-phrases:
-    next_one_order: ""
-    show_translation: true
-sentences:
-    next_one_order: ""
-    show_translation: true
-words:
-    next_one_order: ""
-    show_translation: true
+phrases: {}
+sentences: {}
+show_translation: true
+words: {}
