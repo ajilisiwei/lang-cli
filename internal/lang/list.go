@@ -20,7 +20,7 @@ func PrintLanguages() {
 	for _, lang := range languages {
 		prefix := "  "
 		if lang == currentLanguage {
-			prefix = "· "
+			prefix = "✔ "
 		}
 		fmt.Printf("%s%s\n", prefix, lang)
 	}

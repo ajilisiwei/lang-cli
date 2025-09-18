@@ -17,7 +17,7 @@ type LanguageMenuItem struct {
 func (i LanguageMenuItem) Title() string {
 	title := i.language
 	if i.isCurrent {
-		title = "· " + title
+		title = "✔ " + title
 	}
 	return title
 }

@@ -151,7 +151,7 @@ type MatchModeMenuItem struct {
 func (i MatchModeMenuItem) Title() string {
 	title := i.title
 	if i.isCurrent {
-		title = "· " + title
+		title = "✔ " + title
 	}
 	return title
 }
@@ -280,9 +280,9 @@ type OrderMenuItem struct {
 // 实现list.Item接口
 func (i OrderMenuItem) Title() string {
 	title := i.title
-	if i.isCurrent {
-		title = "· " + title
-	}
+		if i.isCurrent {
+			title = "✔ " + title
+		}
 	return title
 }
 func (i OrderMenuItem) Description() string { return i.description }
