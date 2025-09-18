@@ -46,7 +46,7 @@ func NewMainMenu() *MainMenu {
 		},
 		MenuItem{
 			title:       "设置",
-			description: "配置匹配模式和练习顺序等设置",
+			description: "配置匹配模式、练习顺序等、键盘音效、翻译显示等设置",
 			action:      func() (tea.Model, error) { return NewSettingMenu(), nil },
 		},
 		MenuItem{
