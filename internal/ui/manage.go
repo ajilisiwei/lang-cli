@@ -121,7 +121,7 @@ func NewResourceTypeMenu(action string) *ResourceTypeMenu {
 	items := []list.Item{
 		MenuItem{
 			title:       "单词",
-			description: action + "单词资源",
+			description: getActionTitle(action) + "单词资源",
 			action: func() (tea.Model, error) {
 				if action == "delete" {
 					return NewManageResourceMenu(practice.Words, action), nil
@@ -132,7 +132,7 @@ func NewResourceTypeMenu(action string) *ResourceTypeMenu {
 		},
 		MenuItem{
 			title:       "短语",
-			description: action + "短语资源",
+			description: getActionTitle(action) + "短语资源",
 			action: func() (tea.Model, error) {
 				if action == "delete" {
 					return NewManageResourceMenu(practice.Phrases, action), nil
@@ -143,7 +143,7 @@ func NewResourceTypeMenu(action string) *ResourceTypeMenu {
 		},
 		MenuItem{
 			title:       "句子",
-			description: action + "句子资源",
+			description: getActionTitle(action) + "句子资源",
 			action: func() (tea.Model, error) {
 				if action == "delete" {
 					return NewManageResourceMenu(practice.Sentences, action), nil
@@ -154,7 +154,7 @@ func NewResourceTypeMenu(action string) *ResourceTypeMenu {
 		},
 		MenuItem{
 			title:       "文章",
-			description: action + "文章资源",
+			description: getActionTitle(action) + "文章资源",
 			action: func() (tea.Model, error) {
 				if action == "delete" {
 					return NewManageResourceMenu(practice.Articles, action), nil

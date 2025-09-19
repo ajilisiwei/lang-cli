@@ -9,6 +9,58 @@ import (
 	"strings"
 )
 
+// parseNewlineFormatForImport 解析换行符分隔格式的文件
+func ParseNewlineFormatForImport(file *os.File) ([]string, error) {
+	var result []string
+	scanner := bufio.NewScanner(file)
+	var currentPair []string
+	
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		
+		// 跳过空行
+		if line == "" {
+			continue
+		}
+		
+		currentPair = append(currentPair, line)
+		
+		// 当收集到两行时，组成一对
+		if len(currentPair) == 2 {
+			// 使用 ->> 作为分隔符
+			result = append(result, currentPair[0]+" ->> "+currentPair[1])
+			currentPair = nil
+		}
+	}
+	
+	// 如果还有剩余的单行，跳过它
+	if len(currentPair) > 0 {
+		// 可以选择记录警告或直接忽略
+	}
+	
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
+	
+	return result, nil
+}
+
+// isValidSeparatorFormat 检查行是否包含有效的分隔符格式
+func isValidSeparatorFormat(line string) bool {
+	// 定义支持的分隔符
+	separators := []string{" ->> ", ":", "：", "/"}
+	
+	// 检查是否包含任何一种分隔符
+	for _, sep := range separators {
+		if strings.Contains(line, sep) {
+			return true
+		}
+	}
+	
+	// 检查是否包含空格（作为最后的分隔符选项）
+	return strings.Contains(line, " ")
+}
+
 // ImportResource 导入资源
 func ImportResource(resourceType, sourcePath string) error {
 	// 验证资源类型
@@ -29,6 +81,7 @@ func ImportResource(resourceType, sourcePath string) error {
 	// 获取目标文件名
 	fileName := filepath.Base(sourcePath)
 	targetPath := GetResourcePath(resourceType, fileName)
+	fmt.Printf("调试: 目标路径 = %s\n", targetPath)
 
 	// 检查目标文件是否已存在
 	if _, err := os.Stat(targetPath); err == nil {
@@ -74,43 +127,9 @@ func ImportResource(resourceType, sourcePath string) error {
 	}
 	defer targetFile.Close()
 
-	// 验证文件格式（如果是单词、短语或句子，需要检查格式）
-	if resourceType == Words || resourceType == Phrases || resourceType == Sentences {
-		scanner := bufio.NewScanner(sourceFile)
-		writer := bufio.NewWriter(targetFile)
-
-		lineNum := 0
-		for scanner.Scan() {
-			lineNum++
-			line := scanner.Text()
-
-			// 跳过空行
-			if strings.TrimSpace(line) == "" {
-				continue
-			}
-
-			// 检查格式
-			if !strings.Contains(line, " ->> ") {
-				fmt.Printf("警告: 第 %d 行格式不正确，应为 '内容 ->> 翻译'\n", lineNum)
-				// 继续处理，不中断导入
-			}
-
-			// 写入行
-			fmt.Fprintln(writer, line)
-		}
-
-		if err := scanner.Err(); err != nil {
-			return fmt.Errorf("读取源文件失败: %w", err)
-		}
-
-		if err := writer.Flush(); err != nil {
-			return fmt.Errorf("写入目标文件失败: %w", err)
-		}
-	} else {
-		// 对于文章，直接复制
-		if _, err := io.Copy(targetFile, sourceFile); err != nil {
-			return fmt.Errorf("复制文件失败: %w", err)
-		}
+	// 直接复制文件，不进行格式转换
+	if _, err := io.Copy(targetFile, sourceFile); err != nil {
+		return fmt.Errorf("复制文件失败: %w", err)
 	}
 
 	fmt.Printf("成功导入 %s 到 %s\n", fileName, resourceType)
@@ -158,44 +177,11 @@ func ImportResourceForTest(resourceType, sourcePath string) error {
 	}
 	defer targetFile.Close()
 
-	// 验证文件格式（如果是单词、短语或句子，需要检查格式）
-	if resourceType == Words || resourceType == Phrases || resourceType == Sentences {
-		scanner := bufio.NewScanner(sourceFile)
-		writer := bufio.NewWriter(targetFile)
-
-		lineNum := 0
-		for scanner.Scan() {
-			lineNum++
-			line := scanner.Text()
-
-			// 跳过空行
-			if strings.TrimSpace(line) == "" {
-				continue
-			}
-
-			// 检查格式
-			if !strings.Contains(line, " ->> ") {
-				fmt.Printf("警告: 第 %d 行格式不正确，应为 '内容 ->> 翻译'\n", lineNum)
-				// 继续处理，不中断导入
-			}
-
-			// 写入行
-			fmt.Fprintln(writer, line)
-		}
-
-		if err := scanner.Err(); err != nil {
-			return fmt.Errorf("读取源文件失败: %w", err)
-		}
-
-		if err := writer.Flush(); err != nil {
-			return fmt.Errorf("写入目标文件失败: %w", err)
-		}
-	} else {
-		// 对于文章，直接复制
-		if _, err := io.Copy(targetFile, sourceFile); err != nil {
-			return fmt.Errorf("复制文件失败: %w", err)
-		}
+	// 直接复制文件，不进行格式转换
+	if _, err := io.Copy(targetFile, sourceFile); err != nil {
+		return fmt.Errorf("复制文件失败: %w", err)
 	}
 
+	fmt.Printf("成功导入 %s 到 %s\n", fileName, resourceType)
 	return nil
 }

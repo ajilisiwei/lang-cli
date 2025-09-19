@@ -276,43 +276,61 @@ func (m PracticeSession) getCurrentItem() string {
 			item := m.items[actualIndex]
 			// 根据资源类型和配置决定是否显示翻译
 			if m.resourceType == practice.Words || m.resourceType == practice.Phrases {
-				parts := strings.Split(item, practice.Separator)
-				if len(parts) > 0 {
-					// 检查是否显示翻译
-					showTranslation := m.getShowTranslationConfig()
-					if showTranslation && len(parts) > 1 {
-						// 显示完整内容（包含翻译）
-						return item
+				// 检查是否显示翻译
+				showTranslation := m.getShowTranslationConfig()
+				if showTranslation {
+					// 只对 " ->> " 分隔符进行特殊处理，移除分隔符
+					if strings.Contains(item, " ->> ") {
+						word, translation := practice.ParseLine(item)
+						if word != "" && translation != "" {
+							return word + "\n" + translation
+						}
 					} else {
-						// 只显示正文部分
-						return strings.TrimSpace(parts[0])
+						// 其他格式保持原样显示
+						return item
 					}
+				} else {
+					// 不显示翻译时，只显示正文部分
+					word, _ := practice.ParseLine(item)
+					return word
 				}
 			} else if m.resourceType == practice.Sentences {
 				// 句子类型根据配置决定是否显示翻译
-				parts := strings.Split(item, practice.Separator)
-				if len(parts) > 1 {
-					showTranslation := m.getShowTranslationConfig()
-					if showTranslation {
-						// 显示完整内容（包含翻译）
-						return item
+				showTranslation := m.getShowTranslationConfig()
+				if showTranslation {
+					// 只对 " ->> " 分隔符进行特殊处理，移除分隔符
+					if strings.Contains(item, " ->> ") {
+						sentence, translation := practice.ParseLine(item)
+						if sentence != "" && translation != "" {
+							return sentence + "\n" + translation
+						}
 					} else {
-						// 只显示正文部分
-						return strings.TrimSpace(parts[0])
+						// 其他格式保持原样显示
+						return item
 					}
+				} else {
+					// 不显示翻译时，只显示正文部分
+					sentence, _ := practice.ParseLine(item)
+					return sentence
 				}
 			} else if m.resourceType == practice.Articles {
 				// 文章类型根据配置决定是否显示翻译
-				parts := strings.Split(item, practice.Separator)
-				if len(parts) > 1 {
-					showTranslation := m.getShowTranslationConfig()
-					if showTranslation {
-						// 显示完整内容（包含翻译）
-						return item
+				showTranslation := m.getShowTranslationConfig()
+				if showTranslation {
+					// 只对 " ->> " 分隔符进行特殊处理，移除分隔符
+					if strings.Contains(item, " ->> ") {
+						article, translation := practice.ParseLine(item)
+						if article != "" && translation != "" {
+							return article + "\n" + translation
+						}
 					} else {
-						// 只显示正文部分
-						return strings.TrimSpace(parts[0])
+						// 其他格式保持原样显示
+						return item
 					}
+				} else {
+					// 不显示翻译时，只显示正文部分
+					article, _ := practice.ParseLine(item)
+					return article
 				}
 			}
 			return item
@@ -329,10 +347,10 @@ func (m PracticeSession) getShowTranslationConfig() bool {
 
 // 获取期望输入
 func (m PracticeSession) getExpectedInput(item string) string {
-	// 对于所有资源类型，如果包含翻译分隔符，只返回正文部分
-	parts := strings.Split(item, practice.Separator)
-	if len(parts) > 0 {
-		return strings.TrimSpace(parts[0])
+	// 对于所有资源类型，使用ParseLine函数正确解析多种分隔符，只返回正文部分
+	content, _ := practice.ParseLine(item)
+	if content != "" {
+		return content
 	}
 	return item
 }

@@ -58,7 +58,7 @@ func setupTest(t *testing.T) {
 	}
 	defer importFile.Close()
 
-	if _, err := importFile.WriteString("grape ->> 葡萄\npeach ->> 桃子"); err != nil {
+	if _, err := importFile.WriteString("grape ->> 葡萄\npeach ->> 桃子\n"); err != nil {
 		t.Fatalf("写入导入测试文件失败: %v", err)
 	}
 }
