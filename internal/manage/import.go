@@ -47,18 +47,27 @@ func ParseNewlineFormatForImport(file *os.File) ([]string, error) {
 
 // isValidSeparatorFormat 检查行是否包含有效的分隔符格式
 func isValidSeparatorFormat(line string) bool {
-	// 定义支持的分隔符
-	separators := []string{" ->> ", ":", "：", "/"}
+	// 首先检查 " ->> " 分隔符
+	if strings.Contains(line, " ->> ") {
+		return true
+	}
 	
-	// 检查是否包含任何一种分隔符
+	// 然后检查空格分隔符
+	if strings.Contains(line, " ") {
+		return true
+	}
+	
+	// 定义其他支持的分隔符，按优先级顺序："/", ":", "："
+	separators := []string{"/", ":", "："}
+	
+	// 检查是否包含其他分隔符
 	for _, sep := range separators {
 		if strings.Contains(line, sep) {
 			return true
 		}
 	}
 	
-	// 检查是否包含空格（作为最后的分隔符选项）
-	return strings.Contains(line, " ")
+	return false
 }
 
 // ImportResource 导入资源

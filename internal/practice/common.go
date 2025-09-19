@@ -205,12 +205,27 @@ func parseNewlineFormat(file *os.File) ([]string, error) {
 }
 
 // ParseLine 解析行内容，返回原文和翻译
-// 支持多种分隔符，按优先级顺序：" ->> ", ":", "：", "/", 空格
+// 支持多种分隔符，按优先级顺序：" ->> ", 空格, "/", ":", "："
 func ParseLine(line string) (string, string) {
-	// 定义分隔符优先级列表
-	separators := []string{" ->> ", ":", "：", "/"}
+	// 首先检查 " ->> " 分隔符
+	if strings.Contains(line, " ->> ") {
+		parts := strings.SplitN(line, " ->> ", 2)
+		if len(parts) == 2 {
+			return strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])
+		}
+	}
 	
-	// 按优先级尝试分隔符
+	// 然后检查空格分隔符
+	// 第一个空格之前的文本作为原文，之后的作为翻译
+	spaceIndex := strings.Index(line, " ")
+	if spaceIndex > 0 {
+		return strings.TrimSpace(line[:spaceIndex]), strings.TrimSpace(line[spaceIndex+1:])
+	}
+	
+	// 定义其他分隔符优先级列表
+	separators := []string{"/", ":", "："}
+	
+	// 按优先级尝试其他分隔符
 	for _, sep := range separators {
 		if strings.Contains(line, sep) {
 			parts := strings.SplitN(line, sep, 2)
@@ -220,14 +235,7 @@ func ParseLine(line string) (string, string) {
 		}
 	}
 	
-	// 如果没有找到任何分隔符，使用空格分隔
-	// 第一个空格之前的文本作为原文，之后的作为翻译
-	spaceIndex := strings.Index(line, " ")
-	if spaceIndex > 0 {
-		return strings.TrimSpace(line[:spaceIndex]), strings.TrimSpace(line[spaceIndex+1:])
-	}
-	
-	// 如果没有空格，整行作为原文，翻译为空
+	// 如果没有找到任何分隔符，整行作为原文，翻译为空
 	return line, ""
 }
 

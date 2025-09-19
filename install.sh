@@ -50,6 +50,8 @@ mkdir -p "$LANG_CLI_DIR"
 if [ -f "config/config.yaml" ]; then
     echo "复制配置文件..."
     cp "config/config.yaml" "$LANG_CLI_DIR/"
+    # 确保配置文件有正确的权限
+    chmod 644 "$LANG_CLI_DIR/config.yaml"
     echo "配置文件已更新到最新版本"
 else
     echo "警告: 配置文件 config/config.yaml 不存在"
@@ -60,6 +62,9 @@ if [ -d "resources" ]; then
     if [ ! -d "$LANG_CLI_DIR/resources" ]; then
         echo "复制资源文件..."
         cp -r "resources" "$LANG_CLI_DIR/"
+        # 确保资源目录及其内容有正确的权限
+        chmod -R 755 "$LANG_CLI_DIR/resources"
+        find "$LANG_CLI_DIR/resources" -type f -name "*.txt" -exec chmod 644 {} \;
     else
         echo "资源目录已存在，正在合并新资源..."
         # 遍历每个语言目录
@@ -68,6 +73,8 @@ if [ -d "resources" ]; then
                 lang_name=$(basename "$lang_dir")
                 target_lang_dir="$LANG_CLI_DIR/resources/$lang_name"
                 mkdir -p "$target_lang_dir"
+                # 确保语言目录有正确的权限
+                chmod 755 "$target_lang_dir"
                 
                 # 遍历每个资源类型目录
                 for type_dir in "$lang_dir"*/; do
@@ -75,6 +82,8 @@ if [ -d "resources" ]; then
                         type_name=$(basename "$type_dir")
                         target_type_dir="$target_lang_dir/$type_name"
                         mkdir -p "$target_type_dir"
+                        # 确保资源类型目录有正确的权限
+                        chmod 755 "$target_type_dir"
                         
                         # 复制文件，但不覆盖已存在的文件
                         for file in "$type_dir"*; do
@@ -83,6 +92,8 @@ if [ -d "resources" ]; then
                                 target_file="$target_type_dir/$filename"
                                 if [ ! -f "$target_file" ]; then
                                     cp "$file" "$target_file"
+                                    # 确保复制的文件有正确的权限
+                                    chmod 644 "$target_file"
                                     echo "  添加新资源: $lang_name/$type_name/$filename"
                                 else
                                     echo "  跳过已存在的资源: $lang_name/$type_name/$filename"
@@ -103,10 +114,21 @@ if [ -d "assets" ]; then
     echo "复制assets文件..."
     mkdir -p "$LANG_CLI_DIR/assets"
     cp -r assets/* "$LANG_CLI_DIR/assets/"
+    # 确保assets目录及其内容有正确的权限
+    chmod -R 755 "$LANG_CLI_DIR/assets"
+    find "$LANG_CLI_DIR/assets" -type f -exec chmod 644 {} \;
     echo "assets文件已更新到最新版本"
 else
     echo "警告: assets目录不存在"
 fi
+
+# 最终权限设置 - 确保用户对整个.lang-cli目录有完全控制权
+echo "设置目录权限..."
+chmod 755 "$LANG_CLI_DIR"
+# 确保所有目录都有正确的权限（755 = rwxr-xr-x）
+find "$LANG_CLI_DIR" -type d -exec chmod 755 {} \;
+# 确保所有文件都有正确的权限（644 = rw-r--r--）
+find "$LANG_CLI_DIR" -type f -exec chmod 644 {} \;
 
 echo ""
 echo "安装和初始化完成！"
