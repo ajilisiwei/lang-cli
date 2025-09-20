@@ -52,6 +52,11 @@ func isValidSeparatorFormat(line string) bool {
 		return true
 	}
 	
+	// 然后检查制表符分隔符
+	if strings.Contains(line, "\t") {
+		return true
+	}
+	
 	// 然后检查空格分隔符
 	if strings.Contains(line, " ") {
 		return true

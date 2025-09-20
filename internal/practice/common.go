@@ -205,7 +205,7 @@ func parseNewlineFormat(file *os.File) ([]string, error) {
 }
 
 // ParseLine 解析行内容，返回原文和翻译
-// 支持多种分隔符，按优先级顺序：" ->> ", 空格, "/", ":", "："
+// 支持多种分隔符，按优先级顺序：" ->> ", 制表符, 空格, "/", ":", "："
 func ParseLine(line string) (string, string) {
 	// 首先检查 " ->> " 分隔符
 	if strings.Contains(line, " ->> ") {
@@ -213,6 +213,13 @@ func ParseLine(line string) (string, string) {
 		if len(parts) == 2 {
 			return strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])
 		}
+	}
+	
+	// 然后检查制表符分隔符
+	// 第一个制表符之前的文本作为原文，之后的作为翻译
+	tabIndex := strings.Index(line, "\t")
+	if tabIndex > 0 {
+		return strings.TrimSpace(line[:tabIndex]), strings.TrimSpace(line[tabIndex+1:])
 	}
 	
 	// 然后检查空格分隔符
