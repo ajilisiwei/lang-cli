@@ -267,6 +267,9 @@ func parseNewlineFormat(file *os.File) ([]string, error) {
 				currentTranslation = ""
 			}
 		} else if currentOriginal == "" {
+			if containsInlineSeparator(line) {
+				return nil, fmt.Errorf("检测到行内分隔符，回退到逐行解析")
+			}
 			// 第一行是原文
 			currentOriginal = line
 		} else if currentTranslation == "" {
@@ -298,6 +301,13 @@ func parseNewlineFormat(file *os.File) ([]string, error) {
 	}
 
 	return lines, nil
+}
+
+func containsInlineSeparator(line string) bool {
+	if strings.Contains(line, " ->> ") {
+		return true
+	}
+	return false
 }
 
 // ParseLine 解析行内容，返回原文和翻译
