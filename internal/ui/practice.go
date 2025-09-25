@@ -72,6 +72,15 @@ func (m PracticeMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.quitting = true
 			return m, tea.Quit
 
+		case "esc":
+			mainMenu := NewMainMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := mainMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return mainMenu, nil
+
 		case "enter":
 			i, ok := m.list.SelectedItem().(MenuItem)
 			if ok && i.action != nil {
@@ -186,6 +195,15 @@ func (m ResourceSelectionMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			m.quitting = true
 			return m, tea.Quit
+
+		case "esc":
+			practiceMenu := NewPracticeMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := practiceMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return practiceMenu, nil
 
 		case "enter":
 			i, ok := m.list.SelectedItem().(MenuItem)

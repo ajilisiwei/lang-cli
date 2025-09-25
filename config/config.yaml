@@ -5,7 +5,7 @@ input_keyboard_sound: true
 languages:
     - english
     - japanese
-next_one_order: random
+next_one_order: sequential
 phrases: {}
 sentences: {}
 show_translation: true

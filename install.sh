@@ -7,7 +7,27 @@ set -e
 
 INSTALL_DIR="/usr/local/bin"
 BINARY_NAME="lang-cli"
-LANG_CLI_DIR="$HOME/.lang-cli"
+
+TARGET_USER="${SUDO_USER:-$(whoami)}"
+TARGET_GROUP="$(id -gn "$TARGET_USER" 2>/dev/null || echo "$TARGET_USER")"
+TARGET_HOME=$(eval echo "~$TARGET_USER")
+
+LANG_CLI_DIR="$TARGET_HOME/.lang-cli"
+LANG_CLI_USER_DATA_DIR="$LANG_CLI_DIR/user-data"
+
+run_as_target() {
+    if [ "$TARGET_USER" = "$(whoami)" ]; then
+        "$@"
+    else
+        sudo -u "$TARGET_USER" "$@"
+    fi
+}
+
+ensure_owner() {
+    if [ "$(id -u)" -eq 0 ]; then
+        chown -R "$TARGET_USER:$TARGET_GROUP" "$@"
+    fi
+}
 
 echo "多语言打字学习终端工具 - 安装脚本"
 echo "Multi-language Typing Learning Terminal Tool - Install Script"
@@ -44,14 +64,23 @@ echo "正在初始化用户配置和资源文件..."
 
 # 创建用户主目录下的 .lang-cli 目录
 echo "创建目录: $LANG_CLI_DIR"
-mkdir -p "$LANG_CLI_DIR"
+if [ ! -d "$LANG_CLI_DIR" ]; then
+    run_as_target mkdir -p "$LANG_CLI_DIR"
+fi
+ensure_owner "$LANG_CLI_DIR"
+
+if [ ! -d "$LANG_CLI_USER_DATA_DIR" ]; then
+    run_as_target mkdir -p "$LANG_CLI_USER_DATA_DIR"
+fi
+ensure_owner "$LANG_CLI_USER_DATA_DIR"
 
 # 复制配置文件（强制覆盖以确保配置文件是最新的）
 if [ -f "config/config.yaml" ]; then
     echo "复制配置文件..."
-    cp "config/config.yaml" "$LANG_CLI_DIR/"
+    run_as_target cp "config/config.yaml" "$LANG_CLI_DIR/"
     # 确保配置文件有正确的权限
-    chmod 644 "$LANG_CLI_DIR/config.yaml"
+    run_as_target chmod 644 "$LANG_CLI_DIR/config.yaml"
+    ensure_owner "$LANG_CLI_DIR/config.yaml"
     echo "配置文件已更新到最新版本"
 else
     echo "警告: 配置文件 config/config.yaml 不存在"
@@ -61,10 +90,11 @@ fi
 if [ -d "resources" ]; then
     if [ ! -d "$LANG_CLI_DIR/resources" ]; then
         echo "复制资源文件..."
-        cp -r "resources" "$LANG_CLI_DIR/"
+        run_as_target cp -r "resources" "$LANG_CLI_DIR/"
         # 确保资源目录及其内容有正确的权限
-        chmod -R 755 "$LANG_CLI_DIR/resources"
-        find "$LANG_CLI_DIR/resources" -type f -name "*.txt" -exec chmod 644 {} \;
+        run_as_target chmod -R 755 "$LANG_CLI_DIR/resources"
+        run_as_target find "$LANG_CLI_DIR/resources" -type f -name "*.txt" -exec chmod 644 {} \;
+        ensure_owner "$LANG_CLI_DIR/resources"
     else
         echo "资源目录已存在，正在合并新资源..."
         # 遍历每个语言目录
@@ -72,18 +102,20 @@ if [ -d "resources" ]; then
             if [ -d "$lang_dir" ]; then
                 lang_name=$(basename "$lang_dir")
                 target_lang_dir="$LANG_CLI_DIR/resources/$lang_name"
-                mkdir -p "$target_lang_dir"
+                run_as_target mkdir -p "$target_lang_dir"
                 # 确保语言目录有正确的权限
-                chmod 755 "$target_lang_dir"
+                run_as_target chmod 755 "$target_lang_dir"
+                ensure_owner "$target_lang_dir"
                 
                 # 遍历每个资源类型目录
                 for type_dir in "$lang_dir"*/; do
                     if [ -d "$type_dir" ]; then
                         type_name=$(basename "$type_dir")
                         target_type_dir="$target_lang_dir/$type_name"
-                        mkdir -p "$target_type_dir"
+                        run_as_target mkdir -p "$target_type_dir"
                         # 确保资源类型目录有正确的权限
-                        chmod 755 "$target_type_dir"
+                        run_as_target chmod 755 "$target_type_dir"
+                        ensure_owner "$target_type_dir"
                         
                         # 复制文件，但不覆盖已存在的文件
                         for file in "$type_dir"*; do
@@ -91,9 +123,10 @@ if [ -d "resources" ]; then
                                 filename=$(basename "$file")
                                 target_file="$target_type_dir/$filename"
                                 if [ ! -f "$target_file" ]; then
-                                    cp "$file" "$target_file"
+                                    run_as_target cp "$file" "$target_file"
                                     # 确保复制的文件有正确的权限
-                                    chmod 644 "$target_file"
+                                    run_as_target chmod 644 "$target_file"
+                                    ensure_owner "$target_file"
                                     echo "  添加新资源: $lang_name/$type_name/$filename"
                                 else
                                     echo "  跳过已存在的资源: $lang_name/$type_name/$filename"
@@ -112,11 +145,12 @@ fi
 # 复制assets文件（强制覆盖以确保assets文件是最新的）
 if [ -d "assets" ]; then
     echo "复制assets文件..."
-    mkdir -p "$LANG_CLI_DIR/assets"
-    cp -r assets/* "$LANG_CLI_DIR/assets/"
+    run_as_target mkdir -p "$LANG_CLI_DIR/assets"
+    run_as_target cp -r assets/* "$LANG_CLI_DIR/assets/"
     # 确保assets目录及其内容有正确的权限
-    chmod -R 755 "$LANG_CLI_DIR/assets"
-    find "$LANG_CLI_DIR/assets" -type f -exec chmod 644 {} \;
+    run_as_target chmod -R 755 "$LANG_CLI_DIR/assets"
+    run_as_target find "$LANG_CLI_DIR/assets" -type f -exec chmod 644 {} \;
+    ensure_owner "$LANG_CLI_DIR/assets"
     echo "assets文件已更新到最新版本"
 else
     echo "警告: assets目录不存在"
@@ -124,11 +158,16 @@ fi
 
 # 最终权限设置 - 确保用户对整个.lang-cli目录有完全控制权
 echo "设置目录权限..."
-chmod 755 "$LANG_CLI_DIR"
+run_as_target chmod 755 "$LANG_CLI_DIR"
 # 确保所有目录都有正确的权限（755 = rwxr-xr-x）
-find "$LANG_CLI_DIR" -type d -exec chmod 755 {} \;
+run_as_target find "$LANG_CLI_DIR" -type d -exec chmod 755 {} \;
 # 确保所有文件都有正确的权限（644 = rw-r--r--）
-find "$LANG_CLI_DIR" -type f -exec chmod 644 {} \;
+run_as_target find "$LANG_CLI_DIR" -type f -exec chmod 644 {} \;
+
+ensure_owner "$LANG_CLI_DIR"
+
+echo "确保用户资源目录已创建: $LANG_CLI_USER_DATA_DIR"
+run_as_target mkdir -p "$LANG_CLI_USER_DATA_DIR"
 
 echo ""
 echo "安装和初始化完成！"

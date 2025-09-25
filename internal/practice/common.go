@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 
@@ -31,12 +32,18 @@ func init() {
 }
 
 // GetResourcePath 获取资源文件路径
+// 优先返回用户资源路径，若不存在则回退到基础资源目录
 func GetResourcePath(resourceType string, fileName string) string {
 	currentLanguage := config.AppConfig.CurrentLanguage
-	// 如果文件名没有.txt后缀，自动添加
 	if !strings.HasSuffix(fileName, ".txt") {
 		fileName = fileName + ".txt"
 	}
+
+	userPath := filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType, fileName)
+	if _, err := os.Stat(userPath); err == nil {
+		return userPath
+	}
+
 	return filepath.Join(getResourceBaseDir(), currentLanguage, resourceType, fileName)
 }
 
@@ -46,13 +53,25 @@ func getResourceBaseDir() string {
 	if isTestEnvironment() {
 		return "resources"
 	}
-	
+
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		// 如果无法获取用户主目录，使用当前目录下的resources
 		return "resources"
 	}
 	return filepath.Join(homeDir, ".lang-cli", "resources")
+}
+
+func getUserDataBaseDir() string {
+	if isTestEnvironment() {
+		return filepath.Join("resources", "user-data")
+	}
+
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return filepath.Join("resources", "user-data")
+	}
+	return filepath.Join(homeDir, ".lang-cli", "user-data")
 }
 
 // isTestEnvironment 检查是否在测试环境中
@@ -69,50 +88,61 @@ func isTestEnvironment() bool {
 // GetResourceFiles 获取指定类型的资源文件列表
 func GetResourceFiles(resourceType string) ([]string, error) {
 	currentLanguage := config.AppConfig.CurrentLanguage
-	resourcePath := filepath.Join(getResourceBaseDir(), currentLanguage, resourceType)
+	baseDir := filepath.Join(getResourceBaseDir(), currentLanguage, resourceType)
+	userDir := filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType)
 
-	// 检查目录是否存在
-	if _, err := os.Stat(resourcePath); os.IsNotExist(err) {
-		// 创建目录
-		if err := os.MkdirAll(resourcePath, 0755); err != nil {
-			return nil, fmt.Errorf("创建目录失败: %w", err)
+	if err := os.MkdirAll(baseDir, 0755); err != nil {
+		return nil, fmt.Errorf("创建基础资源目录失败: %w", err)
+	}
+	if err := os.MkdirAll(userDir, 0755); err != nil {
+		return nil, fmt.Errorf("创建用户资源目录失败: %w", err)
+	}
+
+	fileSet := make(map[string]struct{})
+
+	addFiles := func(dir string) error {
+		entries, err := os.ReadDir(dir)
+		if err != nil {
+			return err
 		}
+		for _, entry := range entries {
+			if entry.IsDir() {
+				continue
+			}
+			name := entry.Name()
+			if !strings.HasSuffix(name, ".txt") {
+				continue
+			}
+			trimmed := strings.TrimSuffix(name, ".txt")
+			fileSet[trimmed] = struct{}{}
+		}
+		return nil
 	}
 
-	// 读取目录中的文件
-	files, err := os.ReadDir(resourcePath)
-	if err != nil {
-		return nil, fmt.Errorf("读取目录失败: %w", err)
+	if err := addFiles(baseDir); err != nil {
+		return nil, fmt.Errorf("读取基础资源目录失败: %w", err)
+	}
+	if err := addFiles(userDir); err != nil {
+		return nil, fmt.Errorf("读取用户资源目录失败: %w", err)
 	}
 
-	// 提取文件名（去掉.txt后缀）
 	var fileNames []string
-	for _, file := range files {
-		if !file.IsDir() && strings.HasSuffix(file.Name(), ".txt") {
-			fileName := strings.TrimSuffix(file.Name(), ".txt")
-			fileNames = append(fileNames, fileName)
-		}
+	for name := range fileSet {
+		fileNames = append(fileNames, name)
 	}
+
+	sort.Strings(fileNames)
 
 	return fileNames, nil
 }
 
 // ReadResourceFile 读取资源文件内容
 func ReadResourceFile(resourceType string, fileName string) ([]string, error) {
-	filePath := GetResourcePath(resourceType, fileName)
-
-	// 检查文件是否存在
-	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		// 创建空文件
-		file, err := os.Create(filePath)
-		if err != nil {
-			return nil, fmt.Errorf("创建文件失败: %w", err)
-		}
-		defer file.Close()
-		return []string{}, nil
+	filePath, err := resolveReadableResourcePath(resourceType, fileName)
+	if err != nil {
+		return nil, err
 	}
 
-	// 读取文件内容
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, fmt.Errorf("打开文件失败: %w", err)
@@ -144,6 +174,72 @@ func ReadResourceFile(resourceType string, fileName string) ([]string, error) {
 	return lines, nil
 }
 
+// WriteResourceFile 将内容写入资源文件（覆盖写入）
+func WriteResourceFile(resourceType string, fileName string, lines []string) error {
+	filePath := getWritableResourcePath(resourceType, fileName)
+
+	if err := os.MkdirAll(filepath.Dir(filePath), 0755); err != nil {
+		return fmt.Errorf("创建资源目录失败: %w", err)
+	}
+
+	file, err := os.Create(filePath)
+	if err != nil {
+		return fmt.Errorf("打开资源文件失败: %w", err)
+	}
+	defer file.Close()
+
+	writer := bufio.NewWriter(file)
+	for _, line := range lines {
+		if _, err := writer.WriteString(line + "\n"); err != nil {
+			return fmt.Errorf("写入资源文件失败: %w", err)
+		}
+	}
+
+	if err := writer.Flush(); err != nil {
+		return fmt.Errorf("刷新资源文件失败: %w", err)
+	}
+
+	return nil
+}
+
+func resolveReadableResourcePath(resourceType, fileName string) (string, error) {
+	currentLanguage := config.AppConfig.CurrentLanguage
+	if !strings.HasSuffix(fileName, ".txt") {
+		fileName = fileName + ".txt"
+	}
+
+	userPath := filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType, fileName)
+	if _, err := os.Stat(userPath); err == nil {
+		return userPath, nil
+	}
+
+	basePath := filepath.Join(getResourceBaseDir(), currentLanguage, resourceType, fileName)
+	if _, err := os.Stat(basePath); err == nil {
+		return basePath, nil
+	}
+
+	if err := os.MkdirAll(filepath.Dir(userPath), 0755); err != nil {
+		return "", fmt.Errorf("创建用户资源目录失败: %w", err)
+	}
+
+	file, err := os.Create(userPath)
+	if err != nil {
+		return "", fmt.Errorf("创建资源文件失败: %w", err)
+	}
+	file.Close()
+
+	return userPath, nil
+}
+
+func getWritableResourcePath(resourceType, fileName string) string {
+	currentLanguage := config.AppConfig.CurrentLanguage
+	if !strings.HasSuffix(fileName, ".txt") {
+		fileName = fileName + ".txt"
+	}
+
+	return filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType, fileName)
+}
+
 // parseNewlineFormat 解析换行符分隔格式的资源文件
 // 格式：原文\n翻译\n\n（空行分隔不同的条目）
 func parseNewlineFormat(file *os.File) ([]string, error) {
@@ -151,12 +247,12 @@ func parseNewlineFormat(file *os.File) ([]string, error) {
 	var currentOriginal string
 	var currentTranslation string
 	var lineCount int
-	
+
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 		lineCount++
-		
+
 		if line == "" {
 			// 遇到空行，如果有当前条目，则保存
 			if currentOriginal != "" {
@@ -182,7 +278,7 @@ func parseNewlineFormat(file *os.File) ([]string, error) {
 			return nil, fmt.Errorf("格式不符合换行符分隔规则")
 		}
 	}
-	
+
 	// 处理文件末尾的条目
 	if currentOriginal != "" {
 		if currentTranslation != "" {
@@ -191,16 +287,16 @@ func parseNewlineFormat(file *os.File) ([]string, error) {
 			lines = append(lines, currentOriginal)
 		}
 	}
-	
+
 	if err := scanner.Err(); err != nil {
 		return nil, err
 	}
-	
+
 	// 如果没有解析到任何内容，或者格式不符合要求，返回错误
 	if len(lines) == 0 {
 		return nil, fmt.Errorf("没有找到符合换行符分隔格式的内容")
 	}
-	
+
 	return lines, nil
 }
 
@@ -214,24 +310,24 @@ func ParseLine(line string) (string, string) {
 			return strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])
 		}
 	}
-	
+
 	// 然后检查制表符分隔符
 	// 第一个制表符之前的文本作为原文，之后的作为翻译
 	tabIndex := strings.Index(line, "\t")
 	if tabIndex > 0 {
 		return strings.TrimSpace(line[:tabIndex]), strings.TrimSpace(line[tabIndex+1:])
 	}
-	
+
 	// 然后检查空格分隔符
 	// 第一个空格之前的文本作为原文，之后的作为翻译
 	spaceIndex := strings.Index(line, " ")
 	if spaceIndex > 0 {
 		return strings.TrimSpace(line[:spaceIndex]), strings.TrimSpace(line[spaceIndex+1:])
 	}
-	
+
 	// 定义其他分隔符优先级列表
 	separators := []string{"/", ":", "："}
-	
+
 	// 按优先级尝试其他分隔符
 	for _, sep := range separators {
 		if strings.Contains(line, sep) {
@@ -241,7 +337,7 @@ func ParseLine(line string) (string, string) {
 			}
 		}
 	}
-	
+
 	// 如果没有找到任何分隔符，整行作为原文，翻译为空
 	return line, ""
 }

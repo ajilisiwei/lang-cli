@@ -84,6 +84,15 @@ func (m LanguageMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.quitting = true
 			return m, tea.Quit
 
+		case "esc":
+			mainMenu := NewMainMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := mainMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return mainMenu, nil
+
 		case "enter":
 			switch i := m.list.SelectedItem().(type) {
 			case MenuItem:

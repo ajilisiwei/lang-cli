@@ -79,7 +79,7 @@ appetite / ‘æpitait / n.食欲，胃口；欲望
 appliance / ə’plaiəns / n.用具，器具，器械 
 applicable / ‘æplikəbl / a.能应用的；适当的 
 application / æpli’keiʃən / n.请求，申请；施用 
-appɔint / ə’pɔint / vt.任命，委任；约定 
+appoint / ə’pɔint / vt.任命，委任；约定 
 appreciate / ə’pri:ʃieit / vt.欣赏；领会；感谢 
 approval / ə’pru:vəl / n.赞成，同意；批准  
 approve / ə’pru:v / vt.赞成，称许；批准 
@@ -2264,9 +2264,9 @@ pocket / ‘pɔkit / n.衣袋 n.袖珍的
 poem / ‘pəuim / n.诗，韵文，诗体文 
 poet / pəuit / n.诗人 
 poetry / ‘pəuitri / n.诗，诗歌，诗作 
-pɔint / pɔint / n.点；要点；细目；分 
-pɔison / ‘pɔizn / n.毒，毒药 vt.毒害  
-pɔisonous / ‘pɔiznəs / a.有毒的，有害的  
+point / pɔint / n.点；要点；细目；分 
+poison / ‘pɔizn / n.毒，毒药 vt.毒害  
+poisonous / ‘pɔiznəs / a.有毒的，有害的  
 pole / pəul / n.杆，柱 
 pole / pəul / n.极(点)，磁极，电极  
 police / pə’li:s / n.警察；警察当局 
@@ -2793,7 +2793,7 @@ spill / spil / vt.使溢出 vi.溢出
 spin / spin / vt.纺；使旋转 n.旋转 
 spite / spait / n. 恶意,怨恨,不顾 vt. 刁难,欺侮  
 split / split / vt.劈开 vi.被劈开 
-spɔil / spɔil / vt.损坏，糟蹋；宠坏 
+spoil / spɔil / vt.损坏，糟蹋；宠坏 
 sponsor / ‘spɔnsə/ n.发起者 vt.发起  
 sportsman / ‘spɔ:tsmən / n.运动员  
 spray / sprei / n.浪花；喷雾 vt.喷 

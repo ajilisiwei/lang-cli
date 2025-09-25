@@ -93,6 +93,15 @@ func (m SettingMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.quitting = true
 			return m, tea.Quit
 
+		case "esc":
+			mainMenu := NewMainMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := mainMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return mainMenu, nil
+
 		case "enter":
 			switch i := m.list.SelectedItem().(type) {
 			case SettingMenuItem:
@@ -230,6 +239,15 @@ func (m MatchModeMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.quitting = true
 			return m, tea.Quit
 
+		case "esc":
+			settingMenu := NewSettingMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := settingMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return settingMenu, nil
+
 		case "enter":
 			switch i := m.list.SelectedItem().(type) {
 			case MatchModeMenuItem:
@@ -294,9 +312,9 @@ type OrderMenuItem struct {
 // 实现list.Item接口
 func (i OrderMenuItem) Title() string {
 	title := i.title
-		if i.isCurrent {
-			title = "✔ " + title
-		}
+	if i.isCurrent {
+		title = "✔ " + title
+	}
 	return title
 }
 func (i OrderMenuItem) Description() string { return i.description }
@@ -359,6 +377,15 @@ func (m OrderMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			m.quitting = true
 			return m, tea.Quit
+
+		case "esc":
+			settingMenu := NewSettingMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := settingMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return settingMenu, nil
 
 		case "enter":
 			switch i := m.list.SelectedItem().(type) {
@@ -487,6 +514,15 @@ func (m KeyboardSoundMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.quitting = true
 			return m, tea.Quit
 
+		case "esc":
+			settingMenu := NewSettingMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := settingMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return settingMenu, nil
+
 		case "enter":
 			switch i := m.list.SelectedItem().(type) {
 			case KeyboardSoundMenuItem:
@@ -613,6 +649,15 @@ func (m ShowTranslationMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			m.quitting = true
 			return m, tea.Quit
+
+		case "esc":
+			settingMenu := NewSettingMenu()
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := settingMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return settingMenu, nil
 
 		case "enter":
 			switch i := m.list.SelectedItem().(type) {

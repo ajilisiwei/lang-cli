@@ -7,14 +7,61 @@ import (
 	"strings"
 	"time"
 
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/bubbles/progress"
 	"github.com/charmbracelet/bubbles/textinput"
+	tea "github.com/charmbracelet/bubbletea"
 
+	"github.com/daiweiwei/lang-cli/internal/bookmark"
 	"github.com/daiweiwei/lang-cli/internal/config"
 	"github.com/daiweiwei/lang-cli/internal/practice"
 	"github.com/daiweiwei/lang-cli/internal/sound"
 )
+
+type commandOption struct {
+	name        string
+	description string
+}
+
+var baseCommandOptions = []commandOption{
+	{name: "exit", description: "退出当前练习会话"},
+	{name: "help", description: "显示当前练习会话的帮助信息"},
+	{name: "mark", description: "标记当前内容，下次练习跳过"},
+	{name: "unmark", description: "取消标记当前内容"},
+	{name: "favorite", description: "收藏当前内容，可在收藏列表中查看"},
+	{name: "unfavorite", description: "取消收藏当前内容"},
+}
+
+func cloneCommandOptions(options []commandOption) []commandOption {
+	cloned := make([]commandOption, len(options))
+	copy(cloned, options)
+	return cloned
+}
+
+func filterCommandOptions(options []commandOption, query string) []commandOption {
+	trimmed := strings.TrimSpace(strings.ToLower(query))
+	if trimmed == "" {
+		return cloneCommandOptions(options)
+	}
+
+	filtered := make([]commandOption, 0, len(options))
+	for _, option := range options {
+		if strings.HasPrefix(option.name, trimmed) {
+			filtered = append(filtered, option)
+		}
+	}
+	return filtered
+}
+
+func sessionCommandOptions(resourceType string) []commandOption {
+	options := make([]commandOption, 0, len(baseCommandOptions))
+	for _, option := range baseCommandOptions {
+		if !bookmark.SupportsMark(resourceType) && (option.name == "mark" || option.name == "unmark") {
+			continue
+		}
+		options = append(options, option)
+	}
+	return options
+}
 
 // PracticeSession 练习会话模型
 type PracticeSession struct {
@@ -38,22 +85,42 @@ type PracticeSession struct {
 	wrongInput     string // 错误的输入内容
 	expectedText   string // 期望的正确文本
 	// v0.2 新增：随机顺序支持
-	practiceOrder []int // 练习顺序索引列表
+	practiceOrder  []int // 练习顺序索引列表
 	completedCount int   // 已完成的项目数量
+	// v0.5 新增：命令模式支持
+	commandOptions         []commandOption
+	filteredCommands       []commandOption
+	selectedCommandIndex   int
+	commandDropdownVisible bool
+	inCommandMode          bool
+	commandFeedback        string
+	commandFeedbackIsError bool
 }
 
 // 创建新的练习会话
 func NewPracticeSession(resourceType, fileName string) *PracticeSession {
-	// 读取资源文件
 	items, err := practice.ReadResourceFile(resourceType, fileName)
-	if err != nil || len(items) == 0 {
-		// 处理错误或空文件
-		items = []string{"没有可用的练习内容"}
+	if err != nil {
+		items = []string{}
+	}
+
+	normalizedItems := make([]string, 0, len(items))
+	for _, item := range items {
+		trimmed := strings.TrimSpace(item)
+		if trimmed != "" {
+			normalizedItems = append(normalizedItems, trimmed)
+		}
+	}
+
+	// 过滤已标记或收藏的内容（特殊列表除外）
+	if !bookmark.IsSpecialList(fileName) && len(normalizedItems) > 0 {
+		normalizedItems = filterExcludedItems(resourceType, normalizedItems)
 	}
 
 	// 创建文本输入
 	ti := textinput.New()
 	ti.Placeholder = "输入这里..."
+	ti.Prompt = ""
 	ti.Focus()
 	ti.Width = 40
 
@@ -61,17 +128,16 @@ func NewPracticeSession(resourceType, fileName string) *PracticeSession {
 	p := progress.New(progress.WithDefaultGradient())
 
 	// 初始化练习顺序
-	practiceOrder := make([]int, len(items))
+	practiceOrder := make([]int, len(normalizedItems))
 	for i := range practiceOrder {
 		practiceOrder[i] = i
 	}
 
-	// 根据配置决定是否打乱顺序
-	// 注意：文章练习始终使用顺序模式，不受全局配置影响
-	if resourceType != practice.Articles {
+	// 根据配置决定是否打乱顺序（文章类型始终顺序）
+	if len(practiceOrder) > 1 && resourceType != practice.Articles {
 		orderMode := config.AppConfig.NextOneOrder
 		if orderMode == "" {
-			orderMode = "random" // 默认随机
+			orderMode = "random"
 		}
 		if orderMode == "random" {
 			rand.Seed(time.Now().UnixNano())
@@ -81,18 +147,64 @@ func NewPracticeSession(resourceType, fileName string) *PracticeSession {
 		}
 	}
 
-	return &PracticeSession{
-		resourceType:  resourceType,
-		fileName:      fileName,
-		items:         items,
-		currentIndex:  0,
-		textInput:     ti,
-		progress:      p,
-		startTime:     time.Now(),
-		state:         "practicing",
-		practiceOrder: practiceOrder,
-		completedCount: 0,
+	sessionOptions := sessionCommandOptions(resourceType)
+
+	session := &PracticeSession{
+		resourceType:           resourceType,
+		fileName:               fileName,
+		items:                  normalizedItems,
+		currentIndex:           0,
+		textInput:              ti,
+		progress:               p,
+		startTime:              time.Now(),
+		state:                  "practicing",
+		practiceOrder:          practiceOrder,
+		completedCount:         0,
+		commandOptions:         sessionOptions,
+		filteredCommands:       cloneCommandOptions(sessionOptions),
+		selectedCommandIndex:   0,
+		commandDropdownVisible: false,
+		inCommandMode:          false,
 	}
+
+	if len(normalizedItems) == 0 {
+		session.state = "finished"
+		session.endTime = time.Now()
+		session.result = emptyListMessage(fileName)
+	}
+
+	return session
+}
+
+func filterExcludedItems(resourceType string, items []string) []string {
+	filtered := make([]string, 0, len(items))
+
+	markedSet := make(map[string]struct{})
+	if marked, err := bookmark.GetItems(resourceType, bookmark.MarkedList); err == nil {
+		for _, item := range marked {
+			markedSet[item] = struct{}{}
+		}
+	}
+
+	for _, item := range items {
+		trimmed := strings.TrimSpace(item)
+		if trimmed == "" {
+			continue
+		}
+		if _, ok := markedSet[trimmed]; ok {
+			continue
+		}
+		filtered = append(filtered, trimmed)
+	}
+
+	return filtered
+}
+
+func emptyListMessage(fileName string) string {
+	if bookmark.IsSpecialList(fileName) {
+		return fmt.Sprintf("当前\"%s\"列表为空。按 Enter 或 Esc 返回练习菜单。", fileName)
+	}
+	return "当前资源没有可练习内容，可能已经全部标记。按 Enter 或 Esc 返回练习菜单。"
 }
 
 // Init 初始化模型
@@ -101,26 +213,24 @@ func (m PracticeSession) Init() tea.Cmd {
 }
 
 // Update 更新模型
-func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
+func (m *PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch typedMsg := msg.(type) {
 	case tea.WindowSizeMsg:
-		m.width = msg.Width
-		m.height = msg.Height
-		m.progress.Width = msg.Width - 20
-		m.textInput.Width = msg.Width - 20
+		m.width = typedMsg.Width
+		m.height = typedMsg.Height
+		m.progress.Width = typedMsg.Width - 20
+		m.textInput.Width = typedMsg.Width - 20
 		return m, nil
 
 	case tea.KeyMsg:
-		switch msg.String() {
+		key := typedMsg.String()
+		m.playKeyboardSound(typedMsg)
+		switch key {
 		case "ctrl+c":
 			m.quitting = true
-			// 停止所有声音播放
 			sound.StopAllSounds()
 			return m, tea.Quit
-
 		case "esc":
-			// 无论在什么状态下，ESC键都应该退出练习并返回练习菜单
-			// 停止所有声音播放
 			sound.StopAllSounds()
 			practiceMenu := NewPracticeMenu()
 			if m.width > 0 && m.height > 4 {
@@ -128,11 +238,8 @@ func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return updatedModel, nil
 			}
 			return practiceMenu, nil
-
 		case "enter":
 			if m.state == "finished" {
-				// 返回练习菜单并传递窗口大小
-				// 停止所有声音播放
 				sound.StopAllSounds()
 				practiceMenu := NewPracticeMenu()
 				if m.width > 0 && m.height > 4 {
@@ -142,83 +249,367 @@ func (m PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return practiceMenu, nil
 			}
 
-			// 检查输入是否正确
-			userInput := m.textInput.Value()
-			// 如果用户输入包含翻译文本，只截取正文部分
-			if strings.Contains(userInput, " ->> ") {
-				parts := strings.Split(userInput, " ->> ")
-				if len(parts) > 0 {
-					userInput = strings.TrimSpace(parts[0])
-				}
+			trimmed := strings.TrimSpace(m.textInput.Value())
+			if strings.HasPrefix(trimmed, ">") {
+				return m.handleCommand(trimmed)
 			}
-			// 获取原始项目（包含翻译）用于提取期望输入
-			var originalItem string
-			if m.completedCount < len(m.practiceOrder) {
-				actualIndex := m.practiceOrder[m.completedCount]
-				if actualIndex < len(m.items) {
-					originalItem = m.items[actualIndex]
-				}
+			return m.handleAnswerSubmission()
+		case "tab":
+			if m.commandDropdownVisible && len(m.filteredCommands) > 0 {
+				m.applySelectedCommandSuggestion()
+				return m, nil
 			}
-			expectedInput := m.getExpectedInput(originalItem)
-
-			if m.isInputCorrect(userInput, expectedInput) {
-				// 输入正确
-				m.correct++
-				m.lastInputWrong = false
-				m.wrongInput = ""
-				m.expectedText = ""
-
-				// 清空输入
-				m.textInput.SetValue("")
-
-				// 移动到下一项
-				m.completedCount++
-				if m.completedCount >= len(m.items) {
-					// 练习结束
-					m.state = "finished"
-					m.endTime = time.Now()
-					m.result = m.calculateResult()
-					// 停止所有声音播放
-					sound.StopAllSounds()
-				}
-			} else {
-				// 输入错误
-				m.incorrect++
-				m.lastInputWrong = true
-				m.wrongInput = userInput
-				m.expectedText = expectedInput
-
-				// 清空输入，让用户重新输入
-				m.textInput.SetValue("")
-			}
-
-			return m, nil
 		}
 
-		// 如果练习已结束，不处理其他按键
-		if m.state == "finished" {
-			return m, nil
+		if m.commandDropdownVisible && len(m.filteredCommands) > 0 {
+			switch key {
+			case "up":
+				m.moveCommandSelection(-1)
+				m.applySelectedCommandSuggestion()
+				return m, nil
+			case "down":
+				m.moveCommandSelection(1)
+				m.applySelectedCommandSuggestion()
+				return m, nil
+			}
 		}
 	}
 
-	// 处理文本输入
+	if m.state == "finished" {
+		return m, nil
+	}
+
 	var cmd tea.Cmd
-	oldValue := m.textInput.Value()
 	m.textInput, cmd = m.textInput.Update(msg)
-	newValue := m.textInput.Value()
-	
-	// v0.3 新增：如果输入内容发生变化，播放键盘声音
-	if len(newValue) != len(oldValue) {
-		if len(newValue) > len(oldValue) {
-			// 用户输入了新字符
-			if len(newValue) > 0 {
-				lastChar := rune(newValue[len(newValue)-1])
-				sound.PlayTypingSound(lastChar)
-			}
+	m.updateCommandDropdown()
+
+	return m, cmd
+}
+
+func (m *PracticeSession) handleAnswerSubmission() (tea.Model, tea.Cmd) {
+	m.setCommandFeedback("", false)
+	value := m.textInput.Value()
+	userInput := strings.TrimSpace(value)
+	if strings.Contains(userInput, " ->> ") {
+		parts := strings.Split(userInput, " ->> ")
+		if len(parts) > 0 {
+			userInput = strings.TrimSpace(parts[0])
 		}
 	}
-	
-	return m, cmd
+
+	originalItem := m.getCurrentRawItem()
+	expectedInput := m.getExpectedInput(originalItem)
+
+	if m.isInputCorrect(userInput, expectedInput) {
+		m.correct++
+		m.clearErrorState()
+		m.textInput.SetValue("")
+		m.updateCommandDropdown()
+		m.advanceToNextItem()
+	} else {
+		m.incorrect++
+		m.lastInputWrong = true
+		m.wrongInput = userInput
+		m.expectedText = expectedInput
+		m.textInput.SetValue("")
+		m.updateCommandDropdown()
+	}
+
+	return m, nil
+}
+
+func (m *PracticeSession) handleCommand(raw string) (tea.Model, tea.Cmd) {
+	defer m.resetCommandInput()
+
+	commandText := strings.TrimSpace(strings.TrimPrefix(raw, ">"))
+	if commandText == "" {
+		m.setCommandFeedback("请输入命令。", true)
+		return m, nil
+	}
+
+	parts := strings.Fields(commandText)
+	if len(parts) == 0 {
+		m.setCommandFeedback("请输入命令。", true)
+		return m, nil
+	}
+
+	commandName := strings.ToLower(parts[0])
+
+	switch commandName {
+	case "exit":
+		sound.StopAllSounds()
+		practiceMenu := NewPracticeMenu()
+		if m.width > 0 && m.height > 4 {
+			updatedModel, _ := practiceMenu.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+			return updatedModel, nil
+		}
+		return practiceMenu, nil
+	case "help":
+		m.setCommandFeedback(m.renderCommandHelpDetail(), false)
+		return m, nil
+	case "mark":
+		return m.handleMarkCommand()
+	case "unmark":
+		return m.handleUnmarkCommand()
+	case "favorite":
+		return m.handleFavoriteCommand()
+	case "unfavorite":
+		return m.handleUnfavoriteCommand()
+	default:
+		m.setCommandFeedback(fmt.Sprintf("未知命令: %s", commandText), true)
+		return m, nil
+	}
+}
+
+func (m *PracticeSession) handleMarkCommand() (tea.Model, tea.Cmd) {
+	if !bookmark.SupportsMark(m.resourceType) {
+		m.setCommandFeedback("当前资源类型不支持标记功能。", true)
+		return m, nil
+	}
+
+	item := m.getCurrentRawItem()
+	if item == "" {
+		m.setCommandFeedback("没有可标记的内容。", true)
+		return m, nil
+	}
+
+	added, err := bookmark.Add(m.resourceType, bookmark.MarkedList, item)
+	if err != nil {
+		m.setCommandFeedback(fmt.Sprintf("标记失败: %v", err), true)
+		return m, nil
+	}
+	if !added {
+		m.setCommandFeedback("该内容已标记。", false)
+		return m, nil
+	}
+
+	m.setCommandFeedback("已标记当前内容，下次练习将跳过。", false)
+	m.clearErrorState()
+	m.advanceToNextItem()
+	return m, nil
+}
+
+func (m *PracticeSession) handleUnmarkCommand() (tea.Model, tea.Cmd) {
+	if !bookmark.SupportsMark(m.resourceType) {
+		m.setCommandFeedback("当前资源类型不支持取消标记。", true)
+		return m, nil
+	}
+
+	item := m.getCurrentRawItem()
+	if item == "" {
+		m.setCommandFeedback("没有可取消标记的内容。", true)
+		return m, nil
+	}
+
+	removed, err := bookmark.Remove(m.resourceType, bookmark.MarkedList, item)
+	if err != nil {
+		m.setCommandFeedback(fmt.Sprintf("取消标记失败: %v", err), true)
+		return m, nil
+	}
+	if !removed {
+		m.setCommandFeedback("当前内容未被标记。", false)
+		return m, nil
+	}
+
+	m.setCommandFeedback("已取消标记当前内容。", false)
+	m.clearErrorState()
+	if bookmark.IsSpecialList(m.fileName) {
+		m.removeCurrentItemFromSession()
+	} else {
+		m.advanceToNextItem()
+	}
+	return m, nil
+}
+
+func (m *PracticeSession) handleFavoriteCommand() (tea.Model, tea.Cmd) {
+	item := m.getCurrentRawItem()
+	if item == "" {
+		m.setCommandFeedback("没有可收藏的内容。", true)
+		return m, nil
+	}
+
+	added, err := bookmark.Add(m.resourceType, bookmark.FavoriteList, item)
+	if err != nil {
+		m.setCommandFeedback(fmt.Sprintf("收藏失败: %v", err), true)
+		return m, nil
+	}
+	if !added {
+		m.setCommandFeedback("该内容已在收藏列表中。", false)
+		return m, nil
+	}
+
+	m.setCommandFeedback("已收藏当前内容，可在收藏列表中查看。", false)
+	m.clearErrorState()
+	m.advanceToNextItem()
+	return m, nil
+}
+
+func (m *PracticeSession) handleUnfavoriteCommand() (tea.Model, tea.Cmd) {
+	item := m.getCurrentRawItem()
+	if item == "" {
+		m.setCommandFeedback("没有可取消收藏的内容。", true)
+		return m, nil
+	}
+
+	removed, err := bookmark.Remove(m.resourceType, bookmark.FavoriteList, item)
+	if err != nil {
+		m.setCommandFeedback(fmt.Sprintf("取消收藏失败: %v", err), true)
+		return m, nil
+	}
+	if !removed {
+		m.setCommandFeedback("当前内容未被收藏。", false)
+		return m, nil
+	}
+
+	m.setCommandFeedback("已取消收藏当前内容。", false)
+	m.clearErrorState()
+	if bookmark.IsSpecialList(m.fileName) {
+		m.removeCurrentItemFromSession()
+	} else {
+		m.advanceToNextItem()
+	}
+	return m, nil
+}
+
+func (m *PracticeSession) moveCommandSelection(delta int) {
+	if len(m.filteredCommands) == 0 {
+		m.selectedCommandIndex = 0
+		return
+	}
+
+	count := len(m.filteredCommands)
+	m.selectedCommandIndex = (m.selectedCommandIndex + delta) % count
+	if m.selectedCommandIndex < 0 {
+		m.selectedCommandIndex += count
+	}
+}
+
+func (m *PracticeSession) applySelectedCommandSuggestion() {
+	if len(m.filteredCommands) == 0 {
+		return
+	}
+
+	selected := m.filteredCommands[m.selectedCommandIndex]
+	m.textInput.SetValue("> " + selected.name)
+	m.textInput.CursorEnd()
+	m.updateCommandDropdown()
+}
+
+func (m *PracticeSession) updateCommandDropdown() {
+	input := m.textInput.Value()
+	trimmedLeading := strings.TrimLeft(input, " ")
+
+	m.inCommandMode = strings.HasPrefix(strings.TrimSpace(input), ">")
+
+	if !strings.HasPrefix(trimmedLeading, ">") {
+		m.commandDropdownVisible = false
+		m.filteredCommands = cloneCommandOptions(m.commandOptions)
+		m.selectedCommandIndex = 0
+		return
+	}
+
+	body := strings.TrimSpace(strings.TrimPrefix(trimmedLeading, ">"))
+	shouldShowDropdown := strings.TrimSpace(trimmedLeading) == ">" || strings.HasPrefix(trimmedLeading, "> ")
+	m.filteredCommands = filterCommandOptions(m.commandOptions, body)
+	if len(m.filteredCommands) == 0 {
+		m.commandDropdownVisible = false
+		m.selectedCommandIndex = 0
+		return
+	}
+
+	if m.selectedCommandIndex >= len(m.filteredCommands) {
+		m.selectedCommandIndex = 0
+	}
+
+	m.commandDropdownVisible = shouldShowDropdown
+}
+
+func (m *PracticeSession) resetCommandInput() {
+	m.textInput.SetValue("")
+	m.textInput.CursorEnd()
+	m.commandDropdownVisible = false
+	m.filteredCommands = cloneCommandOptions(m.commandOptions)
+	m.selectedCommandIndex = 0
+	m.inCommandMode = false
+	m.updateCommandDropdown()
+}
+
+func (m *PracticeSession) setCommandFeedback(message string, isError bool) {
+	clean := strings.TrimSpace(message)
+	m.commandFeedback = clean
+	m.commandFeedbackIsError = isError && clean != ""
+}
+
+func (m *PracticeSession) playKeyboardSound(msg tea.KeyMsg) {
+	if m.state != "practicing" {
+		return
+	}
+	if !config.AppConfig.InputKeyboardSound {
+		return
+	}
+
+	char := rune(0)
+	if len(msg.Runes) > 0 {
+		char = msg.Runes[0]
+	}
+	sound.PlayTypingSound(char)
+}
+
+func (m *PracticeSession) clearErrorState() {
+	m.lastInputWrong = false
+	m.wrongInput = ""
+	m.expectedText = ""
+}
+
+func (m *PracticeSession) removeCurrentItemFromSession() {
+	if len(m.practiceOrder) == 0 {
+		m.finishSession()
+		return
+	}
+
+	if m.completedCount >= len(m.practiceOrder) {
+		m.finishSession()
+		return
+	}
+
+	actualIndex := m.practiceOrder[m.completedCount]
+	if actualIndex >= 0 && actualIndex < len(m.items) {
+		m.items = append(m.items[:actualIndex], m.items[actualIndex+1:]...)
+	}
+
+	m.practiceOrder = append(m.practiceOrder[:m.completedCount], m.practiceOrder[m.completedCount+1:]...)
+	for i := range m.practiceOrder {
+		if m.practiceOrder[i] > actualIndex {
+			m.practiceOrder[i]--
+		}
+	}
+
+	if m.completedCount >= len(m.practiceOrder) {
+		m.finishSession()
+	}
+}
+
+func (m *PracticeSession) advanceToNextItem() {
+	if len(m.practiceOrder) == 0 {
+		m.finishSession()
+		return
+	}
+
+	m.completedCount++
+	if m.completedCount >= len(m.practiceOrder) {
+		m.finishSession()
+	}
+}
+
+func (m *PracticeSession) finishSession() {
+	if m.state == "finished" {
+		return
+	}
+
+	m.state = "finished"
+	m.endTime = time.Now()
+	m.result = m.calculateResult()
+	sound.StopAllSounds()
 }
 
 // View 渲染视图
@@ -234,33 +625,68 @@ func (m PracticeSession) View() string {
 	s.WriteString(RenderTitle(title) + "\n\n")
 
 	if m.state == "practicing" {
-		// 显示当前进度
-		progressValue := float64(m.completedCount) / float64(len(m.items))
-		progressText := fmt.Sprintf("进度: %d/%d", m.completedCount+1, len(m.items))
+		total := len(m.practiceOrder)
+		currentPosition := 0
+		if total > 0 {
+			currentPosition = m.completedCount + 1
+			if currentPosition > total {
+				currentPosition = total
+			}
+		}
+
+		progressValue := 1.0
+		if total > 0 {
+			progressValue = float64(m.completedCount) / float64(total)
+		}
+
+		progressText := fmt.Sprintf("进度: %d/%d", currentPosition, total)
 		s.WriteString(RenderText(progressText) + "\n")
 		s.WriteString(m.progress.ViewAs(progressValue) + "\n\n")
 
-		// 显示当前项目
 		currentItem := m.getCurrentItem()
-		s.WriteString(RenderHighlight("当前项目:") + "\n")
-		wrappedText := m.wrapText(currentItem, m.width-4) // 减去边距
-		s.WriteString(RenderText(wrappedText) + "\n\n")
-
-		// 显示输入框
-		s.WriteString(RenderHighlight("请输入:") + "\n")
-		s.WriteString(m.textInput.View() + "\n\n")
-
-		// 显示错误信息（如果有）
-		if m.lastInputWrong {
-			s.WriteString(RenderError("❌ 输入错误！") + "\n")
-			s.WriteString(m.renderWordLevelError() + "\n\n")
+		if currentItem != "" {
+			s.WriteString(RenderHighlight("当前项目:") + "\n")
+			wrappedText := m.wrapText(currentItem, m.width-4)
+			s.WriteString(RenderText(wrappedText) + "\n\n")
+		} else {
+			s.WriteString(RenderText("暂无可练习内容") + "\n\n")
 		}
 
-		// 显示提示
-		s.WriteString(RenderText("按 Enter 提交，按 Esc 退出练习") + "\n")
+		s.WriteString(RenderHighlight("请输入:") + "\n")
+		s.WriteString(m.textInput.View() + "\n")
+		dropdown := m.renderCommandDropdown()
+		if dropdown != "" {
+			s.WriteString(dropdown + "\n\n")
+		} else {
+			s.WriteString("\n")
+		}
+
+		if m.lastInputWrong {
+			s.WriteString(RenderError("❌ 输入错误！") + "\n")
+			s.WriteString(m.renderWordLevelError() + "\n")
+		}
+
+		if m.commandFeedback != "" {
+			if m.commandFeedbackIsError {
+				s.WriteString(RenderError(m.commandFeedback) + "\n\n")
+			} else {
+				s.WriteString(RenderSuccess(m.commandFeedback) + "\n\n")
+			}
+		}
+
+		s.WriteString(RenderText(`按 Enter 提交，按 Esc 退出练习，输入"> help"获取命令说明`) + "\n\n")
+		if m.inCommandMode {
+			helpSummary := m.renderCommandHelpSummary()
+			if helpSummary != "" {
+				s.WriteString(helpSummary + "\n")
+			}
+		}
 	} else if m.state == "finished" {
-		// 显示练习结果
-		s.WriteString(RenderSuccess("练习完成！") + "\n\n")
+		if len(m.practiceOrder) == 0 && len(m.items) == 0 {
+			s.WriteString(RenderHighlight("暂无练习内容") + "\n\n")
+		} else {
+			s.WriteString(RenderSuccess("练习完成！") + "\n\n")
+		}
 		s.WriteString(RenderText(m.result) + "\n\n")
 		s.WriteString(RenderText("按 Enter 或 Esc 返回练习菜单") + "\n")
 	}
@@ -268,75 +694,91 @@ func (m PracticeSession) View() string {
 	return s.String()
 }
 
+func (m PracticeSession) renderCommandDropdown() string {
+	if !m.commandDropdownVisible || len(m.filteredCommands) == 0 {
+		return ""
+	}
+
+	var builder strings.Builder
+	builder.WriteString(RenderHighlight("命令建议:") + "\n")
+	for idx, option := range m.filteredCommands {
+		line := fmt.Sprintf("  %s - %s", option.name, option.description)
+		if idx == m.selectedCommandIndex {
+			builder.WriteString(RenderHighlight("➤ " + option.name + " - " + option.description))
+		} else {
+			builder.WriteString(RenderText(line))
+		}
+		builder.WriteString("\n")
+	}
+
+	return strings.TrimRight(builder.String(), "\n")
+}
+
+func (m PracticeSession) renderCommandHelpSummary() string {
+	if len(m.commandOptions) == 0 {
+		return ""
+	}
+
+	var builder strings.Builder
+	builder.WriteString(RenderHighlight("命令说明:") + "\n")
+	for _, option := range m.commandOptions {
+		line := fmt.Sprintf("> %s - %s", option.name, option.description)
+		builder.WriteString(RenderText(line) + "\n")
+	}
+
+	return strings.TrimRight(builder.String(), "\n")
+}
+
+func (m PracticeSession) renderCommandHelpDetail() string {
+	if len(m.commandOptions) == 0 {
+		return "暂无可用命令"
+	}
+
+	var builder strings.Builder
+	builder.WriteString("可用命令:\n")
+	for _, option := range m.commandOptions {
+		builder.WriteString(fmt.Sprintf("  > %s - %s\n", option.name, option.description))
+	}
+	builder.WriteString(`提示：输入"> "后可使用↑↓选择命令，Tab 自动填充。`)
+	return builder.String()
+}
+
 // 获取当前项目
 func (m PracticeSession) getCurrentItem() string {
-	if m.completedCount < len(m.practiceOrder) {
-		actualIndex := m.practiceOrder[m.completedCount]
-		if actualIndex < len(m.items) {
-			item := m.items[actualIndex]
-			// 根据资源类型和配置决定是否显示翻译
-			if m.resourceType == practice.Words || m.resourceType == practice.Phrases {
-				// 检查是否显示翻译
-				showTranslation := m.getShowTranslationConfig()
-				if showTranslation {
-					// 只对 " ->> " 分隔符进行特殊处理，移除分隔符
-					if strings.Contains(item, " ->> ") {
-						word, translation := practice.ParseLine(item)
-						if word != "" && translation != "" {
-							return word + "\n" + translation
-						}
-					} else {
-						// 其他格式保持原样显示
-						return item
-					}
-				} else {
-					// 不显示翻译时，只显示正文部分
-					word, _ := practice.ParseLine(item)
-					return word
-				}
-			} else if m.resourceType == practice.Sentences {
-				// 句子类型根据配置决定是否显示翻译
-				showTranslation := m.getShowTranslationConfig()
-				if showTranslation {
-					// 只对 " ->> " 分隔符进行特殊处理，移除分隔符
-					if strings.Contains(item, " ->> ") {
-						sentence, translation := practice.ParseLine(item)
-						if sentence != "" && translation != "" {
-							return sentence + "\n" + translation
-						}
-					} else {
-						// 其他格式保持原样显示
-						return item
-					}
-				} else {
-					// 不显示翻译时，只显示正文部分
-					sentence, _ := practice.ParseLine(item)
-					return sentence
-				}
-			} else if m.resourceType == practice.Articles {
-				// 文章类型根据配置决定是否显示翻译
-				showTranslation := m.getShowTranslationConfig()
-				if showTranslation {
-					// 只对 " ->> " 分隔符进行特殊处理，移除分隔符
-					if strings.Contains(item, " ->> ") {
-						article, translation := practice.ParseLine(item)
-						if article != "" && translation != "" {
-							return article + "\n" + translation
-						}
-					} else {
-						// 其他格式保持原样显示
-						return item
-					}
-				} else {
-					// 不显示翻译时，只显示正文部分
-					article, _ := practice.ParseLine(item)
-					return article
-				}
-			}
-			return item
-		}
+	item := m.getCurrentRawItem()
+	if item == "" {
+		return ""
 	}
-	return ""
+
+	primary, translation := practice.ParseLine(item)
+	primary = strings.TrimSpace(primary)
+	translation = strings.TrimSpace(translation)
+
+	if !m.getShowTranslationConfig() || translation == "" {
+		if primary != "" {
+			return primary
+		}
+		return item
+	}
+
+	if primary == "" {
+		primary = item
+	}
+
+	return primary + "\n" + translation
+}
+
+func (m PracticeSession) getCurrentRawItem() string {
+	if m.completedCount < 0 || m.completedCount >= len(m.practiceOrder) {
+		return ""
+	}
+
+	actualIndex := m.practiceOrder[m.completedCount]
+	if actualIndex < 0 || actualIndex >= len(m.items) {
+		return ""
+	}
+
+	return m.items[actualIndex]
 }
 
 // 获取翻译显示配置
@@ -394,17 +836,17 @@ func (m PracticeSession) normalizeForWordMatch(text string) string {
 func (m PracticeSession) renderWordLevelError() string {
 	userWords := strings.Fields(m.wrongInput)
 	expectedWords := strings.Fields(m.expectedText)
-	
+
 	var result strings.Builder
 	result.WriteString(RenderError("你的输入: "))
-	
+
 	// 构建用户输入的高亮文本
 	var userInputParts []string
 	maxLen := len(userWords)
 	if len(expectedWords) > maxLen {
 		maxLen = len(expectedWords)
 	}
-	
+
 	for i := 0; i < maxLen; i++ {
 		if i < len(userWords) {
 			userWord := userWords[i]
@@ -412,7 +854,7 @@ func (m PracticeSession) renderWordLevelError() string {
 			if i < len(expectedWords) {
 				expectedWord = expectedWords[i]
 			}
-			
+
 			// 如果单词不匹配，用红色高亮
 			if userWord != expectedWord {
 				userInputParts = append(userInputParts, RenderError(userWord))
@@ -421,19 +863,19 @@ func (m PracticeSession) renderWordLevelError() string {
 			}
 		}
 	}
-	
+
 	// 将用户输入拼接并换行
 	userInputText := strings.Join(userInputParts, " ")
 	wrappedUserInput := m.wrapText(userInputText, m.width-4) // 减去边距
 	result.WriteString(wrappedUserInput)
-	
+
 	result.WriteString("\n")
-	
+
 	// 正确答案也需要换行，只显示正文部分
 	correctAnswerText := "正确答案: " + m.expectedText
 	wrappedCorrectAnswer := m.wrapText(correctAnswerText, m.width-4) // 减去边距
 	result.WriteString(RenderSuccess(wrappedCorrectAnswer))
-	
+
 	return result.String()
 }
 
