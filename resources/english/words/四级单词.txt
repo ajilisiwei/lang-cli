@@ -109,7 +109,7 @@ assume / ə’sju:m / vt.假定；承担；呈现
 assure / ə’ʃuə/ vt.使确信；向…保证 
 astonish / əs’tɔniʃ/ vt.使惊讶，使吃惊  
 astronaut / ‘æstʃəunɔ:t / n.宇宙航行员，宇航员 
-ætlantic / ət’læntik / a.大西洋的 n.大西洋  
+atlantic / ət’læntik / a.大西洋的 n.大西洋  
 atom / ‘ætəm / n.原子；微粒；微量 
 atomic / ə’tɔmik / a.原子的；原子能的  
 attach / ə’tætʃ/ vt.缚，系，贴；附加  
@@ -714,7 +714,6 @@ custom / ‘kΛstəm / n.习惯，风俗；海关
 customer / ‘kΛstəmə/ n.顾客，主顾 
 cut / kΛt / vt.切，割，剪；减少  
 cycle / ‘saikl / n自行车，循环
-
 each / i:tʃ/ pron.各，各自 a.各  
 eager / ‘i:gə/ a.渴望的，热切的  
 eagle / ‘i:gl / n.鹰 
@@ -730,7 +729,7 @@ eastern / ‘i:stən / a.东方的；朝东的
 easy / ‘i:zi / a.容易的；安逸的  
 eat / i:t / vt.吃，喝 vi.吃饭  
 echo / ‘ekəu / n.回声，反响 vi.重复 
-econɔmic / i:kə’nɔmik / a.经济的，经济学的  
+economic / i:kə’nɔmik / a.经济的，经济学的  
 economical / i:kə’nɔmikəl / a.节约的；经济学的 
 economy / i(:)’kɔnəmi / n.经济；节约，节省  
 edge / edʒ/ n.边缘，边；刀口 
@@ -1523,8 +1522,8 @@ jealous / ‘dʒeləs / a.妒忌的；猜疑的
 jet / dʒet / n.喷气式飞机；喷嘴  
 jewel / ‘dʒu:əl / n.宝石；宝石饰物  
 job / dʒob / n.职业；工作；零活  
-jɔin / dʒɔin / vt.参加；连接  
-jɔint / dʒɔint / n.接头，接缝；关节  
+join / dʒɔin / vt.参加；连接  
+joint / dʒɔint / n.接头，接缝；关节  
 joke / dʒəuk / n.笑话 vi.说笑话  
 journal / ‘dʒə:nl / n.日报，杂志；日志  
 journey / ‘dʒə:ni / n.旅行，旅程 n.旅行  
@@ -1861,8 +1860,8 @@ moderate / ‘mɔdərit / a.温和的；有节制的
 modern / ‘mɔdən / a.现代的，近代的 
 modest / ‘mɔdist / a.有节制的；谦虚的  
 modify / ‘mɔdifai / vt.更改，修改；修饰 
-mɔist / mɔist / a.湿润的；多雨的  
-mɔisture / ‘mɔistʃə/ n.潮湿，湿气；温度 
+moist / mɔist / a.湿润的；多雨的  
+moisture / ‘mɔistʃə/ n.潮湿，湿气；温度 
 molecule / ‘mɔlikju:l / n.分子，克分子 
 moment / ‘məumənt / n.片刻，瞬间，时刻  
 Monday / ‘mΛndi / n.星期一  
@@ -1966,8 +1965,8 @@ no / nəu / ad.不；并不 a.没有
 noble / ‘nəubl / a.贵族的；高尚的  
 nobody / ‘nəubədi / pron.谁也不；无人  
 nod / nɔd / vt.点(头)；点头表示  
-nɔise / nɔiz / n.喧闹声；响声；噪声  
-nɔisy / ‘nɔizi / a.嘈杂的；喧闹的 
+noise / nɔiz / n.喧闹声；响声；噪声  
+noisy / ‘nɔizi / a.嘈杂的；喧闹的 
 none / nΛn / pron.没有人 ad.毫不  
 nonsense / ‘nɔnsəns / n.胡说，废话 
 noon / nu:n / n.正午，中午 
@@ -2031,7 +2030,7 @@ officer / ‘ɔfisə/ n.官员；干事；军官
 official / ə’fiʃəl / a.官员的；官方的 
 often / ‘ɔ:fn / ad.经常，常常 
 oh / əu / int.嗬，哦，唉呀 
-ɔil / ɔil / n.油；石油 vt.加油于  
+oil / ɔil / n.油；石油 vt.加油于  
 okay / ‘əu’kei / (缩作OK)a.&ad.对，好 
 old / əuld / a.老的；…岁的  
 omit / əu’mit / vt.省略，省去；遗漏 
@@ -2758,7 +2757,7 @@ slit / slit / n.裂缝 vt.切开，撕开
 slope / sləup / n.倾斜；斜面 vi.倾斜 
 smart / sma:t / a.巧妙的；洒脱的 
 soak / səuk / vt.浸，泡 vi.浸泡  
-sɔil / sɔil / vt.弄脏 vi.变脏  
+soil / sɔil / vt.弄脏 vi.变脏  
 solar / ‘səulə/ a.太阳的，日光的 
 sole / səul / n.脚底，鞋底，袜底 
 sole / səul / a.单独的，唯一的  
@@ -2955,7 +2954,7 @@ tissue / ‘tisju:/ n.薄绢；薄纸；组织
 toast / təust / n.烤面包 vt.烘，烤  
 toast / təust / n.祝酒；祝酒词 
 toe / təu / n.脚趾，足尖  
-tɔilet / ‘tɔilit / n.厕所，盥洗室，浴室  
+toilet / ‘tɔilit / n.厕所，盥洗室，浴室  
 tolerance / ‘tɔlərəns / n.忍受，容忍；公差 
 tolerate / ‘tɔləreit / vt.忍受，容忍，宽恕  
 tone / təun / n.音；腔调；声调 
