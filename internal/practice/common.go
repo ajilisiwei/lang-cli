@@ -74,6 +74,11 @@ func getUserDataBaseDir() string {
 	return filepath.Join(homeDir, ".lang-cli", "user-data")
 }
 
+// GetUserDataDir 返回用于存储用户练习数据的目录
+func GetUserDataDir() string {
+	return getUserDataBaseDir()
+}
+
 // isTestEnvironment 检查是否在测试环境中
 func isTestEnvironment() bool {
 	// 通过检查环境变量或者调用栈来判断是否在测试中

@@ -341,6 +341,12 @@ func NewOrderMenu() *OrderMenu {
 			description: "单词、短语、句子练习时资源的出现顺序是顺序的（不影响文章练习）",
 			isCurrent:   currentOrder == "sequential",
 		},
+		OrderMenuItem{
+			order:       "ebbinghaus",
+			title:       "艾宾浩斯遗忘曲线",
+			description: "按照艾宾浩斯遗忘曲线安排练习顺序（不影响文章练习）",
+			isCurrent:   currentOrder == "ebbinghaus",
+		},
 		MenuItem{
 			title:       "返回设置菜单",
 			description: "返回到设置菜单",

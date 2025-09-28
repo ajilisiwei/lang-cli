@@ -50,6 +50,11 @@ func NewMainMenu() *MainMenu {
 			action:      func() (tea.Model, error) { return NewSettingMenu(), nil },
 		},
 		MenuItem{
+			title:       "统计",
+			description: "查看每日练习统计与详情",
+			action:      func() (tea.Model, error) { return NewStatisticsMenu(), nil },
+		},
+		MenuItem{
 			title:       "退出",
 			description: "退出程序",
 			action:      func() (tea.Model, error) { return nil, fmt.Errorf("quit") },

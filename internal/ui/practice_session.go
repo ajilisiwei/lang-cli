@@ -15,6 +15,8 @@ import (
 	"github.com/daiweiwei/lang-cli/internal/config"
 	"github.com/daiweiwei/lang-cli/internal/practice"
 	"github.com/daiweiwei/lang-cli/internal/sound"
+	"github.com/daiweiwei/lang-cli/internal/srs"
+	"github.com/daiweiwei/lang-cli/internal/statistics"
 )
 
 type commandOption struct {
@@ -77,6 +79,7 @@ type PracticeSession struct {
 	endTime      time.Time       // 结束时间
 	correct      int             // 正确数量
 	incorrect    int             // 错误数量
+	orderMode    string          // 练习顺序模式
 	state        string          // 状态："practicing", "finished"
 	result       string          // 结果信息
 	quitting     bool
@@ -85,8 +88,12 @@ type PracticeSession struct {
 	wrongInput     string // 错误的输入内容
 	expectedText   string // 期望的正确文本
 	// v0.2 新增：随机顺序支持
-	practiceOrder  []int // 练习顺序索引列表
-	completedCount int   // 已完成的项目数量
+	practiceOrder    []int // 练习顺序索引列表
+	completedCount   int   // 已完成的项目数量
+	initialItemCount int   // 初始练习项目数量
+	srsEnabled       bool
+	srsSchedule      *srs.Schedule
+	statsLogged      bool
 	// v0.5 新增：命令模式支持
 	commandOptions         []commandOption
 	filteredCommands       []commandOption
@@ -133,17 +140,38 @@ func NewPracticeSession(resourceType, fileName string) *PracticeSession {
 		practiceOrder[i] = i
 	}
 
-	// 根据配置决定是否打乱顺序（文章类型始终顺序）
-	if len(practiceOrder) > 1 && resourceType != practice.Articles {
-		orderMode := config.AppConfig.NextOneOrder
-		if orderMode == "" {
-			orderMode = "random"
+	orderMode := strings.ToLower(config.AppConfig.NextOneOrder)
+	if orderMode == "" {
+		orderMode = "random"
+	}
+
+	var schedule *srs.Schedule
+	srsEnabled := false
+
+	if len(practiceOrder) > 0 && resourceType != practice.Articles && orderMode == "ebbinghaus" {
+		if sch, err := srs.Load(resourceType, fileName, normalizedItems); err == nil {
+			ordered := sch.Order(normalizedItems)
+			if len(ordered) == len(practiceOrder) {
+				practiceOrder = ordered
+				schedule = sch
+				srsEnabled = true
+			}
+		} else {
+			orderMode = "sequential"
 		}
-		if orderMode == "random" {
+	}
+
+	if !srsEnabled && len(practiceOrder) > 1 && resourceType != practice.Articles {
+		switch orderMode {
+		case "random":
 			rand.Seed(time.Now().UnixNano())
 			rand.Shuffle(len(practiceOrder), func(i, j int) {
 				practiceOrder[i], practiceOrder[j] = practiceOrder[j], practiceOrder[i]
 			})
+		case "sequential":
+			// already sequential
+		default:
+			orderMode = "sequential"
 		}
 	}
 
@@ -157,9 +185,13 @@ func NewPracticeSession(resourceType, fileName string) *PracticeSession {
 		textInput:              ti,
 		progress:               p,
 		startTime:              time.Now(),
+		orderMode:              orderMode,
 		state:                  "practicing",
 		practiceOrder:          practiceOrder,
 		completedCount:         0,
+		initialItemCount:       len(practiceOrder),
+		srsEnabled:             srsEnabled,
+		srsSchedule:            schedule,
 		commandOptions:         sessionOptions,
 		filteredCommands:       cloneCommandOptions(sessionOptions),
 		selectedCommandIndex:   0,
@@ -229,9 +261,11 @@ func (m *PracticeSession) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			m.quitting = true
 			sound.StopAllSounds()
+			m.logStatistics(false)
 			return m, tea.Quit
 		case "esc":
 			sound.StopAllSounds()
+			m.logStatistics(false)
 			practiceMenu := NewPracticeMenu()
 			if m.width > 0 && m.height > 4 {
 				updatedModel, _ := practiceMenu.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
@@ -300,7 +334,10 @@ func (m *PracticeSession) handleAnswerSubmission() (tea.Model, tea.Cmd) {
 	originalItem := m.getCurrentRawItem()
 	expectedInput := m.getExpectedInput(originalItem)
 
-	if m.isInputCorrect(userInput, expectedInput) {
+	isCorrect := m.isInputCorrect(userInput, expectedInput)
+	m.recordSpacedRepetition(originalItem, isCorrect)
+
+	if isCorrect {
 		m.correct++
 		m.clearErrorState()
 		m.textInput.SetValue("")
@@ -385,6 +422,7 @@ func (m *PracticeSession) handleMarkCommand() (tea.Model, tea.Cmd) {
 
 	m.setCommandFeedback("已标记当前内容，下次练习将跳过。", false)
 	m.clearErrorState()
+	m.removeItemFromSRS(item)
 	m.advanceToNextItem()
 	return m, nil
 }
@@ -413,8 +451,9 @@ func (m *PracticeSession) handleUnmarkCommand() (tea.Model, tea.Cmd) {
 
 	m.setCommandFeedback("已取消标记当前内容。", false)
 	m.clearErrorState()
+	m.removeItemFromSRS(item)
 	if bookmark.IsSpecialList(m.fileName) {
-		m.removeCurrentItemFromSession()
+		m.removeCurrentItemFromSession(item)
 	} else {
 		m.advanceToNextItem()
 	}
@@ -440,6 +479,7 @@ func (m *PracticeSession) handleFavoriteCommand() (tea.Model, tea.Cmd) {
 
 	m.setCommandFeedback("已收藏当前内容，可在收藏列表中查看。", false)
 	m.clearErrorState()
+	m.removeItemFromSRS(item)
 	m.advanceToNextItem()
 	return m, nil
 }
@@ -463,8 +503,9 @@ func (m *PracticeSession) handleUnfavoriteCommand() (tea.Model, tea.Cmd) {
 
 	m.setCommandFeedback("已取消收藏当前内容。", false)
 	m.clearErrorState()
+	m.removeItemFromSRS(item)
 	if bookmark.IsSpecialList(m.fileName) {
-		m.removeCurrentItemFromSession()
+		m.removeCurrentItemFromSession(item)
 	} else {
 		m.advanceToNextItem()
 	}
@@ -561,7 +602,21 @@ func (m *PracticeSession) clearErrorState() {
 	m.expectedText = ""
 }
 
-func (m *PracticeSession) removeCurrentItemFromSession() {
+func (m *PracticeSession) recordSpacedRepetition(item string, correct bool) {
+	if !m.srsEnabled || m.srsSchedule == nil || item == "" {
+		return
+	}
+	_ = m.srsSchedule.RecordResult(item, correct)
+}
+
+func (m *PracticeSession) removeItemFromSRS(item string) {
+	if !m.srsEnabled || m.srsSchedule == nil || item == "" {
+		return
+	}
+	_ = m.srsSchedule.RemoveItem(item)
+}
+
+func (m *PracticeSession) removeCurrentItemFromSession(item string) {
 	if len(m.practiceOrder) == 0 {
 		m.finishSession()
 		return
@@ -573,6 +628,9 @@ func (m *PracticeSession) removeCurrentItemFromSession() {
 	}
 
 	actualIndex := m.practiceOrder[m.completedCount]
+	if m.srsEnabled && item != "" {
+		_ = m.srsSchedule.RemoveItem(item)
+	}
 	if actualIndex >= 0 && actualIndex < len(m.items) {
 		m.items = append(m.items[:actualIndex], m.items[actualIndex+1:]...)
 	}
@@ -584,7 +642,7 @@ func (m *PracticeSession) removeCurrentItemFromSession() {
 		}
 	}
 
-	if m.completedCount >= len(m.practiceOrder) {
+	if len(m.practiceOrder) == 0 || m.completedCount >= len(m.practiceOrder) {
 		m.finishSession()
 	}
 }
@@ -610,6 +668,52 @@ func (m *PracticeSession) finishSession() {
 	m.endTime = time.Now()
 	m.result = m.calculateResult()
 	sound.StopAllSounds()
+	m.logStatistics(true)
+}
+
+func (m *PracticeSession) logStatistics(completed bool) {
+	if m.statsLogged {
+		return
+	}
+
+	total := m.correct + m.incorrect
+	if total == 0 && !completed {
+		return
+	}
+
+	duration := time.Since(m.startTime)
+	if !m.endTime.IsZero() {
+		duration = m.endTime.Sub(m.startTime)
+	}
+	if duration < 0 {
+		duration = 0
+	}
+
+	accuracy := 0.0
+	if total > 0 {
+		accuracy = float64(m.correct) / float64(total) * 100
+	}
+
+	record := statistics.SessionRecord{
+		Timestamp:       time.Now(),
+		ResourceType:    m.resourceType,
+		FileName:        m.fileName,
+		Total:           total,
+		Correct:         m.correct,
+		Incorrect:       m.incorrect,
+		Accuracy:        accuracy,
+		DurationSeconds: int64(duration.Seconds()),
+		OrderMode:       m.orderMode,
+		Completed:       completed,
+	}
+
+	if err := statistics.LogSession(record); err != nil {
+		// 统计记录失败时不阻断用户流程，仅在命令反馈中提示
+		m.commandFeedback = fmt.Sprintf("记录统计数据失败: %v", err)
+		m.commandFeedbackIsError = true
+	}
+
+	m.statsLogged = true
 }
 
 // View 渲染视图

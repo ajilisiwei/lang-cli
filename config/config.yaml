@@ -5,7 +5,7 @@ input_keyboard_sound: true
 languages:
     - english
     - japanese
-next_one_order: sequential
+next_one_order: ebbinghaus
 phrases: {}
 sentences: {}
 show_translation: true
