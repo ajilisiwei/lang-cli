@@ -1,4 +1,4 @@
-package langcli
+package mlltcli
 
 import (
 	"embed"
@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	appDirName      = ".lang-cli"
+	appDirName      = ".mllt-cli"
 	configFileName  = "config.yaml"
 	resourcesDir    = "resources"
 	assetsDir       = "assets"
@@ -135,7 +135,7 @@ func copyEmbeddedTree(root, dest string) error {
 }
 
 func isTestEnvironment() bool {
-	if os.Getenv("LANGCLI_TEST") == "1" {
+	if os.Getenv("MLLTCLI_TEST") == "1" {
 		return true
 	}
 	exeName := filepath.Base(os.Args[0])

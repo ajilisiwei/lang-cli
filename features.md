@@ -9,7 +9,7 @@
 ### 开发实现技术要求
 - 使用 golang 实现
 - 模块划分要求清晰，易管理和维护
-- 最后编译成名叫 lang-cli 的终端工具，需要支持多系统平台
+- 最后编译成名叫 mllt-cli 的终端工具，需要支持多系统平台
 
 ### 支持的的功能
 - 支持lang,practice,manage等一级子命令.
@@ -18,7 +18,7 @@
 - practice提供练习功能。有 words,phrases,sentences,articles 等二级子命令。
 - manage提供资源管理功能。有 delete, import 等二级子命令。
 - 所有的一级子命令均支持q退出并返回上一级
-- 输入 lang-cli 需要列出上面一级子命令列表，通过上下箭头可选择，并回车选中
+- 输入 mllt-cli 需要列出上面一级子命令列表，通过上下箭头可选择，并回车选中
 
 ### lang 模块功能
 
@@ -30,9 +30,9 @@
 
 #### st
 1. 是 switch to 的意思。
-2. 切换练习语言的命令，比如 lang-cli lang st japanese。
+2. 切换练习语言的命令，比如 mllt-cli lang st japanese。
 3. 切换的语言必须是ls中支持的语言。
-4. 需要支持tab键的自动补全。比如 lang-cli lang st ja 按tab需要自动补全为 lang-cli lang st japanese。
+4. 需要支持tab键的自动补全。比如 mllt-cli lang st ja 按tab需要自动补全为 mllt-cli lang st japanese。
 
 ### practice 模块功能
 
@@ -93,7 +93,7 @@
 
 #### delete
 1. 是 delete 的意思。
-2. 删除资源的命令，比如 lang-cli manage delete words。
+2. 删除资源的命令，比如 mllt-cli manage delete words。
 3. 删除的资源类型包括 words、phrases、sentences、articles。
 4. 用户通过上下箭头切换要删除的资源类型，然后回车确认后，会进入对应资源的列表。
 5. 用户在对应资源的列表中选中要删除的资源，然后回车后，会让用户确认是否删除选中的资源。
@@ -102,7 +102,7 @@
 
 #### import
 1. 是 import 的意思。
-2. 导入资源的命令，比如 lang-cli manage import words。
+2. 导入资源的命令，比如 mllt-cli manage import words。
 3. 导入的资源类型包括 words、phrases、sentences、articles。
 4. 用户通过上下箭头切换要导入的资源类型，然后回车确认后，会进入对应资源的导入界面。
 5. 在导入界面中，用户需要输入要导入的资源的文件名路径，文件名需要以.txt结尾。

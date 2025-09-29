@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/ajilisiwei/lang-cli/internal/practice"
+	"github.com/ajilisiwei/mllt-cli/internal/practice"
 )
 
 // parseNewlineFormatForImport 解析换行符分隔格式的文件

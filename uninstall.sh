@@ -6,8 +6,8 @@
 set -e
 
 INSTALL_DIR="/usr/local/bin"
-BINARY_NAME="lang-cli"
-LANG_CLI_DIR="$HOME/.lang-cli"
+BINARY_NAME="mllt-cli"
+LANG_CLI_DIR="$HOME/.mllt-cli"
 
 echo "多语言打字学习终端工具 - 卸载脚本"
 echo "Multi-language Typing Learning Terminal Tool - Uninstall Script"
@@ -21,8 +21,8 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # 询问用户确认
-echo "此操作将完全删除 lang-cli 及其所有数据，包括："
-echo "This operation will completely remove lang-cli and all its data, including:"
+echo "此操作将完全删除 mllt-cli 及其所有数据，包括："
+echo "This operation will completely remove mllt-cli and all its data, including:"
 echo "  - 可执行文件 / Executable file: $INSTALL_DIR/$BINARY_NAME"
 echo "  - 用户数据目录 / User data directory: $LANG_CLI_DIR"
 echo "    (包含配置文件、资源文件、用户数据等)"
@@ -111,8 +111,8 @@ if [ "$UNINSTALL_SUCCESS" = true ]; then
     echo "🎉 卸载完成！"
     echo "🎉 Uninstall completed!"
     echo ""
-    echo "lang-cli 已从您的系统中完全移除"
-    echo "lang-cli has been completely removed from your system"
+    echo "mllt-cli 已从您的系统中完全移除"
+    echo "mllt-cli has been completely removed from your system"
 else
     echo "⚠️  卸载未完全成功，请手动删除剩余文件"
     echo "⚠️  Uninstall not completely successful, please manually remove remaining files"
@@ -127,5 +127,5 @@ else
 fi
 
 echo ""
-echo "感谢使用 lang-cli！"
-echo "Thank you for using lang-cli!"
+echo "感谢使用 mllt-cli！"
+echo "Thank you for using mllt-cli!"

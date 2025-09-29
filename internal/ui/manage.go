@@ -9,8 +9,8 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/ajilisiwei/lang-cli/internal/manage"
-	"github.com/ajilisiwei/lang-cli/internal/practice"
+	"github.com/ajilisiwei/mllt-cli/internal/manage"
+	"github.com/ajilisiwei/mllt-cli/internal/practice"
 )
 
 // ManageMenu 资源管理菜单模型

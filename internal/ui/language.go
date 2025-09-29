@@ -3,7 +3,7 @@ package ui
 import (
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbletea"
-	"github.com/ajilisiwei/lang-cli/internal/lang"
+	"github.com/ajilisiwei/mllt-cli/internal/lang"
 )
 
 // LanguageMenuItem 语言菜单项

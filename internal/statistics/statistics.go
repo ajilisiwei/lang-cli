@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ajilisiwei/lang-cli/internal/practice"
+	"github.com/ajilisiwei/mllt-cli/internal/practice"
 )
 
 // SessionRecord 记录一次练习的统计数据

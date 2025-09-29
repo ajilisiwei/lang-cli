@@ -3,7 +3,7 @@ package lang
 import (
 	"fmt"
 
-	"github.com/ajilisiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/mllt-cli/internal/config"
 )
 
 // SwitchLanguage 切换当前练习的语言

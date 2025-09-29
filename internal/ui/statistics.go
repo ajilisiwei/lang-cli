@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
 
-	"github.com/ajilisiwei/lang-cli/internal/statistics"
+	"github.com/ajilisiwei/mllt-cli/internal/statistics"
 )
 
 // StatisticsMenu 统计菜单

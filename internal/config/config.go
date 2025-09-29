@@ -77,7 +77,7 @@ func LoadConfig() error {
 		if err != nil {
 			return fmt.Errorf("获取用户主目录失败: %w", err)
 		}
-		configDir := filepath.Join(homeDir, ".lang-cli")
+		configDir := filepath.Join(homeDir, ".mllt-cli")
 		viper.AddConfigPath(configDir)
 
 		// 获取当前执行文件的目录作为备用路径

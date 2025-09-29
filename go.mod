@@ -1,4 +1,4 @@
-module github.com/ajilisiwei/lang-cli
+module github.com/ajilisiwei/mllt-cli
 
 go 1.24.0
 

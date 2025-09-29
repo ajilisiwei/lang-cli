@@ -50,7 +50,7 @@ func TestConfigLoadingInDifferentModes(t *testing.T) {
 		// 创建临时目录和配置文件
 		tempDir := t.TempDir()
 		homeDir := filepath.Join(tempDir, "home")
-		configDir := filepath.Join(homeDir, ".lang-cli")
+		configDir := filepath.Join(homeDir, ".mllt-cli")
 		os.MkdirAll(configDir, 0755)
 
 		// 创建测试配置文件

@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/ajilisiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/mllt-cli/internal/config"
 )
 
 // 测试前的准备工作

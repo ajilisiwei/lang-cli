@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/ajilisiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/mllt-cli/internal/config"
 )
 
 var (
@@ -22,7 +22,7 @@ func getKeyboardSoundPath() string {
 	if err != nil {
 		return filepath.Join("assets", "keyboard-sound.wav")
 	}
-	return filepath.Join(homeDir, ".lang-cli", "assets", "keyboard-sound.wav")
+	return filepath.Join(homeDir, ".mllt-cli", "assets", "keyboard-sound.wav")
 }
 
 func PlayKeyboardSound() {

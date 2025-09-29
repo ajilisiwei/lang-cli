@@ -3,8 +3,8 @@ package ui
 import (
 	"testing"
 
-	"github.com/ajilisiwei/lang-cli/internal/config"
-	"github.com/ajilisiwei/lang-cli/internal/practice"
+	"github.com/ajilisiwei/mllt-cli/internal/config"
+	"github.com/ajilisiwei/mllt-cli/internal/practice"
 )
 
 // 测试前的准备工作

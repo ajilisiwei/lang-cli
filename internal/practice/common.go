@@ -12,7 +12,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/ajilisiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/mllt-cli/internal/config"
 )
 
 // 资源类型
@@ -225,7 +225,7 @@ func getResourceBaseDir() string {
 		// 如果无法获取用户主目录，使用当前目录下的resources
 		return "resources"
 	}
-	return filepath.Join(homeDir, ".lang-cli", "resources")
+	return filepath.Join(homeDir, ".mllt-cli", "resources")
 }
 
 func getUserDataBaseDir() string {
@@ -237,7 +237,7 @@ func getUserDataBaseDir() string {
 	if err != nil {
 		return filepath.Join("resources", "user-data")
 	}
-	return filepath.Join(homeDir, ".lang-cli", "user-data")
+	return filepath.Join(homeDir, ".mllt-cli", "user-data")
 }
 
 // GetUserDataDir 返回用于存储用户练习数据的目录
@@ -247,7 +247,7 @@ func GetUserDataDir() string {
 
 // isTestEnvironment 检查是否在测试环境中
 func isTestEnvironment() bool {
-	if os.Getenv("LANGCLI_TEST") == "1" {
+	if os.Getenv("MLLTCLI_TEST") == "1" {
 		return true
 	}
 	base := filepath.Base(os.Args[0])

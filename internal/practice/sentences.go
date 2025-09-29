@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ajilisiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/mllt-cli/internal/config"
 )
 
 // SentencePractice 句子练习

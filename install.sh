@@ -6,13 +6,13 @@
 set -e
 
 INSTALL_DIR="/usr/local/bin"
-BINARY_NAME="lang-cli"
+BINARY_NAME="mllt-cli"
 
 TARGET_USER="${SUDO_USER:-$(whoami)}"
 TARGET_GROUP="$(id -gn "$TARGET_USER" 2>/dev/null || echo "$TARGET_USER")"
 TARGET_HOME=$(eval echo "~$TARGET_USER")
 
-LANG_CLI_DIR="$TARGET_HOME/.lang-cli"
+LANG_CLI_DIR="$TARGET_HOME/.mllt-cli"
 LANG_CLI_USER_DATA_DIR="$LANG_CLI_DIR/user-data"
 
 run_as_target() {
@@ -62,7 +62,7 @@ echo ""
 # 初始化用户配置和资源文件
 echo "正在初始化用户配置和资源文件..."
 
-# 创建用户主目录下的 .lang-cli 目录
+# 创建用户主目录下的 .mllt-cli 目录
 echo "创建目录: $LANG_CLI_DIR"
 if [ ! -d "$LANG_CLI_DIR" ]; then
     run_as_target mkdir -p "$LANG_CLI_DIR"
@@ -156,7 +156,7 @@ else
     echo "警告: assets目录不存在"
 fi
 
-# 最终权限设置 - 确保用户对整个.lang-cli目录有完全控制权
+# 最终权限设置 - 确保用户对整个.mllt-cli目录有完全控制权
 echo "设置目录权限..."
 run_as_target chmod 755 "$LANG_CLI_DIR"
 # 确保所有目录都有正确的权限（755 = rwxr-xr-x）

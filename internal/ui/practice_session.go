@@ -12,12 +12,12 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/ajilisiwei/lang-cli/internal/bookmark"
-	"github.com/ajilisiwei/lang-cli/internal/config"
-	"github.com/ajilisiwei/lang-cli/internal/practice"
-	"github.com/ajilisiwei/lang-cli/internal/sound"
-	"github.com/ajilisiwei/lang-cli/internal/srs"
-	"github.com/ajilisiwei/lang-cli/internal/statistics"
+	"github.com/ajilisiwei/mllt-cli/internal/bookmark"
+	"github.com/ajilisiwei/mllt-cli/internal/config"
+	"github.com/ajilisiwei/mllt-cli/internal/practice"
+	"github.com/ajilisiwei/mllt-cli/internal/sound"
+	"github.com/ajilisiwei/mllt-cli/internal/srs"
+	"github.com/ajilisiwei/mllt-cli/internal/statistics"
 )
 
 type commandOption struct {

@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/ajilisiwei/lang-cli/internal/config"
-	"github.com/ajilisiwei/lang-cli/internal/practice"
+	"github.com/ajilisiwei/mllt-cli/internal/config"
+	"github.com/ajilisiwei/mllt-cli/internal/practice"
 )
 
 const testFolderName = "custom_folder"
