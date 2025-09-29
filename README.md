@@ -37,12 +37,27 @@
    ```
 
 ## 安装与卸载
+### 下载预编译发行包（推荐）
+自 `v1.0.0` 起，我们会在 GitHub Releases 提供打包好的二进制，内置资源与配置会在首次启动时自动解压到 `~/.lang-cli`（Windows 为 `%USERPROFILE%\\.lang-cli`）。
+
+1. 打开 [Releases 页面](https://github.com/ajilisiwei/lang-cli/releases) 下载与你平台匹配的压缩包，例如：
+   - `lang-cli_v1.0.0_darwin_universal.tar.gz`
+   - `lang-cli_v1.0.0_linux_amd64.tar.gz`
+   - `lang-cli_v1.0.0_windows_amd64.zip`
+2. 解压缩：
+   - macOS / Linux：`tar -xzf lang-cli_v1.0.0_<os>_<arch>.tar.gz`
+   - Windows：右键解压或使用 PowerShell `Expand-Archive`
+3. 将可执行文件放入 PATH：
+   - macOS / Linux：`sudo mv lang-cli /usr/local/bin/`
+   - Windows：把 `lang-cli.exe` 复制到 `%USERPROFILE%\AppData\Local\Microsoft\WindowsApps` 或任何已加入 PATH 的文件夹
+4. 终端（或 PowerShell）运行 `lang-cli` 即可；初次启动会生成默认配置与教材资源。
+
 ### 使用 go install
-最简单的方式是通过 `go install` 获取最新版：
+如果你已经安装了 Go，也可以直接通过 `go install` 获取最新版：
 ```bash
 go install github.com/ajilisiwei/lang-cli/cmd/lang-cli@latest
 ```
-`lang-cli` 会被安装到 `$GOPATH/bin`（或 `$GOBIN`）。首次运行时工具会自动在 `~/.lang-cli` 下创建配置、资源与用户数据目录，并解压内置的默认教材与音效文件，无需额外脚本。
+`lang-cli` 会被安装到 `$GOPATH/bin`（或 `$GOBIN`）。首次运行同样会在用户目录下初始化配置与资源。
 
 ### 从源码构建与安装
 1. 克隆仓库并构建
