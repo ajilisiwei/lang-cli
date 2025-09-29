@@ -247,13 +247,11 @@ func GetUserDataDir() string {
 
 // isTestEnvironment 检查是否在测试环境中
 func isTestEnvironment() bool {
-	// 通过检查环境变量或者调用栈来判断是否在测试中
-	for _, arg := range os.Args {
-		if strings.Contains(arg, "test") {
-			return true
-		}
+	if os.Getenv("LANGCLI_TEST") == "1" {
+		return true
 	}
-	return false
+	base := filepath.Base(os.Args[0])
+	return strings.HasSuffix(base, ".test")
 }
 
 // GetResourceFiles 获取指定类型的资源文件列表
