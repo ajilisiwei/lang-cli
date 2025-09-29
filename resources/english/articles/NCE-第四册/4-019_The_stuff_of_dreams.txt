@@ -1,0 +1,72 @@
+It is fairly clear that sleeping period must have some function, and because there is so much of it the function would seem to be important. ->> 很清楚，睡眠必然具有某种作用，占去那么多时间，所以其作用似乎还是很重要。
+Speculations about its nature have been going on for literally thousands of years, and one odd finding that makes the problem puzzling is that it looks very much as if sleeping is not simply a matter of giving the body a rest. ->> 人们对睡眠作用的种种猜测，确实有数千年之久。一项使人对这个问题感到困惑的奇怪的发现是，睡眠在很大程度似乎并不仅仅是为了使身体得到休息。
+'Rest', in terms of muscle relaxation and so on, can be achieved by a brief period lying, or even sitting down. ->> “休息”，从使肌肉得到放松等方面来看，只要稍微躺一躺，甚至坐一坐就能达到。
+The body's tissues are self-repairing and self-restoring to a degree, and function best when more or less continuously active. ->> 人体组织在一定程度上有自我修补和自我恢复的能力，有张有弛地连续活动时，其功能最佳。
+In fact a basic amount of movement occurs during sleep which is specifically concerned with preventing muscle inactivity. ->> 事实上，睡眠状态下仍有着基本的活动量，以防止肌肉活动停止。
+If it is not a question of resting the body, then perhaps it is the brain that needs resting? ->> 如果睡眠的功能不是在于使身体得到休息，那么也许是让大脑得以休息？
+This might be a plausible hypothesis were it not for two factors. ->> 若不是下面两点，这种假设似乎是有道理的。
+First the electroencephalograph (which is simply a device for recording the electrical activity of the brain by attaching electrodes to the scalp) shows that while there is a change in the pattern of activity during sleep, there is no evidence that the total amount of activity is any less. ->> 第一点，脑电图记录仪（不过是一种把电极接到头皮上记录脑电活动的仪器）显示，人在睡眠时大脑活动的方式有变化，但没有迹象表明，其活动总量有任何减少。
+The second factor is more interesting and more fundamental. ->> 第二点更有意思，也更重要。
+Some years ago an American psychiatrist named William Dement published experiments dealing with the recording of eye-movements during sleep. ->> 前些年，美国一位名叫威廉·德门特的精神病学家发表了一篇报告，报告中记录了眼球在睡眠时的活动情况。
+He showed that the average individual's sleep cycle is punctuated with peculiar bursts of eye-movements, some drifting and slow, others jerky and rapid. ->> 他指出，平常人的睡眠周期中不时伴有一阵阵奇怪的眼球运动，这些活动有的飘忽而缓慢，有的急剧而快速。
+People woken during these periods of eye-movements generally reported that they had been dreaming. ->> 在眼球活动期间被叫醒的人都说自己在做梦。
+When woken at other times they reported no dreams. ->> 在其他期间叫醒他们，则说没有做梦。
+If one group of people were disturbed from their eye-movement sleep for several nights on end, and another group were disturbed for an equal period of time but when they were not exhibiting eye-movements, the first group began to show some personality disorders while the others seemed more or less unaffected. ->> 如果有两组人，一组人连续几夜在眼球活动时被叫醒；另一组人也是连续几夜被叫醒，但是在眼球没活动时被叫醒的。结果，第一组人开始出现性格失常，而第二组人似乎没受什么影响。
+The implications of all this were that it was not the disturbance of sleep that mattered, but the disturbance of dreaming. ->> 由此可见，重要的不是睡眠的中断，而是做梦的中断。
+
+
+speculation /ˌspɛkjəˈleɪʃən/ n. 推测  
+The speculation surrounding the event raised numerous questions. ->> 围绕这件事的推测引发了许多问题。  
+Speculation about the outcome created a lot of excitement. ->> 对结果的推测引起了很多兴奋。
+
+literally /ˈlɪtərəli/ adv. 确实  
+She literally couldn't believe her eyes at the surprise party. ->> 她对惊喜派对确实感到难以置信。  
+The instructions were followed literally, ensuring no mistakes. ->> 指示被确实地遵循，以确保没有错误。
+
+odd /ɑd/ adj. 奇特的  
+The odd noises kept the neighbors awake all night. ->> 奇特的声音让邻居们整夜无法入睡。  
+Her style was odd but charming, drawing everyone's attention. ->> 她的风格虽然奇特却很迷人，引起了所有人的注意。
+
+tissue /ˈtɪʃu/ n. 组织  
+The damaged tissue healed faster than expected. ->> 受损的组织愈合得比预期快。  
+Understanding tissue regeneration is crucial in medical research. ->> 理解组织再生在医学研究中至关重要。
+
+plausible /ˈplɔzəbəl/ adj. 似乎有理的  
+His explanation was plausible, but still left some doubt. ->> 他的解释似乎有理，但仍然留下了一些疑问。  
+The theory seemed plausible at first glance. ->> 这个理论乍一看似乎有理。
+
+hypothesis /haɪˈpɑθəsəs/ n. 假说  
+The hypothesis was confirmed after multiple experiments. ->> 经过多次实验后，假说得到了验证。  
+Formulating a hypothesis is the first step in scientific research. ->> 提出假说是科学研究的第一步。
+
+electroencephalograph /electroencephalograph*/ n. 脑电图仪  
+The electroencephalograph recorded unusual activity in the patient's brain. ->> 脑电图仪记录到病人大脑中不寻常的活动。  
+Electroencephalographs are essential tools in neurological studies. ->> 脑电图仪是神经学研究的基本工具。
+
+electrode /ˌɪˈlɛktroʊd/ n. 电极  
+The electrodes were attached to the patient's head for monitoring. ->> 电极被连接到病人的头部用于监测。  
+High-quality electrodes improve the accuracy of readings. ->> 高质量的电极提高了读数的准确性。
+
+scalp /skælp/ n. 头皮  
+A healthy scalp is important for strong hair growth. ->> 健康的头皮对强壮的头发生长很重要。  
+He felt a tingling sensation across his scalp. ->> 他感到头皮有刺痛的感觉。
+
+psychiatrist /səˈkaɪətrəst/ n. 精神病学家  
+The psychiatrist provided valuable insight into the patient's condition. ->> 精神病学家对病人的情况提供了有价值的见解。  
+Consulting a psychiatrist can be beneficial for mental health management. ->> 咨询精神病学家对心理健康管理有益。
+
+punctuate /ˈpəŋkʧuˌeɪt/ v. 不时介入  
+Thunder punctuated the silence throughout the night. ->> 雷声不时地打破了整夜的沉寂。  
+Her speech was punctuated by frequent applause. ->> 她的讲话不时被掌声打断。
+
+jerky /ˈʤərki/ adj. 急动的  
+The jerky movements of the car made the passengers feel sick. ->> 汽车的急动让乘客感到不适。  
+His jerky gestures conveyed nervousness during the interview. ->> 他急动的手势在面试中传达出紧张。
+
+disorder /dɪˈsɔrdər/ n. 失调  
+The new treatment shows promise for managing the disorder. ->> 新疗法在管理失调方面显示出希望。  
+Diet changes can help alleviate symptoms of certain disorders. ->> 饮食变化可以帮助减轻某些失调的症状。
+
+implication /ˌɪmpləˈkeɪʃən/ n. 表明  
+The implication of the findings could impact future studies. ->> 这些发现的表明可能会影响未来的研究。  
+Her statement had significant implications for the ongoing investigation. ->> 她的声明对正在进行的调查有重要的表明。

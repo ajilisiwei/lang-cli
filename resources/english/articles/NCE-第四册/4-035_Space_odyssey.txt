@@ -1,0 +1,76 @@
+The Moon is likely to become the industrial hub of the Solar System, supplying the rocket fuels for its ships, easily obtainable from the lunar rocks in the form of liquid oxygen. ->> 月球很可能成为太阳系的工业中心，为航天飞船提供燃料，这些燃料可以很容易地从月球岩石中提取出液态氧。
+
+The reason lies in its gravity. ->> 其原因在于月球的重力。
+
+Because the Moon has only an eightieth of the Earth's mass, it requires 97 per cent less energy to travel the quarter of a million miles from the Moon to Earth-orbit than the 200 mile-journey from Earth's surface into orbit! ->> 因为月球的质量只有地球的1/80，从月球到地球轨道的25万英里所消耗的能量比从地球表面到地球轨道的200英里所消耗的能量少97%。
+
+This may sound fantastic, but it is easily calculated. ->> 这点听起来令人难以置信，但却很容易计算出来。
+
+To escape from the Earth in a rocket, one must travel at seven miles per second. ->> 要乘坐火箭飞离地球，速度需达到每秒7英里。
+
+The comparable speed from the Moon is only 1.5 miles per second. ->> 而从月球出发的相应速度只需每秒1.5英里。
+
+Because the gravity on the Moon's surface is only a sixth of Earth's (remember how easily the Apollo astronauts bounded along), it takes much less energy to accelerate to that 1.5 miles per second than it does on Earth. ->> 由于月球表面的重力仅是地球的1/6——还记得阿波罗宇航员是如何轻松跳跃的吗——在月球上加速到每秒1.5英里所需的能量比在地球上少得多。
+
+Moon-dwellers will be able to fly in space at only three per cent of the cost of similar journeys by their terrestrial cousins. ->> 月球居民在太空旅行的费用仅是地球居民进行类似旅行费用的3%。
+
+Arthur C. Clark once suggested a revolutionary idea passes through three phases: 1 'It's impossible -- don't waste my time.' 2 'It's possible, but not worth doing.' 3 'I said it was a good idea all along.' ->> 亚瑟·C·克拉克曾提出，一种革命性的想法要经过三个阶段：1 "这不可能——别浪费我的时间。" 2 "这可能，但不值得做。" 3 "我一直说这是个好主意。"
+
+The idea of colonising Mars -- a world 160 times more distant than the Moon -- will move decisively from the second phase to the third, when a significant number of people are living permanently in space. ->> 如果有大量的人永久性地定居在太空，殖民火星的想法——一个比月球远160倍的星球——将果断地从第二阶段过渡到第三阶段。
+
+Mars has an extraordinary fascination for would-be voyagers. ->> 火星对未来的星际旅客有着特殊的吸引力。
+
+America, Russia and Europe are filled with enthusiasts -- many of them serious and senior scientists -- who dream of sending people to it. ->> 美国、俄罗斯和欧洲充满了热衷于此事业的人，其中许多是严肃且资深的科学家，他们梦想着把人送上火星。
+
+Their aim is understandable. ->> 他们的目标是可以理解的。
+
+It is the one world in the Solar System that is most like the Earth. ->> 火星是太阳系中与地球最相似的一颗行星。
+
+It is a world of red sandy deserts (hence its name -- the Red Planet), cloudless skies, savage sandstorms, chasms wider than the Grand Canyon and at least one mountain more than twice as tall as Everest. ->> 这是一个红色沙漠的世界（因此得名为红色星球），无云的天空，猛烈的沙尘暴，比大峡谷更宽的峡谷，至少有一座山比珠穆朗玛峰高两倍。
+
+It seems ideal for settlement. ->> 看起来，它很适合居住。
+
+
+hub /həb/ n. （活动的）中心  
+The bustling market is the hub of the city.  
+Downtown serves as a cultural hub for the community.  
+  
+lunar /ˈlunər/ adj. 月球的  
+The scientists studied lunar rocks to understand more about the moon's history.  
+Lunar missions have provided valuable insights into space exploration.
+  
+oxygen /ˈɑksɪʤən/ n. 氧气  
+The mountain climbers carried tanks of oxygen to help them breathe at high altitudes.  
+Plants produce oxygen during photosynthesis, which is essential for life on Earth.  
+  
+Apollo /əˈpɑloʊ/ n. 阿波罗  
+The Apollo missions marked a significant milestone in space exploration history.  
+Many people are still fascinated by the achievements of the Apollo program.
+  
+accelerate /ækˈsɛlərˌeɪt/ v. 加速  
+She decided to accelerate her studies to graduate early.  
+The car can accelerate from zero to sixty in just a few seconds.  
+  
+terrestrial /tərˈɛstriəl/ adj. 地球的  
+Terrestrial television differs from satellite broadcasts.  
+Many species depend on terrestrial ecosystems for survival.
+  
+permanently /ˈpərmɑˌnɛnˌtli/ adv. 永远地  
+The decision to close the factory was made permanently last year.  
+The artist wished his contributions to be permanently remembered.
+  
+fascination /ˌfæsəˈneɪʃən/ n. 魅力  
+His fascination with astronomy began at a young age.  
+The book captures the fascination of life in the wild.
+  
+senior /ˈsinjər/ adj. 资历深的，年长的  
+She consulted with a senior colleague for advice on the project.  
+The senior members of the team provided valuable guidance.  
+  
+chasm /ˈkæzəm/ n. 断层，裂口  
+The explorers stood on the edge of the chasm, peering into its depths.  
+A chasm of misunderstanding often exists between generations.  
+  
+canyon /ˈkænjən/ n. 峡谷  
+The hikers marveled at the stunning views from the top of the canyon.  
+The river carved a deep canyon through the mountains over millions of years.

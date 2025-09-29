@@ -1,0 +1,97 @@
+An earthquake comes like a thief in the night, without warning. ->> 地震就像夜间的小偷，不打招呼就来了。
+It was necessary, therefore, to invent instruments that neither slumbered nor slept. ->> 因此，有必要发明一种仪器，既不打盹儿，也不睡觉。
+Some devices were quite simple. ->> 有些装置非常简单。
+One, for instance, consisted of rods of various lengths and thicknesses which would stand upright like ninepins. ->> 例如，有一种装置是由一些长短、粗细不同的木棒组成，就像九柱戏的木棒一样坚立着。
+When a shock came, it shook the rigid table upon which these stood. ->> 地震时，它震动了摆放这些木棒的坚固桌子。
+If it were gentle, only the more unstable rods fell. ->> 如果地震轻微，只有不稳定的木棒倒下。
+If it were severe, they all fell. ->> 如果地震剧烈，所有的木棒都会倒下。
+Thus the rods, by falling, and by the direction in which they fell, recorded for the slumbering scientist the strength of a shock that was too weak to waken him, and the direction from which it came. ->> 木棒的倒下及其方向为沉睡的科学家记录了地震强度和震源方向，即使地震太弱未能唤醒他。
+But instruments far more delicate than that were needed if any really serious advance was to be made. ->> 但是，如果要取得真正重大的进展，需要有比这种装置精细得多的仪器。
+The ideal to be aimed at was to devise an instrument that could record with a pen on paper, the movements of the ground or of the table as the quake passed by. ->> 理想的目标是设计出这样一种仪器：当地震发生时，它能用笔在纸上记录下大地和桌子的运动情况。
+While I write my pen moves, but the paper keeps still. ->> 我写字时，笔是移动的，纸是静止的。
+With practice, no doubt, I could in time learn to write by holding the pen still while the paper moved. ->> 毫无疑问，经过练习，我最终能够学会笔不动而纸动来写字。
+That sounds a silly suggestion, but that was precisely the idea adopted in some of the early instruments (seismometers) for recording earthquake waves. ->> 这听起来似乎是一种愚蠢的想法，但是早期记录地震波的仪器（地震仪）正是采用了这种思路。
+But when table, penholder and paper are all moving, how is it possible to write legibly? ->> 可是，当桌子、夹笔装置、纸都在移动时，怎么能书写得清楚呢？
+The key to a solution of that problem lay in an everyday observation. ->> 可以从我们的日常观察中找到这个问题的答案。
+Why does a person standing in a bus or train tend to fall when a sudden start is made? ->> 一个站在公共汽车或火车上的人，为什么会在车辆突然启动时倾倒呢？
+It is because his feet move on, but his head stays still. ->> 这是因为他的脚动了，而他的头保持着静止。
+A simple experiment will help us a little further. ->> 再做一个简单的实验可以帮助我们进一步理解这个问题。
+Tie a heavy weight at the end of a long piece of string. ->> 把一个重物拴在一根长绳子的一端。
+With the hand held high in the air, hold the string so that the weight nearly touches the ground. ->> 把手高高举在空中握住绳子，让重物几乎接触地面。
+Now move the hand to and fro and around but not up and down. ->> 然后把手前后左右以及旋转摆动，但不要上下摆动。
+It will be found that the weight moves but slightly or not at all. ->> 结果会发现，重物是动了，但动得很小，甚至没动。
+Imagine an earthquake shock shaking the floor, the paper, you and your hand. ->> 假设地震震动了地板、纸、你和你的手。
+In the midst of all this movement, the weight and the pen would be still. ->> 在这一切运动中，重物和笔却保持不动。
+But as the paper moved from side to side under the pen point, its movement would be recorded in ink upon its surface. ->> 由于纸在笔尖下左右运动，纸的表面会用墨水记录下运动情况。
+It was upon this principle that the first instruments were made.->> 最初的仪器就是基于这一原理制造的。
+While the drum was being shaken, the line that the pen was drawing wriggled from side to side. ->> 当圆筒受到震动时，笔所画出的线就会左右摆动。
+The apparatus thus described, however, records only the horizontal component of the wave movement, which is, in fact, much more complicated. ->> 然而，这种装置只能记录地震波运动的水平部分，实际上运动要复杂得多。
+If we could actually see the path described by a particle, such as a sand grain in the rock, it would be more like that of a bluebottle buzzing round the room; it would be up and down, to and fro and from side to side. ->> 假如我们能看到例如岩石中的沙粒的运动轨迹，那会更像一只嗡嗡叫的绿头苍蝇在屋内飞行的轨迹，呈现出上上下下、来来回回、左左右右的运动。
+Instruments have been devised and can be so placed that all three elements can be recorded in different graphs. ->> 已经设计出了一些仪器，按照一定的安放方式可测绘出这三种运动的图。
+When the instrument is situated at more than 700 miles from the earthquake centre, the graphic record shows three waves arriving one after the other at short intervals. ->> 如果把这种仪器安装在距震源700多英里远的地方，曲线记录就能显示出三种波前后相继到达。
+The first records the arrival of longitudinal vibrations. ->> 首先记录下的是纵向波的到达。
+The second marks the arrival of transverse vibrations which travel more slowly and arrive several minutes after the first. ->> 然后记录下的是横向波的到达，横向波传播得更慢，在纵向波到达几分钟后到达。
+These two have traveled through the earth. ->> 这两种波都是穿过地球而来的。
+It was from the study of these that so much was learnt about the interior of the earth. ->> 正是从对这两种波的研究中，人们了解到地球内部的许多情况。
+The third, or main wave, is the slowest and has travelled round the earth through the surface rocks. ->> 第三种波，即主波，是最慢的，是围绕地球通过表面岩石传来的。
+
+
+earthquake /ˈərθkˌweɪk/ n. 地震  
+The earthquake caused significant damage to the city. ->> 地震对城市造成了重大损害。  
+Many scientists study the patterns of earthquakes to understand their frequency. ->> 许多科学家研究地震模式以了解它们的频率。  
+
+slumber /sˈləmbər/ v. 睡眠  
+He fell into a deep slumber after a long day at work. ->> 他在工作了一天后陷入深度睡眠。  
+During the afternoon, the cat lay in slumber on the sunny windowsill. ->> 下午时分，那只猫在阳光明媚的窗台上安然入睡。  
+
+ninepin /ninepin*/ n. 九柱戏中的木柱  
+The children set up a makeshift game of ninepin in the backyard. ->> 孩子们在后院临时搭起了一局九柱戏。  
+Learning to knock down a single ninepin requires precision and skill. ->> 击倒一个九柱戏中的木柱需要精准和技巧。  
+
+rigid /ˈrɪʤɪd/ adj. 坚硬的  
+His rigid demeanor made it hard for others to approach him. ->> 他严肃的举止让人难以接近。  
+The metal framework of the structure remained rigid under pressure. ->> 结构的金属框架在压力下保持坚硬。  
+
+delicate /ˈdɛləkət/ adj. 灵感的  
+The delicate fabric needed to be handled with care. ->> 那种细致的织物需要小心处理。  
+Her delicate features were highlighted by the soft lighting. ->> 柔和的灯光衬托出她精致的五官。  
+
+seismometer /seismometer*/ n. 地震仪  
+The seismometer detected the tremors long before they were felt by humans. ->> 地震仪在震动被人类感知前就检测到了。  
+Installing a new seismometer can improve our ability to predict earthquakes. ->> 安装新的地震仪可以提高我们预测地震的能力。  
+
+penholder /penholder*/ n. 笔杆  
+She admired the intricate design of the antique penholder. ->> 她赞赏那支古董笔杆的精美设计。  
+The penholder felt comfortable in his hand, aiding in his writing. ->> 笔杆握在他手中感觉舒适，帮助提升了写作感受。  
+
+legibly /legibly*/ adv. 字迹清楚地  
+Please ensure that your name is written legibly on the form. ->> 请确保你的名字在表格上书写清楚。  
+The student took notes legibly so they could be easily reviewed later. ->> 那名学生清楚地记下笔记，方便之后复习。  
+
+drum /drəm/ n. 鼓状物  
+He learned to play the drum while attending music school. ->> 他在音乐学校学习打鼓。  
+The rain fell heavily, creating a rhythmic drum on the roof. ->> 大雨倾盆而下，在屋顶上敲出节奏明快的鼓声。  
+
+wriggle /ˈrɪgəl/ v. 扭动  
+The baby began to wriggle in his crib as he woke up. ->> 婴儿醒来后开始在小床里扭动。  
+She managed to wriggle free from the tight spot. ->> 她设法从困境中扭动出来。  
+
+bluebottle /ˈbluˌbɔtəl/ n. 绿头苍蝇  
+The bluebottle buzzed loudly as it flew around the kitchen. ->> 绿头苍蝇在厨房飞来飞去，嗡嗡作响。  
+They swatted at the persistent bluebottle that had entered the room. ->> 他们拍打进屋来的那只顽固的绿头苍蝇。  
+
+graph /græf/ n. 图表  
+The graph illustrates the changes in temperature over the decade. ->> 图表展示了十年来温度的变化。  
+Using a graph can help make complex data more understandable. ->> 使用图表可以帮助简化复杂数据的理解。  
+
+graphic /ˈgræfɪk/ adj. 图示的  
+The book contains graphic descriptions of the historical events. ->> 这本书包含对历史事件的生动描述。  
+He has a talent for graphic design, which is evident in his portfolio. ->> 他在图示设计方面很有天赋，这在他的作品集中有所体现。  
+
+longitudinal /ˌlɑnʤəˈtudənəl/ adj. 纵向的  
+The study involved longitudinal data collected over several years. ->> 该研究涉及多年来收集的纵向数据。  
+Longitudinal waves move parallel to the direction of the wave. ->> 纵向波平行于波的方向移动。  
+
+transverse /trænzˈvərs/ adj. 横向的  
+The scientist explained the concept of transverse waves during the lecture. ->> 科学家在讲座中解释了横向波的概念。  
+The bridge features transverse beams to provide extra support. ->> 桥梁安装了横向梁以提供额外支持。

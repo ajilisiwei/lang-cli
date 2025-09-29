@@ -1,0 +1,24 @@
+MR. ->> 布莱克先生：早上好。
+BLAKE: Good morning. ->> 学 生：早上好，布莱克先生。
+STUDENTS: Good morning, Mr. Blake. ->> 布莱克先生：这位是索菲娅.杜邦小姐。
+MR. ->> 索菲娅是个新学生。
+BLAKE: This is Miss Sophie Dupont. ->> 她是法国人。
+Sophie is a new student.She is French. ->> 布莱克先生：索菲娅，这位是汉斯。
+MR. ->> 他是德国人。
+BLAKE: Sophie, this is Hans.He is German. ->> 汉 斯：很高兴见到你。
+HANS: Nice to meet you. ->> 布莱克先生：这位是直子。
+MR. ->> 她是日本人。
+BLAKE: And this is Naoko. ->> 直 子：很高兴见到你。
+She's Japanese. ->> 布莱克先生：这位是昌宇。
+NAOKO: Nice to meet you. ->> 他是韩国人。
+MR. ->> 昌 宇：很高兴见到你。
+BLAKE: And this is Chang-woo. ->> 布莱克先生：这位是鲁明。
+He's Korean. ->> 他是中国人。
+CHANG-WOO: Nice to meet you. ->> 鲁 明：很高兴见到你。
+MR. ->> 布莱克先生：这位是晓惠。
+BLAKE: And this is Luming. ->> 她也是中国人。
+He is Chinese. ->> 晓 惠：很高兴见到你。
+LUMNG: Nice to meet you. ->> 晓 惠：很高兴见到你。
+MR. ->> 晓 惠：很高兴见到你。
+BLAKE: And this is Xiaohui.She's Chinese, too. ->> 晓 惠：很高兴见到你。
+XIAOHUI: Nice to meet you. ->> 晓 惠：很高兴见到你。

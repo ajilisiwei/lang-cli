@@ -1,0 +1,76 @@
+Contamination of water supplies is usually due to poor sanitation close to water sources, sewage disposal into the sources themselves, leakage of sewage into distribution systems or contamination with industrial or farm waste. ->> 水源的污染通常是由于接近水源的地方卫生条件太差而造成的：污水排入水源，污水渗入给水系统或工农业废弃物造成污染。
+Even if a piped water supply is safe at its source, it is not always safe by the time it reaches the tap. ->> 即使管道供水系统在水源处是安全的，等水到达龙头时就不一定总是安全的了。
+Intermittent tap-water supplies should be regarded as particularly suspect. ->> 断断续续的自来水供应应该被视为是非常可疑的。
+Travellers on short trips to areas with water supplies of uncertain quality should avoid drinking tap-water, or untreated water from any other source. ->> 短途旅行到水质不确定的地区时，应避免饮用自来水或未经处理的任何其他来源的水。
+It is best to hot drinks, bottled or canned drinks of well-known brand names -- international standards of water treatment are usually followed at bottling plants. ->> 最好仅饮用热饮，知名品牌的瓶装或罐装饮品 -- 装瓶厂通常遵循国际水处理标准。
+Carbonated drinks are acidic, and slightly safer. ->> 碳酸饮料是酸性的，相对更安全一些。
+Make sure that all bottles are opened in your presence, and that their rims are clean and dry. ->> 确保瓶子是在你面前开启的，瓶口清洁干燥。
+Boiling is always a good way of treating water. ->> 烧开一直是处理水的一种好办法。
+Some hotels supply boiled water on request and this can be used for drinking, or for brushing teeth. ->> 一些酒店可以根据要求提供开水，这些开水可用于饮用和刷牙。
+Portable boiling elements that can boil small quantities of water are useful when the right voltage of electricity is available. ->> 如果有合适的电压，可以煮少量水的便携式加热装置是有用的。
+Refuse politely any cold drink from an unknown source. ->> 应礼貌地拒绝任何不明来源的冷饮。
+Ice is only as safe as the water from which it is made, and should not be put in drinks unless it is known to be safe. ->> 冰块只有在其制成的水是安全时才是安全的，只有知道冰块安全时才能加入饮料。
+Drink can be cooled by placing them on ice rather than adding ice to them. ->> 可以把饮料置于冰块上进行冷却，而不是把冰块加进饮料中。
+Alcohol may be a medical disinfectant, but should not be relied upon to sterilize water. ->> 酒精可能是医学上的消毒剂，但绝不可用来消毒饮用水。
+Ethanol is more effective at a concentration of 50-70 per cent; below 20 per cent, its bactericidal action is negligible. ->> 乙醇浓度在50%至70%时比较有效，浓度低于20%时，杀菌能力基本可以忽略。
+Spirits labelled 95 proof contain only about 47 per cent alcohol. ->> 标记为95度的烈酒中仅含有约47%的酒精。
+Beware of methylated alcohol, which is very poisonous, and should never be added to drinking water. ->> 要提防甲基化酒精，那是剧毒的，绝不可掺入饮用水。
+If no other safe supply can be obtained, tap water that is too hot to touch can be left to cool and is generally safe to drink. ->> 如果没有其他安全的饮用水来源，水管中流出的烫手的水可以放凉后饮用，一般是安全的。
+Those planning a trip to remote areas, or intending to live in countries where drinking water is not readily available, should know about the various possible methods for making water safe. ->> 准备前往偏远地区旅行，或计划居住在饮用水不易获取的国家的人，应该了解各种可能的水处理方法以确保安全。
+
+
+contamination /kənˌtæməˈneɪʃən/ n. 污染  
+Contamination in the river has become a major concern for local residents. ->> 河流中的污染已成为当地居民的一大担忧。  
+Efforts to reduce contamination in the area are proving to be effective. ->> 减少该地区污染的努力正在证明是有效的。
+
+sanitation /ˌsænɪˈteɪʃən/ n. 卫生，卫生设备  
+Improving sanitation in rural areas can significantly enhance public health. ->> 改善农村地区的卫生可以显著提高公共健康。  
+Sanitation workers play a critical role during health crises. ->> 在健康危机中，卫生工人起着至关重要的作用。
+
+sewage /suɪʤ/ n. 污水  
+The city is investing in new infrastructure to treat sewage more effectively. ->> 该市正在投资新的基础设施，以更有效地处理污水。  
+Sewage leaks can lead to severe environmental issues if not addressed promptly. ->> 如果不及时处理，污水泄漏可能导致严重的环境问题。
+
+leakage /ˈlikɪʤ/ n. 泄漏  
+The discovery of a gas leakage prompted the evacuation of the building. ->> 发现煤气泄漏后，整栋建筑被紧急疏散。  
+Water leakage in the basement caused significant damage to the building's foundation. ->> 地下室的水泄漏对建筑的地基造成了严重损害。
+
+intermittent /ˌɪntərˈmɪtənt/ adj. 间歇的，断断续续的  
+The intermittent rain made it difficult to plan outdoor activities. ->> 间歇的雨水使得室外活动难以筹划。  
+She suffers from intermittent back pain, which flares up unpredictably. ->> 她患有间歇性背痛，不定期复发。
+
+carbonated /ˈkɑrbəˌneɪtɪd/ adj. 碳化的，碳酸的  
+She prefers carbonated drinks over still water. ->> 她更喜欢喝碳酸饮料而不是非碳酸水。  
+The carbonated sensation of the drink was refreshing on a hot day. ->> 碳酸饮料的刺激感在炎热的天气显得清新爽口。
+
+acidic /əˈsɪdɪk/ adj. 酸的，酸性的  
+The soil in this region is too acidic for most crops to thrive. ->> 该地区的土壤过于酸性，以致大多数作物无法茁壮成长。  
+Some fruit juices can be quite acidic, affecting dental health if consumed frequently. ->> 一些果汁可能非常酸，经常饮用会影响牙齿健康。
+
+alcohol /ˈælkəˌhɑl/ n. 酒精  
+Excessive consumption of alcohol can lead to health complications. ->> 过度饮用酒精可能导致健康问题。  
+Alcohol is often used as a disinfectant in medical settings. ->> 酒精常在医疗环境中用作消毒剂。
+
+disinfectant /dɪsɪnˈfɛktənt/ n. 消毒剂  
+The use of disinfectant products has increased significantly during the pandemic. ->> 在疫情期间，消毒剂产品的使用显著增加。  
+Make sure to use a reliable disinfectant to clean high-touch surfaces. ->> 确保使用可靠的消毒剂清洁高频接触的表面。
+
+sterilize /ˈstɛrəˌlaɪz/ v. 消毒  
+It's important to sterilize medical instruments before use. ->> 消毒医疗器械在使用前非常重要。  
+The procedure to sterilize the equipment took longer than expected. ->> 消毒设备的过程比预期的要长。
+
+ethanol /ˈɛθəˌnɔl/ n. 乙醇  
+Ethanol is commonly used as a fuel additive. ->> 乙醇常用作燃料添加剂。  
+In laboratories, ethanol is used as a solvent for various reactions. ->> 在实验室中，乙醇用作各种反应的溶剂。
+
+bactericidal /bactericidal*/ adj. 杀菌的  
+The new cleaning agent has bactericidal properties that eliminate 99% of germs. ->> 新的清洁剂具有杀菌性能，可消除99%的细菌。  
+Bactericidal soaps are increasingly popular in households around the world. ->> 杀菌皂在世界各地的家庭中越来越受欢迎。
+
+negligible /ˈnɛglɪʤəbəl/ adj. 可以忽略的，微不足道的  
+The difference in results was negligible and did not affect the overall conclusion. ->> 结果的差异微不足道，不影响整体结论。  
+His contribution to the project was negligible compared to the team’s effort. ->> 与团队的努力相比，他对项目的贡献微不足道。
+
+methylated /methylated*/ adj. 加入甲醇的  
+Methylated spirits are often used as a solvent and as fuel for spirit burners. ->> 加入甲醇的酒精常用作溶剂和用于酒精炉的燃料。  
+Due to its methylated content, this substance must be handled with care. ->> 由于其含有甲醇，该物质必须小心处理。

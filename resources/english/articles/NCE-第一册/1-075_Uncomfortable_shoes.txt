@@ -1,0 +1,43 @@
+LADY: Have you any shoes like these? ->> 女士：像这样的鞋子你们有吗？
+SALESMAN: What size? ->> 售货员：什么尺码的？
+Lady: Size five. ->> 女士：5号的。
+Salesman: What colour? ->> 售货员：什么颜色？
+Lady: Black. ->> 女士：黑的。
+Salesman: I’m sorry. ->> 售货员：对不起。
+We don't have it. ->> 我们没有。
+Lady: But my sister bought this pair last month. ->> 女士：但是，我姐姐上个月买到了这样的一双。
+Salesman: Did she buy them here? ->> 售货员：她是在这儿买的吗？
+Lady: No, she bought them in the U.S. ->> 女士：不。她是在美国买的。
+Salesman: We had some shoes like those a month ago, but we haven’t any now. ->> 售货员：一个月前我们有这样的鞋，但是现在没有了。
+Lady: Can you get a pair for me please? ->> 女士：您能为我找一双吗？
+Salesman: I’m afraid that I can’t. ->> 售货员：恐怕不行。
+They were in fashion last year and the year before last. But they’re not in fashion this year. ->> 这鞋在去年和前年时兴，而今年已不流行了。
+Salesman: These shoes are in fashion now. ->> 售货员：现在流行的是这种鞋子。
+Lady: They look very uncomfortable. ->> 女士：这种鞋子看上去很不舒适。
+Salesman: They are very uncomfortable. ->> 售货员：的确很不舒适。
+But women always wear uncomfortable shoes! ->> 可是女人们总是穿不舒适的鞋子！
+
+
+ago /əˈgoʊ/ adv. 以前  
+He graduated from college five years ago.  
+We visited that museum a year ago.  
+
+buy /baɪ/ v. 买  
+They decided to buy a new car this month.  
+Did you buy tickets for the concert yet?  
+
+pair /pɛr/ n. 双，对  
+She found a pair of matching earrings.  
+Do you have a pair of scissors I could borrow?  
+
+fashion /ˈfæʃən/ n. （服装的）流行式样  
+Vintage fashion is making a comeback.  
+She's always up to date with the latest fashion trends.  
+
+uncomfortable /ənˈkəmfərtəbəl/ adj. 不舒服的  
+The meeting room chairs are quite uncomfortable.  
+He felt uncomfortable discussing his personal life.  
+
+wear /wɛr/ v. 穿着  
+He likes to wear his favorite sweater during winter.  
+Do you plan to wear the same dress to the party?

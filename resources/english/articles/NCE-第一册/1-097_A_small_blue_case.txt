@@ -1,0 +1,53 @@
+Mr Hall: I left a suitcase on the train to London the other day. ->> 霍尔先生：几天前我把一只手提箱忘在开往伦敦的火车上了。
+Attendant: Can you describe it, sir? ->> 服务员：先生，您能描述一下它是什么样子的吗？
+Mr Hall: It's a small blue case and it's got a zip. ->> 霍尔先生：是只蓝色的小箱子，上面有拉链。
+There's a label on the handle with my name and address on it. ->> 箱把上有一张标签，上面写着我的姓名和住址。
+Attendant: Is this case yours? ->> 服务员：这箱子是您的吗？
+Mr Hall: No, that's not mine. ->> 霍尔先生：不，那不是我的。
+Attendant: What about this one? ->> 服务员：这只是不是？
+This one's got a label. ->> 这只箱子有张标签。
+Mr Hall: Let me see it. ->> 霍尔先生：让我看看。
+Attendant: What's your name and address? ->> 服务员：您的姓名和住址？
+Mr Hall: David Hall,83, Bridge Street. ->> 霍尔先生：大卫·霍尔，大桥街83号。
+Attendant: That's right. ->> 服务员：那就对了。
+D.N.Hall.83.Bridge Street. ->> D.N.霍尔，大桥街83号。
+Attendant: Three pounds and fifty pence please. ->> 服务员：请付3英镑50便士。
+Mr Hall: Here you are. ->> 霍尔先生：给您。
+Attendant: Thank you. ->> 服务员：谢谢您。
+Mr Hall: Hey! ->> 霍尔先生：嗨！
+Attendant: What's the matter? ->> 服务员：怎么回事？
+Mr Hall: This case doesn't belong to me! ->> 霍尔先生：这箱子不是我的！
+You've given me the wrong case! ->> 您给错了箱子！
+
+
+leave (left, left) /liv/ v. 遗留  
+He left his umbrella at the restaurant. ->> 他把伞遗留在餐厅里。  
+They left their phones charging in the living room. ->> 他们把手机留在客厅充电。  
+
+describe /dɪˈskraɪb/ v. 描述  
+He described the sunset in great detail. ->> 他详细描述了日落的景象。  
+Could you describe how she reacted? ->> 你能描述一下她的反应吗？  
+
+zip /zɪp/ n. 拉链  
+The zip on her purse got stuck. ->> 她钱包上的拉链卡住了。  
+He struggled to close the zip of his backpack. ->> 他费劲地拉上了背包的拉链。  
+
+label /ˈleɪbəl/ n. 标签  
+Check the label for allergy information. ->> 查看标签上的过敏信息。  
+The label indicates that the shirt is made of cotton. ->> 标签显示这件衬衫是棉制的。  
+
+handle /ˈhændəl/ n. 提手，把手  
+The handle on the pan was too hot to touch. ->> 平底锅的把手烫得无法触摸。  
+He turned the handle and walked inside. ->> 他旋转了把手，走了进去。  
+
+address /ˈæˌdrɛs/ n. 地址  
+Please verify their address before sending the invitation. ->> 发送邀请前请核实他们的地址。  
+Her address was written on the envelope. ->> 她的地址写在信封上。  
+
+pence /pɛns/ n. penny 的复数形式  
+The new toy cost eighty pence. ->> 这个新玩具售价八十便士。  
+Dropping a few pence into the charity box, she smiled. ->> 她往慈善箱里投了几便士，微笑着。  
+
+belong /bɪˈlɔŋ/ v. 属于  
+Does this jacket belong to you? ->> 这件夹克是你的吗？  
+After moving several times, he finally found where he belonged. ->> 几次搬家后，他终于找到了归属感。

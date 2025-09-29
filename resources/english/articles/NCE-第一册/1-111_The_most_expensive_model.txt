@@ -1,0 +1,42 @@
+Mr Frith: I like this TV very much. ->> 弗里斯先生：我非常喜欢这台电视机。
+How much does it cost please? ->> 请问它多少钱？
+Assistant: It's the most expensive model in the shop. ->> 店员：这是店里最贵的型号。
+It costs 500 pounds. ->> 它的售价是500英镑。
+Mrs Frith: That's too expensive for us. ->> 弗里斯夫人：这对我们来说是太贵了。
+We can't afford all that money. ->> 我们花不起那么多钱。
+Assistant: This model's less expensive than that one. ->> 店员：这种型号比那种要便宜些。
+It's only 300 pounds. But, of course, it's not as good as the expensive one. ->> 它只要300英镑，但是，它当然没有贵的那种好。
+Mr Frith: I don't like this model. The other model's more expensive, but it's worth the money. ->> 弗里斯先生：我不喜欢这种型号。那种型号价格是贵一些，但它值得那么多钱。
+Mr Frith: Can we buy it on instalments? ->> 弗里斯先生：我们可以用分期付款的方式购买吗？
+Assistant: Of course. ->> 店员：当然可以。
+You can pay a deposit of ten pounds, and then one pound a week for sixty weeks. ->> 您可以先付10英镑定金，然后每周付1英镑，分60周付清。
+Mr Frith: Do you like it, dear? ->> 弗里斯先生：你喜欢吗，亲爱的？
+Mrs Frith: I certainly do, but I don't like the price. ->> 弗里斯夫人：我当然喜欢，但是我不喜欢这个价钱。
+You always want the best, but we can't afford it. ->> 你总是要买最好的，可我们买不起。
+Sometimes you think you're a millionaire! ->> 有时候你认为自己是个百万富翁！
+Mr Frith: Millionaires don't buy things on instalments! ->> 弗里斯先生：百万富翁是不会分期付款买东西的！
+
+
+model /ˈmɑdəl/ n. 型号  
+This model is no longer available in stores. ->> 这个型号在商店里已经买不到了。  
+We compared the features of each model before deciding. ->> 我们在决定之前比较了每个型号的功能。  
+
+afford /əˈfɔrd/ v. 付得起（钱）  
+They can finally afford to buy their dream house. ->> 他们终于能买得起梦想中的房子了。  
+She couldn't afford to take a long vacation this year. ->> 她今年负担不起长假。  
+
+deposit /dɪˈpɑzət/ n. 预付定金  
+A refundable deposit is required for registration. ->> 注册需要支付可退还的定金。  
+He lost his deposit after canceling the order late. ->> 他取消订单太晚，损失了定金。  
+
+instalment /ɪnˈstɔːlmənt/ n. 分期付款  
+They agreed to pay off the loan in monthly instalments. ->> 他们同意以每月分期付款的方式还贷。  
+The laptop is available for purchase in three instalments. ->> 这款笔记本电脑可以分三期购买。  
+
+price /praɪs/ n. 价格  
+They negotiated the price with the seller before buying. ->> 他们在购买之前与卖方谈判价格。  
+Due to demand, the price of tickets may increase. ->> 由于需求，票价可能会上涨。  
+
+millionaire /ˌmɪljəˈnɛr/ n. 百万富翁  
+The young millionaire invested in several tech startups. ->> 这位年轻的百万富翁投资了几家科技初创公司。  
+After winning the lottery, she instantly became a millionaire. ->> 中奖后，她立刻成了一名百万富翁。

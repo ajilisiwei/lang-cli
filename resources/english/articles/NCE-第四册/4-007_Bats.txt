@@ -1,0 +1,65 @@
+Not all sounds made by animals serve as language, and we have only to turn to that extraordinary discovery of echo-location in bats to see a case in which the voice plays a strictly utilitarian role. ->> 动物发出的声音不都是用作语言交际，我们只要看一看蝙蝠回声定位这一极不寻常的发现，就可以探究一下声音在什么情况下有绝对的实用价值。
+To get a full appreciation of what this means we must turn first to some recent human inventions. ->> 要透彻理解这句话的意义，我们应先回顾一下人类最近的几项发明。
+Everyone knows that if he shouts in the vicinity of a wall or a mountainside, an echo will come back. ->> 大家都知道，在墙壁或山腰附近发出的喊声，就会听到回声。
+The further off this solid obstruction, the longer time will elapse for the return of the echo. ->> 固体障碍物越远，回声返回所用时间就越长。
+A sound made by tapping on the hull of a ship will be reflected from the sea bottom, and by measuring the time interval between the taps and the receipt of the echoes, the depth of the sea at that point can be calculated. ->> 敲打船体所发出的声音会从海底反射回来，测出回声间隔的时间，便可算出该处海洋的深度。
+So was born the echo-sounding apparatus, now in general use in ships. ->> 这样就产生了目前各种船舶上普遍应用的回声探测仪。
+Every solid object will reflect a sound, varying according to the size and nature of the object. ->> 任何固体物体都能反射声音，反射的声音因物体的大小和性质的不同而不同。
+A shoal of fish will do this. ->> 鱼群也能反射声音。
+So it is a comparatively simple step from locating the sea bottom to locating a shoal of fish. ->> 从测定海深到测定鱼群，这一进展比较容易。
+With experience, and with improved apparatus, it is now possible not only to locate a shoal but to tell if it is herring, cod, or other well-known fish, by the pattern of its echo. ->> 根据经验和改进后的仪器，不仅能够确定鱼群的位置，而且可以根据鱼群回声的特点分辨出是鲱鱼、鳕鱼，或人们所熟悉的其他鱼。
+It has been found that certain bats emit squeaks and by receiving the echoes, they can locate and steer clear of obstacles -- or locate flying insects on which they feed. ->> 人们发现，某些蝙蝠能发出尖叫声，并能通过接收回声来确定并躲开障碍物，或者找到它们赖以为生的飞行昆虫。
+This echo-location in bats is often compared with radar, the principle of which is similar. ->> 蝙蝠的回声定位常被拿来与雷达比较，两者的原理相似。
+
+
+bat /bæt/ n. 蝙蝠  
+Researchers monitored the bat to better understand its echolocation abilities. ->> 研究人员监测蝙蝠以更好地理解其回声定位能力。  
+At dusk, bats begin to emerge from their roosts, searching for food. ->> 黄昏时分，蝙蝠开始从栖息地出来寻找食物。  
+
+strictly /ˈstrɪktli/ adv. 明确地  
+The guidelines were strictly enforced to ensure everyone's safety. ->> 为了确保每个人的安全，指南被明确地执行。  
+She strictly adheres to her diet plan, never straying from it. ->> 她明确地遵循她的饮食计划，从不偏离。  
+
+utilitarian /juˌtɪləˈtɛriən/ adj. 实用的  
+The new office furniture was chosen for its utilitarian design. ->> 新的办公室家具是因为其实用的设计而被选择的。  
+His clothing style is more utilitarian than fashionable, focusing on comfort. ->> 他的着装风格更实用而不是时尚，注重舒适性。  
+
+appreciation /əˌpriʃiˈeɪʃən/ n. 理解  
+His appreciation of the arts grew after taking a few classes on art history. ->> 在上了几节艺术史课程后，他对艺术的理解增加了。  
+The teacher's appreciation of individual learning styles helped each student succeed. ->> 老师对个体学习风格的理解帮助每位学生成功。  
+
+elapse /ɪˈlæps/ v. 消逝  
+As the days elapse, the temperature steadily increases. ->> 随着日子的消逝，气温稳步上升。  
+Five years elapsed before they met again, yet it felt like no time had passed at all. ->> 在他们再次相遇之前五年就这样消逝了，但感觉好像时间根本没有流逝。  
+
+hull /hʌl/ n. 船体  
+The hull was inspected for any damage before the voyage began. ->> 在航程开始之前，船体被检查是否有损坏。  
+Barnacles covered the hull of the old fishing boat. ->> 年老渔船的船体覆盖着藤壶。  
+
+interval /ˈɪntərvəl/ n. 间隔  
+The concert had a fifteen-minute interval halfway through. ->> 演唱会在中途有一个十五分钟的间隔。  
+She practiced the piano at regular intervals every day. ->> 她每天都有规律地间隔练习钢琴。   
+
+receipt /rɪˈsit/ n. 收据  
+Please keep your receipt in case you need to return the item. ->> 请保留您的收据以防需要退货。  
+The cashier handed me a receipt for my purchase. ->> 收银员给了我一张购买收据。  
+
+apparatus /ˌæpəˈrætəs/ n. 仪器  
+The laboratory was well-equipped with various scientific apparatus for the experiments. ->> 实验室配备了各种科学仪器用于实验。  
+Firefighters quickly set up the breathing apparatus before entering the smoky building. ->> 消防员在进入烟雾弥漫的建筑之前迅速安装了呼吸器。  
+
+shoal /ʃoʊl/ n. 鱼群  
+A shoal of small fish darted around the coral reef. ->> 一群小鱼在珊瑚礁周围快速游动。  
+The fisherman cast his net, hoping to catch a large shoal. ->> 渔夫撒网，希望捕到一群大鱼。  
+
+herring /ˈhɛrɪŋ/ n. 鲱鱼  
+The fishing boats returned with a large haul of herring. ->> 渔船满载大量鲱鱼归来。  
+Herring is commonly used in various pickled dish recipes. ->> 鲱鱼通常用于各种腌制菜肴的食谱中。  
+
+cod /kɒd/ n. 鳕鱼  
+The price of cod has increased due to dwindling fish stocks. ->> 由于鱼群数量减少，鳕鱼的价格已上涨。  
+He prepared a delicious cod dish for dinner. ->> 他为晚餐准备了一道美味的鳕鱼菜肴。  
+
+squeak /skwik/ n. 吱吱声  
+The floorboards gave a loud squeak as she tiptoed across the room. ->> 当她踮脚穿过房间时，地板发出了很大的吱吱声。  
+The door hinge needs some oil, hence the annoying squeak. ->> 门铰链需要一些油，以免发出恼人的吱吱声。

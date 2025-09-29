@@ -1,0 +1,101 @@
+Technology trends may push Silicon Valley back to the future. ->> 技术的发展趋势有可能把硅谷重新推向未来。
+Carver Mead, a pioneer in integrated circuits and a professor of computer science at the California Institute of Technology, notes there are now work-stations that enable engineers to design, test and produce chips right on their desks, much the way an editor creates a newsletter on a Macintosh. ->> 卡弗·米德——集成电路的一位先驱，加州理工学院的计算机教授——注意到，现在有些计算机工作站使工程师可以在他们的办公桌上设计、试验和生产芯片，就像编辑在苹果机上编出时事通讯一样。
+As the time and cost of making a chip drop to a few days and a few hundred dollars, engineers may soon be free to let their imaginations soar without being penalized by expensive failures. ->> 由于制造一块芯片的时间缩短到几天，成本降至几百美元，因此工程师们可能很快就可以自由发挥他们的想象力，而不必担心因失败而导致的昂贵损失。
+Mead predicts that inventors will be able to perfect powerful customized chips over a weekend at the office -- spawning a new generation of garage start-ups and giving the U.S. a jump on its foreign rivals in getting new products to market fast. ->> 米德预言，发明者可以在办公室用一个周末的时间生产出完美的、功能强大的、按客户需求设计的芯片——这将催生新一代从车库起家的初创企业，并使美国在快速将新产品推向市场方面领先于外国对手。
+'We've got more garages with smart people,' Mead observes. ->> “我们有更多的车库，那里有许多聪明人，”米德说。
+'We really thrive on anarchy.' And on Asians. ->> “我们确实靠无政府状态发展起来。” 还靠亚洲人。
+Already, orientals and Asian Americans constitute the majority of the engineering staffs at many Valley firms. ->> 在硅谷许多公司中，工程技术人员的大多数是东方人和亚裔美国人。
+And Chinese, Korean, Filipino and Indian engineers are graduating in droves from California's colleges. ->> 中国、韩国、菲律宾和印度的工程师们成群结队地从加州的大学毕业。
+As the heads of next-generation start-ups, these Asian innovators can draw on customs and languages to forge tighter links with crucial Pacific Rim markets. ->> 作为新一代初创企业的领军人物，亚裔发明家可以凭借他们在习惯和语言上的优势，与关键的太平洋沿岸市场建立更紧密的联系。
+For instance, Alex Au, a Stanford Ph.D. from Hong Kong, has set up a Taiwan factory to challenge Japan's near lock on the memory-chip market. ->> 比如说，亚历克斯·奥，一位来自香港的斯坦福大学博士，已经在台湾建厂，以挑战日本在记忆芯片市场上的近乎垄断地位。
+India-born N.Damodar Reddy's tiny California company reopened an AT & T chip plant in Kansas City last spring with financing from the state of Missouri. ->> 印度出生的N.达莫达·雷迪在小加州公司在堪萨斯城重新启用了美国电话电报公司的一家芯片工厂，并获得了密苏里州的财政支持。
+Before it becomes a retirement village, Silicon Valley may prove a classroom for building a global business. ->> 在硅谷变成退休村之前，它很可能成为建立全球商业的教学场所。
+
+
+silicon /ˈsɪləkən/ n. 硅  
+Scientists are trying to improve solar cells with new silicon materials.  
+Manufacturers rely on silicon to produce more efficient computer chips.  
+
+integrated /ˈɪnəˌgreɪtɪd/ adj. 综合的  
+The integrated system improved the overall functionality of the software.  
+They created an integrated approach to problem-solving in the team.  
+
+circuit /ˈsərkət/ n. 线路，电路  
+The engineers examined every circuit to ensure there were no faults.  
+We learned about different types of circuits in our electronics course.  
+
+California /ˌkæləˈfɔrnjə/ n. 加利福尼亚（美国州名）  
+California is known for its diverse culture and innovation.  
+Many people dream of visiting California for its sunny beaches and movie industry.  
+
+workstation /ˈwərkˌsteɪʃən/ n. 工作站  
+Her workstation is equipped with the latest technology for maximum productivity.  
+He organized his workstation to be both efficient and ergonomic.  
+
+chip /ʧɪp/ n. 芯片，集成电路片，集成块  
+This new chip enhances the performance of the smartphone.  
+The company released an advanced chip that supports artificial intelligence capabilities.  
+
+newsletter /ˈnuzˌlɛtər/ n. 时事通讯  
+The monthly newsletter provides updates on community events.  
+I subscribed to the newsletter to stay informed about industry trends.  
+
+Macintosh /ˈmækənˌtɔʃ/ n. 苹果机，一种个人电脑  
+The Macintosh revolutionized personal computing in the 1980s.  
+She prefers using a Macintosh for graphic design projects.  
+
+penalize /ˈpɛnəˌlaɪz/ v. 处罚，惩罚  
+Players are penalized for breaking the rules during the game.  
+The company was penalized for not adhering to environmental regulations.  
+
+customize /ˈkəstəˌmaɪz/ v. 按顾客具体需要制造  
+You can customize your pizza by choosing your favorite toppings.  
+The software allows users to customize their interface for a better experience.  
+
+spawn /spɔn/ v. 引起，酿成  
+The new policy could spawn numerous changes in the industry.  
+Her book spawned a series of discussions on social media.  
+
+thrive /θraɪv/ v. 兴旺，繁荣  
+Small businesses often thrive in communities that support local entrepreneurs.  
+With the right conditions, this type of plant can thrive even in a desert.  
+
+anarchy /ˈænərˌki/ n. 无政府状态，混乱  
+Without effective leadership, the organization fell into anarchy.  
+The sudden power outage caused anarchy in the crowded city center.  
+
+oriental /ˌɔriˈɛnəl/ n. 东方人  
+She specializes in oriental art and history at the university.  
+The restaurant is famous for its authentic oriental cuisine.  
+
+constitute /ˈkɑnstəˌtut/ v. 构成  
+These elements constitute the foundation of our research.  
+A committee was constituted to review the project proposals.  
+
+drove /droʊv/ n. 群  
+Droves of people attended the festival over the weekend.  
+During the migration season, droves of birds fly south.  
+
+innovator /ˈɪnəˌveɪtər/ n. 发明者  
+He is regarded as an innovator in renewable energy solutions.  
+Innovators often challenge conventional ideas to drive change.  
+
+forge /fɔrʤ/ v. 发展  
+They decided to forge a new partnership to tackle the issue.  
+The company has been able to forge a strong reputation in the tech industry.  
+
+memory-chip /memory-chip*/ n. 内存条  
+Upgrading the memory-chip improved the computer's speed and efficiency.  
+Manufacturers are developing memory-chips with higher capacities.  
+
+AT /æt/ & T 美国电话电报公司 (American Telephone and Telegraph)  
+AT&T provides critical telecommunications services to millions.  
+The merger with another company helped AT&T expand its offerings.  
+
+Kansas /ˈkænzəs/ n. 堪萨斯（美国州名）  
+Kansas is often referred to as the heart of America due to its central location.  
+The agriculture industry is a major component of the Kansas economy.  
+
+Missouri /məˈzʊri/ n. 密苏里（美国州名）  
+The Missouri River plays a vital role in the state's commerce and transport.  
+Missouri is known for its rich cultural heritage and natural beauty.

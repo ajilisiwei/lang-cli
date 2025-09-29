@@ -1,3 +1,0 @@
-apple ->> 苹果
-banana ->> 香蕉
-orange ->> 橙子

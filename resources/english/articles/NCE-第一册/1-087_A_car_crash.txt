@@ -1,0 +1,47 @@
+Mr Wood: Is my car ready yet? ->> 伍德先生：我的汽车修好了吗？  
+Attendant: I don't know, sir. ->> 服务员：我不知道，先生。  
+What's the licence number of your car? ->> 您的汽车牌号是多少？  
+Mr Wood: It's LFZ 312 G. ->> 伍德先生：是 LFZ312G。  
+Attendant: When did you bring it to us? ->> 服务员：您什么时候送来的？  
+Mr Wood: I brought it here three days ago. ->> 伍德先生：我是三天前送来的。  
+Attendant: Ah yes, I remember now. ->> 服务员：啊，是的，我现在记起来了。  
+Mr Wood: Have your mechanics finished yet? ->> 伍德先生：你们的机械师修好了吗？  
+Attendant: No, they're still working on it. ->> 服务员：没有，他们还在修呢。  
+Let's go into the garage and have a look at it. ->> 我们到车库去看一下吧。  
+Attendant: Isn't that your car? ->> 服务员：那不是您的车吗？  
+Mr Wood: Well, it was my car. ->> 伍德先生：唔，那曾是我的车。  
+Attendant: Didn't you have a crash? ->> 服务员：难道您没有出车祸吗？  
+Mr Wood: That's right. ->> 伍德先生：是啊。  
+She drove it into a lamp post（电线杆）. ->> 她把汽车撞在电线杆上了。  
+Can your mechanics repair it? ->> 你们的机械师能修好吗？  
+Attendant: Well, they're trying to repair it, sir. ->> 服务员：嗯，他们正设法修呢，先生。  
+But to tell you the truth, you need a new car. ->> 不过说实在的，您需要一辆新车了。
+
+
+attendant /əˈtɛndənt/ n. 接待员  
+The parking lot attendant directed us to an available spot. ->> 停车场的接待员指引我们到一个空位。  
+At the hotel, the attendant carried our bags to the room. ->> 在酒店，接待员把我们的行李提到房间。
+
+bring (brought, brought) /brɪŋ/ v. 带来，送来  
+Can you bring some milk when you come back? ->> 你回来的时候能带些牛奶吗？  
+He brought flowers to surprise her. ->> 他带了花来给她一个惊喜。
+
+garage /gərɑʒ/ n. 车库，汽车修理厂  
+She keeps her gardening tools in the garage. ->> 她把园艺工具放在车库里。  
+The mechanic at the garage is very knowledgeable. ->> 修理厂的技工经验丰富。
+
+crash /kræʃ/ n. 碰撞  
+The loud crash startled everyone in the office. ->> 巨大的碰撞声让办公室里的每个人都吓了一跳。  
+Due to the crash, the road was closed for hours. ->> 由于碰撞事故，公路关闭了数小时。
+
+lamp-post /ˈlæmp poʊst/ 灯杆  
+She tied her dog to the lamp-post while she went into the store. ->> 她把狗拴在灯杆上，然后进了商店。  
+The lamp-post flickered as the evening set in. ->> 夜幕降临时，灯杆闪烁着。
+
+repair /rɪˈpɛr/ v. 修理  
+The landlord promised to repair the leaky sink. ->> 房东答应修理漏水的水槽。  
+We need to repair the fence before winter. ->> 我们需要在冬天前修理篱笆。
+
+try /traɪ/ v. 努力，设法  
+I'll try to call you later today. ->> 我稍后会试着给你打电话。  
+Despite being tired, he tried to stay awake during the meeting. ->> 尽管很累，他还是努力在会议期间保持清醒。

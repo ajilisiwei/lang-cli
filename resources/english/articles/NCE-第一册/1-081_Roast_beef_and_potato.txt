@@ -1,0 +1,45 @@
+John: Hullo, Peggy! ->> 约翰：你好，佩吉！
+Where's Tom? ->> 汤姆在哪儿？
+Peggy: He's upstairs. ->> 佩吉：他在楼上。
+He's having a bath. ->> 他正在洗澡。
+Peggy: Tom! ->> 佩吉：汤姆！
+Tom: Yes? ->> 汤姆：什么事？
+Peggy: John's here. ->> 佩吉：约翰来了。
+Tom: I'm nearly ready. ->> 汤姆：我马上就好。
+Tom: Hullo, John. ->> 汤姆：你好，约翰。
+Have a cigarette. ->> 请抽烟。
+John: No thanks, Tom. ->> 约翰：不，谢谢，汤姆。
+Tom: Have a glass of whisky then. ->> 汤姆：那么，来杯威士忌吧。
+John: O.K. ->> 约翰：好的，谢谢。
+Thanks. ->> 谢谢。
+Tom: Is dinner ready, Peggy? ->> 汤姆：佩吉，饭好了吗？
+Peggy: It's nearly ready. ->> 佩吉：马上就好。
+We can have dinner at seven o'clock. ->> 我们可以在7点钟吃饭。
+Tom: John and I had lunch together today. ->> 汤姆：我和约翰今天一起吃的午饭。
+We went to a restaurant. ->> 我们去了一家饭店。
+Peggy: What did you have? ->> 佩吉：你们吃了什么？
+Tom: We had roast beef and potatoes. ->> 汤姆：我们吃的是烤牛肉和土豆。
+Peggy: Oh! ->> 佩吉：噢！
+Tom: What's the matter, Peggy? ->> 汤姆：怎么了，佩吉？
+Peggy: Well, you're going to have roast beef and potatoes again tonight! ->> 佩吉：唉，今晚你们又要吃烤牛肉和土豆了！
+
+
+bath /bæθ/ n. 洗澡  
+The hotel room has a luxurious bath. ->> 酒店房间有一个豪华的浴缸。  
+He prefers a bath to a quick shower. ->> 他更喜欢洗澡而不是快速冲淋。  
+
+nearly /ˈnɪrli/ adv. 几乎，将近  
+We've nearly completed the project. ->> 我们几乎完成了这个项目。  
+She nearly missed the last train home. ->> 她差点错过回家的末班火车。  
+
+ready /ˈrɛdi/ adj. 准备好的，完好的  
+Dinner will be ready in ten minutes. ->> 晚餐将在十分钟后准备好。  
+He was ready with an answer to the question. ->> 他已经准备好回答这个问题。  
+
+dinner /ˈdɪnər/ n. 正餐，晚餐  
+We're going out for dinner tonight. ->> 我们今晚要出去吃晚餐。  
+My family gathers for dinner every Sunday. ->> 我们家每周日都会聚在一起共进晚餐。  
+
+roast /roʊst/ adj. 烤的  
+The restaurant is famous for its roast beef. ->> 那家餐馆以烤牛肉而闻名。  
+She prepared a roast vegetable platter for the party. ->> 她为聚会准备了烤蔬菜拼盘。

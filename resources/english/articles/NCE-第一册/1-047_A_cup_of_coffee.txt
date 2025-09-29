@@ -1,0 +1,23 @@
+MRS YOUNG: Do you like coffee, Mrs Price? ->> YOUNG：你喜欢咖啡吗，Price？
+MRS PRICE: Yes, I do. ->> PRICE：是的，我喜欢。
+MRS YOUNG: Do you want a cup? ->> YOUNG：你想要一杯吗？
+MRS PRICE: Yes, please. ->> PRICE：好的，请来一杯。
+MRS YOUNG: Do you want any sugar? ->> YOUNG：你要放些糖吗？
+MRS PRICE: Yes, please. ->> PRICE：好的，请放一些。
+MRS YOUNG: Do you want any milk? ->> YOUNG：要放些牛奶吗？
+MRS PRICE: No, thank you. ->> PRICE：不了，谢谢。
+I don't like milk in my coffee. ->> 我不喜欢咖啡中放牛奶，我喜欢黑咖啡。
+I like black coffee. ->> 我喜欢黑咖啡。
+MRS YOUNG: Do you like biscuits? ->> YOUNG：你喜欢饼干吗？
+MRS PRICE: Yes, I do. ->> PRICE：是的，我喜欢。
+MRS YOUNG: Do you want one? ->> YOUNG：你想要一块吗？
+MRS PRICE: Yes, please. ->> PRICE：好的，请来一块。
+
+
+like /laɪk/ v. 喜欢，想要  
+He likes to travel to new countries every year. ->> 他喜欢每年去新的国家旅行。  
+We like having dinner together on Sundays. ->> 我们喜欢在星期天一起吃晚饭。  
+
+want /wɔnt/ v. 想  
+She wants to learn how to play the guitar. ->> 她想学会弹吉他。  
+Do you want to join us for coffee later? ->> 你想待会和我们一起喝咖啡吗？

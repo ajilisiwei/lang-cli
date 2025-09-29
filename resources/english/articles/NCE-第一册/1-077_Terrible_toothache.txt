@@ -1,0 +1,32 @@
+Nurse: Good morning, Mr Croft. ->> 护士：早上好，克罗夫特先生。
+Mr Croft: Good morning, nurse. ->> 克罗夫特先生：早上好，护士。
+I want to see the dentist, please. ->> 我想见牙科医生。
+Nurse: Have you an appointment? ->> 护士：您约好了吗？
+Mr Croft: No, I haven't. ->> 克罗夫特先生：没有。
+Nurse: Is it urgent? ->> 护士：急吗？
+Mr Croft: Yes, it is. ->> 克罗夫特先生：是的，很急。
+It's very urgent. ->> 痛得很厉害。
+I feel awful. ->> 我难受极了。
+I have a terrible toothache. ->> 牙痛得要命。
+Nurse: Can you come at 10 am on Monday, April 24th? ->> 护士：您在4月24日星期一上午10点钟来行吗？
+Mr Croft: I must see the dentist now, nurse. ->> 克罗夫特先生：我必须现在就见牙科医生，护士。
+Nurse: The dentist is very busy at the moment. ->> 护士：牙科医生这会儿很忙。
+Can you come at 2:00 PM? ->> 您下午两点钟来行吗？
+Mr Croft: That's very late. ->> 克罗夫特先生：那就太晚了。
+Can't the dentist see me now? ->> 牙科医生现在就不能给我看一下吗？
+Nurse: I'm afraid that he can't, Mr Croft. ->> 护士：恐怕不能，克罗夫特先生。
+Can't you wait till this afternoon? ->> 您就不能等到今天下午吗？
+Mr Croft: I can wait, but my toothache can't! ->> 我倒是可以等，可是我的牙痛等不了啊！
+
+
+appointment /əˈpɔɪntmənt/ n. 约会，预约  
+I have a haircut appointment at noon. ->> 我中午有个理发的预约。  
+He scheduled an appointment with his financial advisor. ->> 他预约了和他的财务顾问见面。
+
+urgent /ˈɜːrdʒənt/ adj. 紧急的，急迫的  
+The doctor was called for an urgent case at the hospital. ->> 医生被叫去医院处理一件紧急情况。  
+We need an urgent response to this crisis. ->> 我们需要对这一危机作出紧急响应。
+
+till /tɪl/ prep. 直到……为止  
+I'll wait for you till the last train leaves. ->> 我会等你到最后一班火车离开。  
+Keep the door open till the guests arrive. ->> 把门开着直到客人们到来。

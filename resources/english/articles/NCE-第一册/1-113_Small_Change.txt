@@ -1,0 +1,21 @@
+Conductor: Fares please! ->> 售票员： 请买票！
+Man: Trafalgar Square please. ->> 男 子： 请买一张到特拉法加广场的票。
+Conductor: I'm sorry, sir. ->> 售票员： 对不起，我找不开10英镑的钞票。
+I can't change a pound note. ->> 您没有零钱吗？
+Haven't you got any small change? ->> 男 子： 恐怕我没有零钱。
+Man: I've got no small change, I'm afraid. ->> 售票员： 我来问问其他乘客。
+Conductor: I'll ask some of the passengers. ->> 售票员： 先生，您有零钱吗？
+Conductor: Have you any small change, sir? ->> 乘 客1： 对不起，我没有。
+1st Passenger: I'm sorry. ->> 乘 客2： 我也没有。
+I've got none. ->> 售票员： 夫人，您能把这10英镑的钞票换开吗？
+2ndPassenger: I haven't got any either. ->> 乘 客3： 恐怕不能。
+Conductor: Can you change this pound note, madam? ->> 乘 客4： 我也不能。
+3rd Passenger: I'm afraid I can't. ->> 售票员： 非常抱歉，先生。
+4th Passenger: Neither can I. ->> 您必须下车。
+Conductor: I'm very sorry, sir. ->> 我们的乘客中没人能换开这张钞票。
+You must get off the bus.None of our passengers can change this note. ->> 他们都是百万富翁！
+They're all millionaires! ->> 二流浪汉：我们俩除外。
+Two Tramps: Except us, conductor. ->> 流浪汉1： 我有零钱。
+1st Tramp: I've got some small change. ->> 流浪汉2： 我也有。
+2nd Tramp: So have I. ->> 流浪汉2： 我也有。
+

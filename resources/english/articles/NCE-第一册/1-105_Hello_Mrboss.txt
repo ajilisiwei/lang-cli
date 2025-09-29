@@ -1,0 +1,42 @@
+The Boss: Where's Miss Simpson, Bob? ->> 老板：鲍勃，Simpson小姐在哪儿？
+I want her. ->> 我要找她。
+Bob: Do you want to speak to her, sir? ->> 鲍勃：您要同她谈话吗？
+The Boss: Yes, I do. ->> 老板：是的。
+I want her to come to my office. ->> 我要她到我的办公室来。
+Tell her to come at once. ->> 叫她马上就来。
+Miss Simpson: Did you want to see me, sir? ->> Simpson小姐：您找我吗？
+The Boss: Ah, yes, Miss Simpson. ->> 老板：啊，是的，Simpson小姐。
+How do you spell “intelligent”? ->> "intelligent" 怎样拼写？
+Can you tell me? ->> 你能告诉我吗？
+Miss Simpson: I-N-T-E-L-L-I-G-E-N-T. ->> Simpson小姐：I-N-T-E-L-L-I-G-E-N-T。
+The Boss: That's right. ->> 老板：对的。
+You've typed it with only one “L”. ->> 但你只打了1个“L”。
+This letter's full of mistakes. ->> 这封信里错误百出。
+I want you to type it again. ->> 我要你重打一遍。
+Miss Simpson: Yes, I'll do that. ->> Simpson小姐：是，我重打。
+I'm sorry about that. ->> 对此我感到很抱歉。
+The Boss: And here's a little present for you. ->> 老板：这里有一件小礼物送你。
+Miss Simpson: What is it? ->> Simpson小姐：是什么？
+The Boss: It's a dictionary. ->> 老板：是本词典。
+I hope it will help you. ->> 我希望它能对你有所帮助。
+
+
+spell /spɛl/ v. 拼写  
+Could you spell the address out for me? ->> 你能帮我拼一下这个地址吗？  
+Children often learn to spell by using phonics exercises. ->> 孩子们通常通过语音练习学习拼写。
+
+intelligent /ˌɪnˈtɛləʤənt/ adj. 聪明的，有智慧的  
+He came up with an intelligent solution to the issue. ->> 他提出了一个聪明的解决方案。  
+Her intelligent remarks impressed everyone at the meeting. ->> 她聪明的发言让会议上的每个人都印象深刻。
+
+mistake /mɪˈsteɪk/ n. 错误  
+She realized her mistake and quickly corrected it. ->> 她意识到了自己的错误并迅速改正。  
+It's okay to make a mistake as long as you learn from it. ->> 只要从中学习，犯错误是可以接受的。
+
+present /ˈprɛzənt/ n. 礼物  
+He was surprised by the unexpected present. ->> 他对这个意外的礼物感到惊喜。  
+They exchanged presents during the holiday season. ->> 他们在节日期间互换礼物。
+
+dictionary /ˈdɪkʃəˌnɛri/ n. 词典  
+He consulted the dictionary for the definition of the word. ->> 他查阅了词典寻找这个词的定义。  
+My grandmother gave me an old dictionary as a gift. ->> 我祖母送了我一本旧词典作为礼物。

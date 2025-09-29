@@ -1,0 +1,85 @@
+Beyond two or three days, the world's best weather forecasts are speculative, and beyond six or seven they are worthless. ->> 世界上最好的天气预报在超过两三天后具有很强的猜测性，而如果超过六七天，天气预报就没有了任何价值。
+The Butterfly Effect is the reason. ->> 原因是蝴蝶效应。
+For small pieces of weather -- and to a global forecaster, small can mean thunderstorms and blizzards -- any prediction deteriorates rapidly. ->> 对于小片的天气来说 —— 对一个全球性的气象预报员而言，“小”可以意味着雷暴雨和暴风雪 —— 任何预测的质量会很快下降。
+Errors and uncertainties multiply, cascading upward through a chain of turbulent features, from dust devils and squalls up to continent-size eddies that only satellites can see. ->> 错误和不确定性在增加，接踵而来的是一系列湍流现象，从尘卷风和阵风到只有卫星能看到的大陆大小的旋涡。
+The modern weather models work with a grid of points of the order of sixty miles apart, and even so, some starting data has to be guessed, since ground stations and satellites cannot see everywhere. ->> 现代气象模型使用相隔约六十英里的网格点进行工作，即使如此，有些初始数据仍需依靠推测，因为地面工作站和卫星无法观测到所有地方。
+But suppose the earth could be covered with sensors spaced one foot apart, rising at one-foot intervals all the way to the top of the atmosphere. ->> 但假设地球可以被布满每隔一英尺就有一个传感器的覆盖层，这些传感器以一英尺的间隔一直排列到大气层的顶端。
+Suppose every sensor gives perfectly accurate readings of temperature, pressure, humidity, and any other quantity a meteorologist would want. ->> 假定每个传感器都能极其准确地读取温度、气压、湿度以及气象学家需要的任何其他数据。
+Precisely at noon an infinitely powerful computer takes all the data and calculates what will happen at each point at 12.01, then 12.02, then 12.03... ->> 在正午时分，一个功能极其强大的计算机会接收所有数据，并计算出在每个点12：01、12：02、12：03时可能出现的情况。
+The computer will still be unable to predict whether Princeton, New Jersey, will have sun or rain on a day one month away. ->> 然而，计算机仍无法预测一个月后某一天新泽西州普林斯顿的天气是晴天还是雨天。
+At noon the spaces between the sensors will hide fluctuations that the computer will not know about, tiny deviations from the average. ->> 正午时分，传感器之间的间隔会掩盖计算机无法得知的波动及细微的均值偏差。
+By 12.01, those fluctuations will already have created small errors one foot away. ->> 到12：01时，那些波动就已经在一英尺远的地方造成了小误差。
+Soon the errors will have multiplied to the ten-foot scale, and so on up to the size of the globe. ->> 不久这些误差就会扩展到十英尺的尺度，继而扩展到整个地球的尺度。
+
+
+forecast /ˈfɔrˌkæst/ n. 预报  
+The economic forecast was more optimistic than expected.  
+Before planning our hike, we checked the weather forecast for the weekend.
+
+speculative /ˈspɛkjələtɪv/ adj. 推测的  
+His speculative remarks about the stock market turned out to be quite accurate.  
+The art exhibit featured many speculative designs about future cities.
+
+blizzard /ˈblɪzərd/ n. 暴风雪  
+The blizzard paralyzed the entire city for days.  
+Schools were closed due to the severe blizzard warning.
+
+deteriorate /dɪˈtɪriərˌeɪt/ v. 变坏  
+Her health continued to deteriorate despite the best medical efforts.  
+The neglected building began to deteriorate over the years.
+
+multiply /ˈməltəˌplaɪ/ v. 增加  
+Bacteria can multiply rapidly under the right conditions.  
+Her responsibilities at work began to multiply after the promotion.
+
+cascade /kæˈskeɪd/ v. 瀑布似地落下  
+The water cascaded down the rocks into the pool below.  
+Her hair cascaded over her shoulders in soft curls.
+
+turbulent /ˈtərbjələnt/ adj. 狂暴的  
+The plane experienced turbulent skies on the way to its destination.  
+He had a turbulent childhood filled with constant change.
+
+dust /dəst/ devil 小尘暴，尘旋风  
+The dust devil danced across the open field on a hot summer day.  
+Farmers often spot dust devils on their land during dry seasons.
+
+squall /skwɔl/ n. 暴风  
+A sudden squall caught us off guard while we were sailing.  
+The squall left a trail of debris in its wake.
+
+eddy /ˈɛdi/ n. 旋涡  
+Strong eddies made it difficult for the small boat to navigate the river.  
+The artist captured the essence of eddies in her painting of the river.
+
+grid /grɪd/ n. 坐标方格  
+The map used a grid system to help locate specific landmarks.  
+Engineers worked tirelessly to restore power to the entire grid after the blackout.
+
+sensor /ˈsɛnsər/ n. 传感器  
+The sensor detected motion and turned on the outdoor lights automatically.  
+Modern cars are equipped with sensors to alert drivers of obstacles.
+
+humidity /hjuˈmɪdəti/ n. 湿度  
+High humidity makes the summer heat feel even more oppressive.  
+The humidity in the rainforest is much higher than in the desert.
+
+meteorologist /ˌmitiərˈɑləʤɪst/ n. 气象学家  
+The meteorologist predicted a snowy winter for the northern regions.  
+A renowned meteorologist delivered a lecture on climate change impacts.
+
+Princeton /ˈprɪnstən/ n. 普林斯顿（美国城市名）  
+Princeton is known for its prestigious university and rich history.  
+After graduation, she received a job offer from a company based in Princeton.
+
+New Jersey /nu ˈʤərzi/ n. 新泽西（美国州名）  
+New Jersey is famous for its shorelines and bustling suburbs.  
+Many commuters travel from New Jersey to New York City for work.
+
+fluctuation /ˌfləkʧuˈeɪʃən/ n. 起伏，波动  
+The stock market experienced significant fluctuation throughout the week.  
+Temperature fluctuations can be challenging for plant life.
+
+deviation /ˌdiviˈeɪʃən/ n. 偏差  
+There was a noticeable deviation from the expected results in the experiment.  
+Flight deviation occurred due to unexpected weather conditions.

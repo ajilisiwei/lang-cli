@@ -1,0 +1,95 @@
+Predicting the future is notoriously difficult. ->> 众所周知，预测未来是非常困难的。  
+Who could have imagined, in the mid 1970s, for example, that by the end of the 20th century, computers would be as common in people's homes as TV sets? ->> 举个例子，在20世纪70年代中叶，又有谁能想象到，到20世纪末，家庭用的计算机会像电视机一样普遍呢？  
+In the 1970s, computers were common enough, but only in big business, government departments, and large organizations. ->> 在70年代，计算机已经相当普及，但只是在大公司、政府部门和大型组织中。  
+These were the so-called mainframe machines. ->> 这些被称为主机。  
+Mainframe computers were very large indeed, often occupying whole air-conditioned rooms, employing full-time technicians and run on specially-written software. ->> 这些主机确实非常庞大，常常占据整间空调房，雇用专职技师，并依托专门编写的软件运行。  
+Though these large machines still exist, many of their functions have been taken over by small powerful personal computers, commonly known as PCs. ->> 尽管这种大型计算机仍然存在，但它们的许多功能已被小型而功能强大的个人电脑接管，通常称为PC。  
+In 1975, a primitive machine called the Altair, was launched in the USA. ->> 1975年，美国推出了一台名为“牛郎星（Altair）”的原始机型。  
+It can properly be described as the first 'home computer' and it pointed the way to the future. ->> 严格来说，它可以被称为第一台“家用电脑”，并且为未来指明了方向。  
+This was followed, at the end of the 1970s, by a machine called an Apple. ->> 紧随其后的是70年代末推出的一款名为“苹果”的机型。  
+In the early 1980s, the computer giant, IBM produced the world's first Personal Computer. ->> 在80年代初，计算机巨头IBM生产出了世界上第一台个人电脑。  
+This ran on an 'operating system' called DOS, produced by a then small company named Microsoft. ->> 这种电脑采用了一种操作系统，叫做DOS，由当时一家规模不大的公司——微软生产。  
+The IBM Personal Computer was widely copied. ->> IBM的个人电脑被广泛模仿。  
+From those humble beginnings, we have seen the development of the user-friendly home computers and multimedia machines which are in common use today. ->> 从那些不起眼的初始阶段，我们见证了易于使用的家用电脑和多媒体机的发展，这些机器如今已普遍使用。  
+Considering how recent these developments are, it is even more remarkable that as long ago as the 1960s, an Englishman, Leon Bagrit, was able to predict some of the uses of computers which we know today. ->> 想一想这些发展实现的时间是多么短暂，就更加令人惊叹，早在20世纪60年代，英国人莱昂·巴格瑞特就能预言我们今天所知道的一些计算机用途。  
+Bagrit dismissed the idea that computers would learn to 'think' for themselves and would 'rule the world', which people liked to believe in those days. ->> 巴格瑞特根本不接受计算机可以学会自己去“思考”和“统治世界”这种想法，而这种想法是当时的人们乐于相信的。  
+Bagrit foresaw a time when computers would be small enough to hold in the hand, when they would be capable of providing information about traffic jams and suggesting alternative routes, when they would be used in hospitals to help doctors to diagnose illnesses, when they would relieve office workers and accountants of dull, repetitive clerical work. ->> 巴格瑞特预见到有一天，计算机可以小到握在手中；它们能够提供有关交通堵塞的信息并提供替代路线建议；它们将在医院中被用于帮助医生诊断疾病；它们将使办公室人员和会计免受枯燥重复的文书工作。  
+All these computer uses have become commonplace. ->> 所有这些计算机的用途现在都变得很常见。  
+Of course, Leon Bagrit could not possibly have foreseen the development of the Internet, the worldwide system that enables us to communicate instantly with anyone in any part of the world by using computers linked to telephone networks. ->> 当然，莱昂·巴格瑞特不可能预测到互联网的发展——这个全球性的系统让我们可以通过连接到电话网络的计算机与世界上任何地方的人即时进行交流。  
+Nor could he have foreseen how we could use the Internet to obtain information on every known subject, so we can read it on a screen in our homes and even print it as well if we want to. ->> 他也无法预测到我们可以利用互联网获取有关任何已知专题的信息，以便在家中的屏幕上阅读，如果愿意的话，还可以将其打印出来。  
+Computers have become smaller and smaller, more and more powerful and cheaper and cheaper. ->> 计算机已经变得越来越小，功能越来越强，价格越来越便宜。  
+This is what makes Leon Bagrit's predictions particularly remarkable. ->> 这就是莱昂·巴格瑞特的预测显得特别非凡的原因。  
+If he, or someone like him, were alive today, he might be able to tell us what to expect in the next fifty years. ->> 如果他或是像他这样的人今天还活着，他大概可以告诉我们未来五十年可能会发生什么事情。
+
+
+notoriously /noʊˈtɔriəsli/ adv. （尤指因坏事）众所周知地  
+His notoriously bold statements during the press conference shocked everyone.  
+The project was notoriously mishandled by the previous administration.  
+
+full-time /ˈfʊlˌtaɪm/ adj. 专职的  
+He accepted a full-time position at the company last month.  
+Being a full-time student requires a lot of dedication and discipline.  
+
+technician /tɛkˈnɪʃən/ n. 技师  
+The technician fixed the issue with the computer within minutes.  
+Every successful lab needs a skilled technician to manage the equipment.  
+
+software /ˈsɔfˌwɛr/ n. 软件  
+We need to update the software on all company computers.  
+This new software has significantly improved productivity.  
+
+IBM /ibm*/ （美国）国际商用机器公司  
+IBM has been a leader in the tech industry for decades.  
+Many graduates aspire to work for IBM due to its reputation.  
+
+DOS /dɔs/ 磁盘操作系统（Disk Operating System）  
+DOS was widely used in the early days of personal computing.  
+He learned DOS commands to troubleshoot old computer systems.  
+
+Microsoft /ˈmaɪˌkroʊˈsɔft/ n. （美国）微软公司  
+Microsoft has launched a new version of its popular operating system.  
+Many businesses rely on Microsoft Office for their daily operations.  
+
+user-friendly /user-friendly*/ adj. 容易操作的，好用的  
+The new app is extremely user-friendly and intuitive.  
+This user-friendly device is perfect for beginners.  
+
+mainframe /ˈmeɪnˌfreɪm/ n. 主机，中央处理机  
+The mainframe in their data center processes complex computations.  
+Banks often rely on mainframes for their data-heavy operations.  
+
+multimedia /ˌməltiˈmidiə/ adj. 多媒体的  
+She created a multimedia presentation for her marketing project.  
+The school has a multimedia room equipped with the latest technology.  
+
+alternative /ɔlˈtərnətɪv/ adj. 选择的  
+They proposed an alternative solution to the problem.  
+Her alternative approach to therapy has proven effective.  
+
+diagnose /ˌdaɪəgˈnoʊs/ v. 诊断  
+The doctor was able to diagnose the illness quickly.  
+They used a new method to diagnose the patient's condition.  
+
+relieve /rɪˈliv/ v. 减轻  
+The medicine helped relieve his chronic back pain.  
+We are implementing measures to relieve the team of excessive workload.  
+
+accountant /əˈkaʊntənt/ n. 会计  
+The accountant reviewed the financial statements before the audit.  
+She hired an accountant to help with her taxes.  
+
+repetitive /rɪˈpɛtɪtɪv/ adj. 重复的  
+The job was tedious and highly repetitive.  
+He found the repetitive nature of the task monotonous.  
+
+clerical /ˈklɛrɪkəl/ adj. 办公室工作的  
+She was hired to perform clerical duties in the finance department.  
+The clerical staff ensures that all paperwork is processed efficiently.  
+
+Internet /ˈɪntərˌnɛt/ n. 国际交互网  
+The Internet has revolutionized the way we communicate and access information.  
+He spent hours researching on the Internet for his thesis.  
+
+network /ˈnɛtˌwərk/ n. 网络  
+The company upgraded its network to improve security and speed.  
+She used her professional network to find new job opportunities.
