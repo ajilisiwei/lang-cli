@@ -1,4 +1,4 @@
-# 语言学习打字终端 (lang-cli)
+# 多语言学习打字终端 (Multilingual language learning typing terminal)
 
 `lang-cli` 是一个基于 Go 构建的终端语言学习工具，提供命令行与 Bubble Tea TUI 双重体验，帮助多语言学习者通过单词、短语、句子与文章的打字练习巩固记忆。项目内置资源管理、收藏/标记、键盘音效、练习统计以及基于艾宾浩斯遗忘曲线的间隔重复算法，适用于持续迭代的个人学习流程。
 
