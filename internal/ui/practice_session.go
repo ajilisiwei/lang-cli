@@ -79,6 +79,7 @@ type PracticeSession struct {
 	endTime      time.Time       // 结束时间
 	correct      int             // 正确数量
 	incorrect    int             // 错误数量
+	displayFileName string       // 用于展示的文件名
 	orderMode    string          // 练习顺序模式
 	state        string          // 状态："practicing", "finished"
 	result       string          // 结果信息
@@ -192,6 +193,7 @@ func NewPracticeSession(resourceType, fileName string) *PracticeSession {
 		initialItemCount:       len(practiceOrder),
 		srsEnabled:             srsEnabled,
 		srsSchedule:            schedule,
+		displayFileName:        practice.FormatResourceDisplayName(fileName),
 		commandOptions:         sessionOptions,
 		filteredCommands:       cloneCommandOptions(sessionOptions),
 		selectedCommandIndex:   0,
@@ -725,7 +727,7 @@ func (m PracticeSession) View() string {
 	var s strings.Builder
 
 	// 标题
-	title := fmt.Sprintf("%s练习 - %s", getResourceTypeTitle(m.resourceType), m.fileName)
+	title := fmt.Sprintf("%s练习 - %s", getResourceTypeTitle(m.resourceType), m.displayFileName)
 	s.WriteString(RenderTitle(title) + "\n\n")
 
 	if m.state == "practicing" {

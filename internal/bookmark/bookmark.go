@@ -2,6 +2,7 @@ package bookmark
 
 import (
 	"fmt"
+	"path/filepath"
 	"strings"
 
 	"github.com/daiweiwei/lang-cli/internal/practice"
@@ -141,7 +142,9 @@ func SupportsMark(resourceType string) bool {
 }
 
 func isSupportedList(listName string) bool {
-	_, ok := supportedLists[listName]
+	name := filepath.Base(listName)
+	name = strings.TrimSuffix(name, ".txt")
+	_, ok := supportedLists[name]
 	return ok
 }
 

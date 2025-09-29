@@ -8,5 +8,5 @@ languages:
 next_one_order: ebbinghaus
 phrases: {}
 sentences: {}
-show_translation: true
+show_translation: false
 words: {}

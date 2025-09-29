@@ -1,6 +1,9 @@
 package ui
 
 import (
+	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/list"
@@ -84,7 +87,6 @@ func (m ManageMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					// 处理错误
 					return m, nil
 				}
-				// 传递当前窗口大小给新模型
 				width, height := m.list.Width(), m.list.Height()+4
 				if width > 0 && height > 4 {
 					updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: width, Height: height})
@@ -261,35 +263,46 @@ type ManageResourceMenu struct {
 	list         list.Model
 	resourceType string
 	action       string
+	folders      []practice.ResourceFolder
 	quitting     bool
+}
+
+// ManageFolderItem 表示资源管理中的文件夹条目
+type ManageFolderItem struct {
+	folder       practice.ResourceFolder
+	action       string
+	resourceType string
+}
+
+func (i ManageFolderItem) Title() string {
+	return i.folder.DisplayName
+}
+
+func (i ManageFolderItem) Description() string {
+	return fmt.Sprintf("包含 %d 个资源", len(i.folder.Files))
+}
+
+func (i ManageFolderItem) FilterValue() string {
+	return i.folder.DisplayName
 }
 
 // 创建新的资源管理菜单
 func NewManageResourceMenu(resourceType, action string) *ManageResourceMenu {
-	// 获取资源文件列表
-	files, err := manage.ListResourceFiles(resourceType)
+	folders, err := manage.ListResourceFolders(resourceType)
 	if err != nil {
-		files = []string{}
+		folders = []practice.ResourceFolder{}
 	}
 
-	// 创建菜单项
 	items := []list.Item{}
-	for _, file := range files {
-		fileName := file // 创建副本以避免闭包问题
-		items = append(items, MenuItem{
-			title:       fileName,
-			description: getActionTitle(action) + fileName,
-			action: func() (tea.Model, error) {
-				if action == "delete" {
-					// 显示删除确认对话框
-					return NewDeleteConfirmView(resourceType, fileName), nil
-				}
-				return nil, nil
-			},
+	for _, folder := range folders {
+		folderCopy := folder
+		items = append(items, ManageFolderItem{
+			folder:       folderCopy,
+			action:       action,
+			resourceType: resourceType,
 		})
 	}
 
-	// 添加返回选项
 	items = append(items, MenuItem{
 		title:       "返回资源类型菜单",
 		description: "返回到资源类型菜单",
@@ -297,7 +310,7 @@ func NewManageResourceMenu(resourceType, action string) *ManageResourceMenu {
 	})
 
 	l := list.New(items, list.NewDefaultDelegate(), 0, 0)
-	l.Title = getActionTitle(action) + getResourceTypeTitle(resourceType)
+	l.Title = getActionTitle(action) + getResourceTypeTitle(resourceType) + "文件夹"
 	l.SetShowStatusBar(false)
 	l.SetFilteringEnabled(false)
 	l.Styles.Title = TitleStyle
@@ -306,6 +319,7 @@ func NewManageResourceMenu(resourceType, action string) *ManageResourceMenu {
 		list:         l,
 		resourceType: resourceType,
 		action:       action,
+		folders:      folders,
 	}
 }
 
@@ -329,7 +343,6 @@ func (m ManageResourceMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 
 		case "esc":
-			// 返回到资源类型菜单
 			resourceTypeMenu := NewResourceTypeMenu(m.action)
 			width, height := m.list.Width(), m.list.Height()+4
 			if width > 0 && height > 4 {
@@ -339,20 +352,28 @@ func (m ManageResourceMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return resourceTypeMenu, nil
 
 		case "enter":
-			i, ok := m.list.SelectedItem().(MenuItem)
-			if ok && i.action != nil {
-				newModel, err := i.action()
-				if err != nil {
-					// 处理错误
-					return m, nil
-				}
-				// 传递当前窗口大小给新模型
+			switch selected := m.list.SelectedItem().(type) {
+			case ManageFolderItem:
+				folderMenu := NewManageFolderDetailMenu(m.resourceType, m.action, selected.folder)
 				width, height := m.list.Width(), m.list.Height()+4
 				if width > 0 && height > 4 {
-					updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: width, Height: height})
+					updatedModel, _ := folderMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
 					return updatedModel, nil
 				}
-				return newModel, nil
+				return folderMenu, nil
+			case MenuItem:
+				if selected.action != nil {
+					newModel, err := selected.action()
+					if err != nil {
+						return m, nil
+					}
+					width, height := m.list.Width(), m.list.Height()+4
+					if width > 0 && height > 4 {
+						updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: width, Height: height})
+						return updatedModel, nil
+					}
+					return newModel, nil
+				}
 			}
 		}
 	}
@@ -371,28 +392,227 @@ func (m ManageResourceMenu) View() string {
 	return m.list.View()
 }
 
+// ManageFolderDetailMenu 文件夹详情菜单
+type ManageFolderDetailMenu struct {
+	list         list.Model
+	resourceType string
+	action       string
+	folder       practice.ResourceFolder
+	folderNotice string
+	quitting     bool
+}
+
+// NewManageFolderDetailMenu 创建文件夹详情菜单
+func NewManageFolderDetailMenu(resourceType, action string, folder practice.ResourceFolder) *ManageFolderDetailMenu {
+	items := make([]list.Item, 0, len(folder.Files)+3)
+	folderDir := folder.DirName
+	folderDisplay := folder.DisplayName
+	folderNotice := ""
+
+	if len(folder.Files) == 0 {
+		items = append(items, MenuItem{
+			title:       "（该文件夹暂无资源）",
+			description: "按 Esc 返回上一层",
+			action:      nil,
+		})
+	} else {
+		for _, file := range folder.Files {
+			fileName := file
+			identifier := practice.BuildResourceIdentifier(folderDir, fileName)
+			display := practice.FormatResourceDisplayName(identifier)
+			itemIdentifier := identifier
+			itemDisplay := display
+			items = append(items, MenuItem{
+				title:       itemDisplay,
+				description: getActionTitle(action) + itemDisplay,
+				action: func() (tea.Model, error) {
+					if action == "delete" {
+						return NewDeleteConfirmView(resourceType, folderDir, itemIdentifier, itemDisplay), nil
+					}
+					return nil, nil
+				},
+			})
+		}
+	}
+
+	if action == "delete" && folderDir != practice.DefaultFolderDir {
+		if len(folder.Files) == 0 {
+			items = append(items, MenuItem{
+				title:       "删除该文件夹",
+				description: "删除空文件夹",
+				action: func() (tea.Model, error) {
+					return NewDeleteFolderConfirmView(resourceType, folderDir, folderDisplay), nil
+				},
+			})
+		} else {
+			if folderDisplay != "" {
+				folderNotice = fmt.Sprintf("文件夹“%s”非空，无法直接删除\n删除文件夹所有资源后，文件夹会自动删除", folderDisplay)
+			} else {
+				folderNotice = "文件夹非空，无法直接删除\n删除文件夹所有资源后，文件夹会自动删除"
+			}
+		}
+	}
+
+	items = append(items, MenuItem{
+		title:       "返回文件夹列表",
+		description: "返回上一层",
+		action:      func() (tea.Model, error) { return NewManageResourceMenu(resourceType, action), nil },
+	})
+
+	l := list.New(items, list.NewDefaultDelegate(), 0, 0)
+	l.Title = fmt.Sprintf("%s - %s", getResourceTypeTitle(resourceType), folderDisplay)
+	l.SetShowStatusBar(false)
+	l.SetFilteringEnabled(false)
+	l.Styles.Title = TitleStyle
+
+	return &ManageFolderDetailMenu{
+		list:         l,
+		resourceType: resourceType,
+		action:       action,
+		folder:       folder,
+		folderNotice: folderNotice,
+	}
+}
+
+// NewManageFolderDetailMenuByDir 根据目录重新构建文件夹详情菜单
+func NewManageFolderDetailMenuByDir(resourceType, action, folderDir string) tea.Model {
+	folder, err := manage.GetResourceFolder(resourceType, folderDir)
+	if err != nil {
+		return NewManageResourceMenu(resourceType, action)
+	}
+	return NewManageFolderDetailMenu(resourceType, action, *folder)
+}
+
+func (m ManageFolderDetailMenu) Init() tea.Cmd {
+	return nil
+}
+
+func (m ManageFolderDetailMenu) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.list.SetWidth(msg.Width)
+		m.list.SetHeight(msg.Height - 4)
+		return m, nil
+
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c":
+			m.quitting = true
+			return m, tea.Quit
+		case "esc":
+			folderMenu := NewManageResourceMenu(m.resourceType, m.action)
+			width, height := m.list.Width(), m.list.Height()+4
+			if width > 0 && height > 4 {
+				updatedModel, _ := folderMenu.Update(tea.WindowSizeMsg{Width: width, Height: height})
+				return updatedModel, nil
+			}
+			return folderMenu, nil
+		case "enter":
+			item, ok := m.list.SelectedItem().(MenuItem)
+			if ok && item.action != nil {
+				newModel, err := item.action()
+				if err != nil {
+					return m, nil
+				}
+				width, height := m.list.Width(), m.list.Height()+4
+				if width > 0 && height > 4 {
+					updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: width, Height: height})
+					return updatedModel, nil
+				}
+				return newModel, nil
+			}
+		}
+	}
+
+	var cmd tea.Cmd
+	m.list, cmd = m.list.Update(msg)
+	return m, cmd
+}
+
+func (m ManageFolderDetailMenu) View() string {
+	if m.quitting {
+		return "再见！"
+	}
+
+	view := m.list.View()
+	if m.folderNotice != "" {
+		view += "\n\n" + RenderText(m.folderNotice)
+	}
+	return view
+}
+
 // ImportView 导入视图模型
 type ImportView struct {
-	resourceType string
-	textInput    textinput.Model
-	message      string
-	width        int
-	height       int
-	quitting     bool
+	resourceType          string
+	folderInput           textinput.Model
+	fileInput             textinput.Model
+	message               string
+	width                 int
+	height                int
+	quitting              bool
+	focus                 string
+	folderOptions         []folderOption
+	filteredFolderOptions []folderOption
+	selectedFolderIndex   int
+	folderDropdownVisible bool
+	fileOptions           []fileOption
+	filteredFileOptions   []fileOption
+	selectedFileIndex     int
+	fileDropdownVisible   bool
+}
+
+type folderOption struct {
+	dir     string
+	display string
+}
+
+type fileOption struct {
+	path  string
+	label string
+	isDir bool
+}
+
+func buildFolderOptions(resourceType string) []folderOption {
+	folders, err := manage.ListResourceFolders(resourceType)
+	if err != nil {
+		return []folderOption{}
+	}
+	options := make([]folderOption, 0, len(folders))
+	for _, folder := range folders {
+		options = append(options, folderOption{
+			dir:     folder.DirName,
+			display: folder.DisplayName,
+		})
+	}
+	return options
 }
 
 // 创建新的导入视图
 func NewImportView(resourceType string) *ImportView {
-	// 创建文本输入
-	ti := textinput.New()
-	ti.Placeholder = "输入文件路径..."
-	ti.Focus()
-	ti.Width = 40
+	folderInput := textinput.New()
+	folderInput.Placeholder = "默认"
+	folderInput.Focus()
+	folderInput.Width = 40
+
+	fileInput := textinput.New()
+	fileInput.Placeholder = "输入文件路径..."
+	fileInput.Width = 40
+
+	options := buildFolderOptions(resourceType)
 
 	return &ImportView{
-		resourceType: resourceType,
-		textInput:    ti,
-		message:      "",
+		resourceType:          resourceType,
+		folderInput:           folderInput,
+		fileInput:             fileInput,
+		focus:                 "folder",
+		folderOptions:         options,
+		filteredFolderOptions: options,
+		selectedFolderIndex:   0,
+		folderDropdownVisible: len(options) > 0,
+		fileOptions:           []fileOption{},
+		filteredFileOptions:   []fileOption{},
+		selectedFileIndex:     0,
+		fileDropdownVisible:   false,
 	}
 }
 
@@ -407,7 +627,10 @@ func (m ImportView) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
-		m.textInput.Width = msg.Width - 20
+		if m.width > 0 {
+			m.folderInput.Width = msg.Width - 20
+			m.fileInput.Width = msg.Width - 20
+		}
 		return m, nil
 
 	case tea.KeyMsg:
@@ -426,36 +649,295 @@ func (m ImportView) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			return newModel, nil
 
+		case "tab":
+			if m.focus == "folder" {
+				m.applySelectedFolderSuggestion()
+				m.setFocus("file")
+			} else {
+				if m.fileDropdownVisible && len(m.filteredFileOptions) > 0 {
+					m.applySelectedFileSuggestion()
+				} else {
+					m.setFocus("folder")
+				}
+			}
+			return m, nil
+
 		case "enter":
-			// 获取文件路径
-			filePath := m.textInput.Value()
-			if filePath == "" {
-				m.message = "请输入文件路径"
+			if m.focus == "folder" {
+				m.applySelectedFolderSuggestion()
+				m.setFocus("file")
+				return m, nil
+			}
+			return m.handleImport()
+
+		case "up":
+			if m.focus == "folder" && m.folderDropdownVisible && len(m.filteredFolderOptions) > 0 {
+				m.moveFolderSelection(-1)
+				m.applySelectedFolderSuggestion()
+				return m, nil
+			}
+			if m.focus == "file" && m.fileDropdownVisible && len(m.filteredFileOptions) > 0 {
+				m.moveFileSelection(-1)
+				m.applySelectedFileSuggestion()
 				return m, nil
 			}
 
-			// 导入资源 - 使用不需要用户确认的版本
-			err := manage.ImportResourceForTest(m.resourceType, filePath)
-			if err != nil {
-				m.message = "导入失败: " + err.Error()
+		case "down":
+			if m.focus == "folder" && m.folderDropdownVisible && len(m.filteredFolderOptions) > 0 {
+				m.moveFolderSelection(1)
+				m.applySelectedFolderSuggestion()
 				return m, nil
-			} else {
-				// 导入成功，自动返回到资源类型菜单
-				newModel := NewResourceTypeMenu("import")
-				// 传递当前窗口大小给新模型
-				if m.width > 0 && m.height > 0 {
-					updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
-					return updatedModel, nil
-				}
-				return newModel, nil
+			}
+			if m.focus == "file" && m.fileDropdownVisible && len(m.filteredFileOptions) > 0 {
+				m.moveFileSelection(1)
+				m.applySelectedFileSuggestion()
+				return m, nil
 			}
 		}
 	}
 
 	// 处理文本输入
 	var cmd tea.Cmd
-	m.textInput, cmd = m.textInput.Update(msg)
+	if m.focus == "folder" {
+		m.folderInput, cmd = m.folderInput.Update(msg)
+		m.updateFolderSuggestions()
+	} else {
+		m.fileInput, cmd = m.fileInput.Update(msg)
+		m.updateFileSuggestions()
+	}
 	return m, cmd
+}
+
+func (m *ImportView) setFocus(target string) {
+	if m.focus == target {
+		return
+	}
+	switch target {
+	case "folder":
+		m.folderInput.Focus()
+		m.fileInput.Blur()
+		m.updateFolderSuggestions()
+	case "file":
+		m.fileInput.Focus()
+		m.folderInput.Blur()
+		m.updateFileSuggestions()
+	}
+	m.focus = target
+}
+
+func (m *ImportView) updateFolderSuggestions() {
+	query := strings.ToLower(strings.TrimSpace(m.folderInput.Value()))
+	if query == "" {
+		m.filteredFolderOptions = m.folderOptions
+		m.selectedFolderIndex = 0
+		m.folderDropdownVisible = len(m.filteredFolderOptions) > 0
+		return
+	}
+
+	filtered := make([]folderOption, 0, len(m.folderOptions))
+	for _, option := range m.folderOptions {
+		if strings.HasPrefix(strings.ToLower(option.display), query) {
+			filtered = append(filtered, option)
+		}
+	}
+
+	m.filteredFolderOptions = filtered
+	if len(filtered) == 0 {
+		m.folderDropdownVisible = false
+		m.selectedFolderIndex = 0
+		return
+	}
+	if m.selectedFolderIndex >= len(filtered) {
+		m.selectedFolderIndex = 0
+	}
+	m.folderDropdownVisible = true
+}
+
+func (m *ImportView) moveFolderSelection(delta int) {
+	if len(m.filteredFolderOptions) == 0 {
+		return
+	}
+	count := len(m.filteredFolderOptions)
+	m.selectedFolderIndex = (m.selectedFolderIndex + delta + count) % count
+}
+
+func (m *ImportView) applySelectedFolderSuggestion() {
+	if !m.folderDropdownVisible || len(m.filteredFolderOptions) == 0 {
+		return
+	}
+	option := m.filteredFolderOptions[m.selectedFolderIndex]
+	m.folderInput.SetValue(option.display)
+	m.folderInput.CursorEnd()
+}
+
+func (m *ImportView) updateFileSuggestions() {
+	value := m.fileInput.Value()
+	trimmed := strings.TrimSpace(value)
+	expanded := expandUserPath(trimmed)
+	separator := string(os.PathSeparator)
+
+	searchDir := expanded
+	prefix := ""
+	inputEndsWithSep := strings.HasSuffix(trimmed, separator)
+
+	if trimmed == "" {
+		searchDir = "."
+	} else if inputEndsWithSep {
+		searchDir = expanded
+	} else {
+		searchDir = filepath.Dir(expanded)
+		if searchDir == "" {
+			searchDir = "."
+		}
+		prefix = filepath.Base(expanded)
+	}
+
+	entries, err := os.ReadDir(searchDir)
+	if err != nil {
+		m.fileOptions = nil
+		m.filteredFileOptions = nil
+		m.fileDropdownVisible = false
+		m.selectedFileIndex = 0
+		return
+	}
+
+	lowerPrefix := strings.ToLower(prefix)
+	options := make([]fileOption, 0, len(entries))
+	for _, entry := range entries {
+		name := entry.Name()
+		if lowerPrefix != "" && !strings.HasPrefix(strings.ToLower(name), lowerPrefix) {
+			continue
+		}
+		fullPath := filepath.Join(searchDir, name)
+		labelPath := fullPath
+		if entry.IsDir() {
+			fullPath += separator
+			labelPath += separator
+		}
+		labelPath = collapseUserPath(labelPath)
+		options = append(options, fileOption{
+			path:  fullPath,
+			label: labelPath,
+			isDir: entry.IsDir(),
+		})
+	}
+
+	if len(options) == 0 {
+		m.fileOptions = nil
+		m.filteredFileOptions = nil
+		m.fileDropdownVisible = false
+		m.selectedFileIndex = 0
+		return
+	}
+
+	m.fileOptions = options
+	m.filteredFileOptions = options
+	m.selectedFileIndex = 0
+	m.fileDropdownVisible = true
+}
+
+func (m *ImportView) moveFileSelection(delta int) {
+	if len(m.filteredFileOptions) == 0 {
+		return
+	}
+	count := len(m.filteredFileOptions)
+	m.selectedFileIndex = (m.selectedFileIndex + delta + count) % count
+}
+
+func (m *ImportView) applySelectedFileSuggestion() {
+	if !m.fileDropdownVisible || len(m.filteredFileOptions) == 0 {
+		return
+	}
+	option := m.filteredFileOptions[m.selectedFileIndex]
+	m.fileInput.SetValue(option.label)
+	m.fileInput.CursorEnd()
+	// 当选择的是目录时，保持目录状态以便继续深入
+	if option.isDir {
+		m.updateFileSuggestions()
+	} else {
+		m.fileDropdownVisible = false
+	}
+}
+
+func expandUserPath(path string) string {
+	trimmed := strings.TrimSpace(path)
+	if trimmed == "" {
+		return ""
+	}
+	if strings.HasPrefix(trimmed, "~") {
+		home, err := os.UserHomeDir()
+		if err == nil {
+			if trimmed == "~" {
+				return home
+			}
+			rest := strings.TrimPrefix(trimmed, "~")
+			rest = strings.TrimPrefix(rest, string(os.PathSeparator))
+			return filepath.Join(home, rest)
+		}
+	}
+	return trimmed
+}
+
+func collapseUserPath(path string) string {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return path
+	}
+	home = filepath.Clean(home)
+	separator := string(os.PathSeparator)
+	cleaned := filepath.Clean(path)
+	if strings.HasPrefix(cleaned, home+separator) || cleaned == home {
+		rel, err := filepath.Rel(home, cleaned)
+		if err == nil {
+			if rel == "." || rel == "" {
+				return "~"
+			}
+			collapsed := filepath.Join("~", rel)
+			if strings.HasSuffix(path, separator) && !strings.HasSuffix(collapsed, separator) {
+				collapsed += separator
+			}
+			return collapsed
+		}
+	}
+	if strings.HasSuffix(path, separator) && !strings.HasSuffix(cleaned, separator) {
+		return cleaned + separator
+	}
+	return path
+}
+func (m ImportView) handleImport() (tea.Model, tea.Cmd) {
+	filePath := strings.TrimSpace(m.fileInput.Value())
+	if filePath == "" {
+		m.message = "请输入文件路径"
+		return m, nil
+	}
+
+	expandedPath := expandUserPath(filePath)
+	if expandedPath == "" {
+		m.message = "请输入有效的文件路径"
+		return m, nil
+	}
+
+	folderValue := strings.TrimSpace(m.folderInput.Value())
+	normalizedFolder, changed := practice.NormalizeFolderName(folderValue)
+	if changed && folderValue != "" && normalizedFolder != folderValue {
+		m.folderInput.SetValue(normalizedFolder)
+		m.folderInput.CursorEnd()
+		m.message = fmt.Sprintf("文件夹名称已调整为 %s，请确认后再次导入", normalizedFolder)
+		return m, nil
+	}
+
+	err := manage.ImportResourceForTest(m.resourceType, normalizedFolder, expandedPath)
+	if err != nil {
+		m.message = "导入失败: " + err.Error()
+		return m, nil
+	}
+
+	newModel := NewResourceTypeMenu("import")
+	if m.width > 0 && m.height > 0 {
+		updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+		return updatedModel, nil
+	}
+	return newModel, nil
 }
 
 // View 渲染视图
@@ -470,9 +952,33 @@ func (m ImportView) View() string {
 	title := "导入" + getResourceTypeTitle(m.resourceType)
 	s.WriteString(RenderTitle(title) + "\n\n")
 
-	// 显示输入框
+	// 文件夹输入
+	s.WriteString(RenderHighlight("选择文件夹:") + "\n")
+	s.WriteString(m.folderInput.View() + "\n")
+	if m.folderDropdownVisible && len(m.filteredFolderOptions) > 0 {
+		for idx, option := range m.filteredFolderOptions {
+			marker := "  "
+			if idx == m.selectedFolderIndex {
+				marker = "> "
+			}
+			s.WriteString(marker + option.display + "\n")
+		}
+	}
+	s.WriteString("\n")
+
+	// 文件路径输入
 	s.WriteString(RenderHighlight("请输入文件路径:") + "\n")
-	s.WriteString(m.textInput.View() + "\n\n")
+	s.WriteString(m.fileInput.View() + "\n\n")
+	if m.fileDropdownVisible && len(m.filteredFileOptions) > 0 {
+		for idx, option := range m.filteredFileOptions {
+			marker := "  "
+			if idx == m.selectedFileIndex {
+				marker = "> "
+			}
+			s.WriteString(marker + option.label + "\n")
+		}
+		s.WriteString("\n")
+	}
 
 	// 显示消息
 	if m.message != "" {
@@ -484,7 +990,7 @@ func (m ImportView) View() string {
 	}
 
 	// 显示提示
-	s.WriteString(RenderText("按 Enter 导入，按 Esc 返回") + "\n")
+	s.WriteString(RenderText("按 Tab 切换输入框，按 Enter 导入，按 Esc 返回") + "\n")
 
 	return s.String()
 }
@@ -492,7 +998,9 @@ func (m ImportView) View() string {
 // DeleteConfirmView 删除确认视图模型
 type DeleteConfirmView struct {
 	resourceType string
-	fileName     string
+	folderDir    string
+	resourceName string
+	displayName  string
 	message      string
 	width        int
 	height       int
@@ -500,10 +1008,12 @@ type DeleteConfirmView struct {
 }
 
 // 创建新的删除确认视图
-func NewDeleteConfirmView(resourceType, fileName string) *DeleteConfirmView {
+func NewDeleteConfirmView(resourceType, folderDir, resourceIdentifier, displayName string) *DeleteConfirmView {
 	return &DeleteConfirmView{
 		resourceType: resourceType,
-		fileName:     fileName,
+		folderDir:    folderDir,
+		resourceName: resourceIdentifier,
+		displayName:  displayName,
 	}
 }
 
@@ -528,13 +1038,12 @@ func (m DeleteConfirmView) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "y", "Y":
 			// 确认删除
-			err := manage.DeleteResourceWithoutConfirm(m.resourceType, m.fileName)
+			err := manage.DeleteResourceWithoutConfirm(m.resourceType, m.resourceName)
 			if err != nil {
 				m.message = "删除失败: " + err.Error()
 				return m, nil
 			}
-			// 删除成功，返回资源列表
-			newModel := NewManageResourceMenu(m.resourceType, "delete")
+			newModel := NewManageFolderDetailMenuByDir(m.resourceType, "delete", m.folderDir)
 			// 传递当前窗口大小
 			if m.width > 0 && m.height > 0 {
 				updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
@@ -544,7 +1053,7 @@ func (m DeleteConfirmView) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		case "n", "N", "esc":
 			// 取消删除，返回资源列表
-			newModel := NewManageResourceMenu(m.resourceType, "delete")
+			newModel := NewManageFolderDetailMenuByDir(m.resourceType, "delete", m.folderDir)
 			// 传递当前窗口大小
 			if m.width > 0 && m.height > 0 {
 				updatedModel, _ := newModel.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
@@ -569,7 +1078,89 @@ func (m DeleteConfirmView) View() string {
 	s.WriteString("\n\n")
 	s.WriteString("确认删除以下资源吗？\n\n")
 	s.WriteString("资源类型: " + getResourceTypeTitle(m.resourceType) + "\n")
-	s.WriteString("文件名: " + m.fileName + "\n\n")
+	s.WriteString("所在文件夹: " + practice.FolderDisplayName(m.folderDir) + "\n")
+	s.WriteString("文件名: " + m.displayName + "\n\n")
+	s.WriteString("按 Y 确认删除，按 N 或 Esc 取消\n")
+
+	if m.message != "" {
+		s.WriteString("\n")
+		s.WriteString(m.message)
+	}
+
+	return s.String()
+}
+
+// DeleteFolderConfirmView 删除文件夹确认视图
+type DeleteFolderConfirmView struct {
+	resourceType  string
+	folderDir     string
+	folderDisplay string
+	message       string
+	width         int
+	height        int
+	quitting      bool
+}
+
+func NewDeleteFolderConfirmView(resourceType, folderDir, folderDisplay string) *DeleteFolderConfirmView {
+	return &DeleteFolderConfirmView{
+		resourceType:  resourceType,
+		folderDir:     folderDir,
+		folderDisplay: folderDisplay,
+	}
+}
+
+func (m DeleteFolderConfirmView) Init() tea.Cmd {
+	return nil
+}
+
+func (m DeleteFolderConfirmView) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
+		return m, nil
+
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c":
+			m.quitting = true
+			return m, tea.Quit
+		case "y", "Y":
+			if err := manage.DeleteResourceFolder(m.resourceType, m.folderDir); err != nil {
+				m.message = "删除失败: " + err.Error()
+				return m, nil
+			}
+			menu := NewManageResourceMenu(m.resourceType, "delete")
+			if m.width > 0 && m.height > 0 {
+				updatedModel, _ := menu.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+				return updatedModel, nil
+			}
+			return menu, nil
+		case "n", "N", "esc":
+			menu := NewManageFolderDetailMenuByDir(m.resourceType, "delete", m.folderDir)
+			if m.width > 0 && m.height > 0 {
+				updatedModel, _ := menu.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+				return updatedModel, nil
+			}
+			return menu, nil
+		}
+	}
+
+	return m, nil
+}
+
+func (m DeleteFolderConfirmView) View() string {
+	if m.quitting {
+		return "再见！"
+	}
+
+	var s strings.Builder
+	s.WriteString("\n")
+	s.WriteString(TitleStyle.Render("确认删除文件夹"))
+	s.WriteString("\n\n")
+	s.WriteString("确认删除以下文件夹吗？\n\n")
+	s.WriteString("资源类型: " + getResourceTypeTitle(m.resourceType) + "\n")
+	s.WriteString("文件夹: " + m.folderDisplay + "\n\n")
 	s.WriteString("按 Y 确认删除，按 N 或 Esc 取消\n")
 
 	if m.message != "" {

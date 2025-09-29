@@ -6,9 +6,11 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"strings"
 	"time"
+	"unicode"
 
 	"github.com/daiweiwei/lang-cli/internal/config"
 )
@@ -20,6 +22,19 @@ const (
 	Sentences = "sentences"
 	Articles  = "articles"
 )
+
+// 资源文件夹常量
+const (
+	DefaultFolderDir     = "default"
+	DefaultFolderDisplay = "默认"
+)
+
+// ResourceFolder 表示一个资源文件夹及其文件
+type ResourceFolder struct {
+	DirName     string
+	DisplayName string
+	Files       []string
+}
 
 // 分隔符
 const (
@@ -33,18 +48,169 @@ func init() {
 
 // GetResourcePath 获取资源文件路径
 // 优先返回用户资源路径，若不存在则回退到基础资源目录
-func GetResourcePath(resourceType string, fileName string) string {
-	currentLanguage := config.AppConfig.CurrentLanguage
-	if !strings.HasSuffix(fileName, ".txt") {
-		fileName = fileName + ".txt"
+func normalizeFolderDir(folder string) string {
+	sanitized, _ := sanitizeFolderName(folder)
+	return sanitized
+}
+
+// NormalizeFolderName 对用户输入的文件夹名进行规范化处理，返回规范化后的名称和是否发生了修改
+func NormalizeFolderName(folder string) (string, bool) {
+	return sanitizeFolderName(folder)
+}
+
+var windowsReservedNames = map[string]struct{}{
+	"con": {}, "prn": {}, "aux": {}, "nul": {},
+	"com1": {}, "com2": {}, "com3": {}, "com4": {}, "com5": {}, "com6": {}, "com7": {}, "com8": {}, "com9": {},
+	"lpt1": {}, "lpt2": {}, "lpt3": {}, "lpt4": {}, "lpt5": {}, "lpt6": {}, "lpt7": {}, "lpt8": {}, "lpt9": {},
+}
+
+const invalidFolderChars = "<>:\"/\\|?*"
+
+func sanitizeFolderName(folder string) (string, bool) {
+	original := folder
+	folder = strings.TrimSpace(folder)
+	folder = strings.ReplaceAll(folder, "..", "")
+	folder = strings.ReplaceAll(folder, "\\", "/")
+	folder = strings.Trim(folder, "/")
+
+	if folder == "" || folder == "." || folder == DefaultFolderDisplay {
+		return DefaultFolderDir, !strings.EqualFold(strings.TrimSpace(original), DefaultFolderDir)
 	}
 
-	userPath := filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType, fileName)
+	replaced := false
+	var builder strings.Builder
+	for _, r := range folder {
+		if isInvalidFolderRune(r) {
+			replaced = true
+			builder.WriteRune('_')
+			continue
+		}
+		builder.WriteRune(r)
+	}
+
+	sanitized := strings.TrimSpace(builder.String())
+
+	if runtime.GOOS == "windows" {
+		sanitized = strings.Trim(sanitized, ". ")
+		lower := strings.ToLower(sanitized)
+		if _, reserved := windowsReservedNames[lower]; reserved {
+			replaced = true
+			sanitized = "_" + sanitized
+		}
+	}
+
+	if sanitized == "" {
+		return DefaultFolderDir, true
+	}
+
+	return sanitized, replaced || sanitized != folder
+}
+
+func isInvalidFolderRune(r rune) bool {
+	if r == 0 || r == '/' {
+		return true
+	}
+	if unicode.IsControl(r) {
+		return true
+	}
+	if strings.ContainsRune(invalidFolderChars, r) {
+		return true
+	}
+	return false
+}
+
+func FolderDisplayName(dir string) string {
+	if dir == "" || dir == DefaultFolderDir {
+		return DefaultFolderDisplay
+	}
+	return dir
+}
+
+func splitResourceIdentifier(name string) (string, string) {
+	trimmed := strings.TrimSpace(name)
+	trimmed = strings.ReplaceAll(trimmed, "\\", "/")
+	trimmed = strings.TrimSuffix(trimmed, ".txt")
+	trimmed = strings.Trim(trimmed, "/")
+	if trimmed == "" {
+		return DefaultFolderDir, ""
+	}
+	parts := strings.Split(trimmed, "/")
+	if len(parts) == 1 {
+		return DefaultFolderDir, parts[0]
+	}
+	folder := normalizeFolderDir(parts[0])
+	fileName := strings.Join(parts[1:], "/")
+	return folder, fileName
+}
+
+func BuildResourceIdentifier(folderDir, fileName string) string {
+	folderDir = normalizeFolderDir(folderDir)
+	fileName = strings.TrimSuffix(fileName, ".txt")
+	fileName = strings.TrimSpace(fileName)
+	fileName = strings.Trim(fileName, "/")
+	if fileName == "" {
+		return folderDir
+	}
+	if folderDir == "" || folderDir == DefaultFolderDir {
+		return fileName
+	}
+	return folderDir + "/" + fileName
+}
+
+func FormatResourceDisplayName(identifier string) string {
+	folderDir, fileName := splitResourceIdentifier(identifier)
+	displayFolder := FolderDisplayName(folderDir)
+	if fileName == "" {
+		return displayFolder
+	}
+	if folderDir == DefaultFolderDir {
+		return fileName
+	}
+	return displayFolder + "/" + fileName
+}
+
+func GetResourcePath(resourceType string, fileName string) string {
+	currentLanguage := config.AppConfig.CurrentLanguage
+	folderDir, baseName := splitResourceIdentifier(fileName)
+	if baseName == "" {
+		baseName = folderDir
+		folderDir = DefaultFolderDir
+	}
+	baseName = strings.TrimSpace(baseName)
+	if baseName == "" {
+		baseName = "resource"
+	}
+	if !strings.HasSuffix(baseName, ".txt") {
+		baseName += ".txt"
+	}
+
+	userRoot := filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType)
+	baseRoot := filepath.Join(getResourceBaseDir(), currentLanguage, resourceType)
+
+	folderDir = normalizeFolderDir(folderDir)
+
+	userPath := filepath.Join(userRoot, folderDir, baseName)
 	if _, err := os.Stat(userPath); err == nil {
 		return userPath
 	}
 
-	return filepath.Join(getResourceBaseDir(), currentLanguage, resourceType, fileName)
+	basePath := filepath.Join(baseRoot, folderDir, baseName)
+	if _, err := os.Stat(basePath); err == nil {
+		return basePath
+	}
+
+	if folderDir == DefaultFolderDir {
+		legacyUserPath := filepath.Join(userRoot, baseName)
+		if _, err := os.Stat(legacyUserPath); err == nil {
+			return legacyUserPath
+		}
+		legacyBasePath := filepath.Join(baseRoot, baseName)
+		if _, err := os.Stat(legacyBasePath); err == nil {
+			return legacyBasePath
+		}
+	}
+
+	return userPath
 }
 
 // getResourceBaseDir 获取资源基础目录
@@ -91,6 +257,98 @@ func isTestEnvironment() bool {
 }
 
 // GetResourceFiles 获取指定类型的资源文件列表
+func GetResourceFolders(resourceType string) ([]ResourceFolder, error) {
+	currentLanguage := config.AppConfig.CurrentLanguage
+	baseRoot := filepath.Join(getResourceBaseDir(), currentLanguage, resourceType)
+	userRoot := filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType)
+
+	folderMap := make(map[string]map[string]struct{})
+
+	collect := func(root string) error {
+		entries, err := os.ReadDir(root)
+		if err != nil {
+			if os.IsNotExist(err) {
+				return nil
+			}
+			return err
+		}
+
+		for _, entry := range entries {
+			name := entry.Name()
+			if entry.IsDir() {
+				folderDir := normalizeFolderDir(name)
+				files, err := os.ReadDir(filepath.Join(root, name))
+				if err != nil {
+					return err
+				}
+				for _, f := range files {
+					if f.IsDir() {
+						continue
+					}
+					fname := strings.TrimSuffix(f.Name(), ".txt")
+					if fname == "" {
+						continue
+					}
+					if _, ok := folderMap[folderDir]; !ok {
+						folderMap[folderDir] = make(map[string]struct{})
+					}
+					folderMap[folderDir][fname] = struct{}{}
+				}
+			} else {
+				if !strings.HasSuffix(name, ".txt") {
+					continue
+				}
+				fname := strings.TrimSuffix(name, ".txt")
+				if fname == "" {
+					continue
+				}
+				if _, ok := folderMap[DefaultFolderDir]; !ok {
+					folderMap[DefaultFolderDir] = make(map[string]struct{})
+				}
+				folderMap[DefaultFolderDir][fname] = struct{}{}
+			}
+		}
+		return nil
+	}
+
+	if err := collect(baseRoot); err != nil {
+		return nil, fmt.Errorf("读取基础资源目录失败: %w", err)
+	}
+	if err := collect(userRoot); err != nil {
+		return nil, fmt.Errorf("读取用户资源目录失败: %w", err)
+	}
+
+	if len(folderMap) == 0 {
+		folderMap[DefaultFolderDir] = make(map[string]struct{})
+	}
+
+	var folders []ResourceFolder
+	for dir, filesMap := range folderMap {
+		var files []string
+		for name := range filesMap {
+			files = append(files, name)
+		}
+		sort.Strings(files)
+		folders = append(folders, ResourceFolder{
+			DirName:     dir,
+			DisplayName: FolderDisplayName(dir),
+			Files:       files,
+		})
+	}
+
+	sort.Slice(folders, func(i, j int) bool {
+		if folders[i].DirName == DefaultFolderDir {
+			return true
+		}
+		if folders[j].DirName == DefaultFolderDir {
+			return false
+		}
+		return folders[i].DirName < folders[j].DirName
+	})
+
+	return folders, nil
+}
+
 func GetResourceFiles(resourceType string) ([]string, error) {
 	currentLanguage := config.AppConfig.CurrentLanguage
 	baseDir := filepath.Join(getResourceBaseDir(), currentLanguage, resourceType)
@@ -103,37 +361,20 @@ func GetResourceFiles(resourceType string) ([]string, error) {
 		return nil, fmt.Errorf("创建用户资源目录失败: %w", err)
 	}
 
-	fileSet := make(map[string]struct{})
-
-	addFiles := func(dir string) error {
-		entries, err := os.ReadDir(dir)
-		if err != nil {
-			return err
-		}
-		for _, entry := range entries {
-			if entry.IsDir() {
-				continue
-			}
-			name := entry.Name()
-			if !strings.HasSuffix(name, ".txt") {
-				continue
-			}
-			trimmed := strings.TrimSuffix(name, ".txt")
-			fileSet[trimmed] = struct{}{}
-		}
-		return nil
-	}
-
-	if err := addFiles(baseDir); err != nil {
-		return nil, fmt.Errorf("读取基础资源目录失败: %w", err)
-	}
-	if err := addFiles(userDir); err != nil {
-		return nil, fmt.Errorf("读取用户资源目录失败: %w", err)
+	folders, err := GetResourceFolders(resourceType)
+	if err != nil {
+		return nil, err
 	}
 
 	var fileNames []string
-	for name := range fileSet {
-		fileNames = append(fileNames, name)
+	for _, folder := range folders {
+		for _, file := range folder.Files {
+			if folder.DirName == DefaultFolderDir {
+				fileNames = append(fileNames, file)
+			} else {
+				fileNames = append(fileNames, folder.DirName+"/"+file)
+			}
+		}
 	}
 
 	sort.Strings(fileNames)
@@ -209,40 +450,74 @@ func WriteResourceFile(resourceType string, fileName string, lines []string) err
 
 func resolveReadableResourcePath(resourceType, fileName string) (string, error) {
 	currentLanguage := config.AppConfig.CurrentLanguage
-	if !strings.HasSuffix(fileName, ".txt") {
-		fileName = fileName + ".txt"
+	folderDir, baseName := splitResourceIdentifier(fileName)
+	if baseName == "" {
+		baseName = folderDir
+		folderDir = DefaultFolderDir
+	}
+	baseName = strings.TrimSpace(baseName)
+	if baseName == "" {
+		return "", fmt.Errorf("无效的资源名称")
+	}
+	if !strings.HasSuffix(baseName, ".txt") {
+		baseName += ".txt"
 	}
 
-	userPath := filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType, fileName)
-	if _, err := os.Stat(userPath); err == nil {
-		return userPath, nil
+	folderDir = normalizeFolderDir(folderDir)
+	userRoot := filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType)
+	baseRoot := filepath.Join(getResourceBaseDir(), currentLanguage, resourceType)
+
+	searchPaths := []string{
+		filepath.Join(userRoot, folderDir, baseName),
+		filepath.Join(baseRoot, folderDir, baseName),
+	}
+	if folderDir == DefaultFolderDir {
+		searchPaths = append(searchPaths,
+			filepath.Join(userRoot, baseName),
+			filepath.Join(baseRoot, baseName),
+		)
 	}
 
-	basePath := filepath.Join(getResourceBaseDir(), currentLanguage, resourceType, fileName)
-	if _, err := os.Stat(basePath); err == nil {
-		return basePath, nil
+	for _, path := range searchPaths {
+		if _, err := os.Stat(path); err == nil {
+			return path, nil
+		}
 	}
 
-	if err := os.MkdirAll(filepath.Dir(userPath), 0755); err != nil {
+	targetDir := filepath.Join(userRoot, folderDir)
+	if err := os.MkdirAll(targetDir, 0755); err != nil {
 		return "", fmt.Errorf("创建用户资源目录失败: %w", err)
 	}
 
-	file, err := os.Create(userPath)
+	path := filepath.Join(targetDir, baseName)
+	file, err := os.Create(path)
 	if err != nil {
 		return "", fmt.Errorf("创建资源文件失败: %w", err)
 	}
 	file.Close()
 
-	return userPath, nil
+	return path, nil
 }
 
 func getWritableResourcePath(resourceType, fileName string) string {
 	currentLanguage := config.AppConfig.CurrentLanguage
-	if !strings.HasSuffix(fileName, ".txt") {
-		fileName = fileName + ".txt"
+	folderDir, baseName := splitResourceIdentifier(fileName)
+	if baseName == "" {
+		baseName = folderDir
+		folderDir = DefaultFolderDir
 	}
+	baseName = strings.TrimSpace(baseName)
+	if baseName == "" {
+		baseName = "resource"
+	}
+	if !strings.HasSuffix(baseName, ".txt") {
+		baseName += ".txt"
+	}
+	folderDir = normalizeFolderDir(folderDir)
 
-	return filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType, fileName)
+	dir := filepath.Join(getUserDataBaseDir(), currentLanguage, resourceType, folderDir)
+	_ = os.MkdirAll(dir, 0755)
+	return filepath.Join(dir, baseName)
 }
 
 // parseNewlineFormat 解析换行符分隔格式的资源文件

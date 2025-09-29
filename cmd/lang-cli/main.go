@@ -291,8 +291,8 @@ var manageImportCmd = &cobra.Command{
 			return
 		}
 
-		// 导入资源
-		if err := manage.ImportResource(resourceType, filePath); err != nil {
+		// 导入资源，默认导入到“默认”文件夹
+		if err := manage.ImportResource(resourceType, practice.DefaultFolderDir, filePath); err != nil {
 			fmt.Printf("导入%s文件失败: %s\n", resourceType, err)
 		}
 	},

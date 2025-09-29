@@ -7,6 +7,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/daiweiwei/lang-cli/internal/practice"
 )
 
 // parseNewlineFormatForImport 解析换行符分隔格式的文件
@@ -14,17 +16,17 @@ func ParseNewlineFormatForImport(file *os.File) ([]string, error) {
 	var result []string
 	scanner := bufio.NewScanner(file)
 	var currentPair []string
-	
+
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		
+
 		// 跳过空行
 		if line == "" {
 			continue
 		}
-		
+
 		currentPair = append(currentPair, line)
-		
+
 		// 当收集到两行时，组成一对
 		if len(currentPair) == 2 {
 			// 使用 ->> 作为分隔符
@@ -32,16 +34,16 @@ func ParseNewlineFormatForImport(file *os.File) ([]string, error) {
 			currentPair = nil
 		}
 	}
-	
+
 	// 如果还有剩余的单行，跳过它
 	if len(currentPair) > 0 {
 		// 可以选择记录警告或直接忽略
 	}
-	
+
 	if err := scanner.Err(); err != nil {
 		return nil, err
 	}
-	
+
 	return result, nil
 }
 
@@ -51,32 +53,32 @@ func isValidSeparatorFormat(line string) bool {
 	if strings.Contains(line, " ->> ") {
 		return true
 	}
-	
+
 	// 然后检查制表符分隔符
 	if strings.Contains(line, "\t") {
 		return true
 	}
-	
+
 	// 然后检查空格分隔符
 	if strings.Contains(line, " ") {
 		return true
 	}
-	
+
 	// 定义其他支持的分隔符，按优先级顺序："/", ":", "："
 	separators := []string{"/", ":", "："}
-	
+
 	// 检查是否包含其他分隔符
 	for _, sep := range separators {
 		if strings.Contains(line, sep) {
 			return true
 		}
 	}
-	
+
 	return false
 }
 
 // ImportResource 导入资源
-func ImportResource(resourceType, sourcePath string) error {
+func ImportResource(resourceType, folderDir, sourcePath string) error {
 	// 验证资源类型
 	if !ValidateResourceType(resourceType) {
 		return fmt.Errorf("无效的资源类型: %s", resourceType)
@@ -94,7 +96,9 @@ func ImportResource(resourceType, sourcePath string) error {
 
 	// 获取目标文件名
 	fileName := filepath.Base(sourcePath)
-	targetPath := GetResourcePath(resourceType, fileName)
+	baseName := strings.TrimSuffix(fileName, ".txt")
+	identifier := practice.BuildResourceIdentifier(folderDir, baseName)
+	targetPath := GetResourcePath(resourceType, identifier)
 	fmt.Printf("调试: 目标路径 = %s\n", targetPath)
 
 	// 检查目标文件是否已存在
@@ -112,7 +116,7 @@ func ImportResource(resourceType, sourcePath string) error {
 	}
 
 	// 确认导入
-	fmt.Printf("确认导入 %s 到 %s 吗？(y/n): ", sourcePath, resourceType)
+	fmt.Printf("确认导入 %s 到 %s/%s 吗？(y/n): ", sourcePath, resourceType, practice.FormatResourceDisplayName(identifier))
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
 	input = strings.TrimSpace(input)
@@ -146,13 +150,13 @@ func ImportResource(resourceType, sourcePath string) error {
 		return fmt.Errorf("复制文件失败: %w", err)
 	}
 
-	fmt.Printf("成功导入 %s 到 %s\n", fileName, resourceType)
+	fmt.Printf("成功导入 %s 到 %s/%s\n", fileName, resourceType, practice.FormatResourceDisplayName(identifier))
 	return nil
 }
 
 // ImportResourceForTest 导入资源（用于测试，不需要用户确认）
 // ImportResourceForTest 导入资源（用于测试，不需要用户确认）
-func ImportResourceForTest(resourceType, sourcePath string) error {
+func ImportResourceForTest(resourceType, folderDir, sourcePath string) error {
 	// 验证资源类型
 	if !ValidateResourceType(resourceType) {
 		return fmt.Errorf("无效的资源类型: %s", resourceType)
@@ -170,7 +174,9 @@ func ImportResourceForTest(resourceType, sourcePath string) error {
 
 	// 获取目标文件名
 	fileName := filepath.Base(sourcePath)
-	targetPath := GetResourcePath(resourceType, fileName)
+	baseName := strings.TrimSuffix(fileName, ".txt")
+	identifier := practice.BuildResourceIdentifier(folderDir, baseName)
+	targetPath := GetResourcePath(resourceType, identifier)
 
 	// 复制文件
 	sourceFile, err := os.Open(sourcePath)
@@ -196,6 +202,6 @@ func ImportResourceForTest(resourceType, sourcePath string) error {
 		return fmt.Errorf("复制文件失败: %w", err)
 	}
 
-	fmt.Printf("成功导入 %s 到 %s\n", fileName, resourceType)
+	fmt.Printf("成功导入 %s 到 %s/%s\n", fileName, resourceType, practice.FormatResourceDisplayName(identifier))
 	return nil
 }

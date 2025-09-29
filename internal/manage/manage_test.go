@@ -9,6 +9,8 @@ import (
 	"github.com/daiweiwei/lang-cli/internal/practice"
 )
 
+const testFolderName = "custom_folder"
+
 // 测试前的准备工作
 func setupTest(t *testing.T) {
 	// 确保配置已加载
@@ -68,13 +70,18 @@ func cleanupTest(t *testing.T) {
 	// 删除测试文件
 	testFiles := []string{
 		filepath.Join("resources", config.AppConfig.CurrentLanguage, practice.Words, "test_manage_words.txt"),
-		filepath.Join("resources", config.AppConfig.CurrentLanguage, practice.Words, "import_test_words.txt"),
+		filepath.Join("resources", "user-data", config.AppConfig.CurrentLanguage, practice.Words, testFolderName, "import_test_words.txt"),
 	}
 
 	for _, file := range testFiles {
 		if err := os.Remove(file); err != nil && !os.IsNotExist(err) {
 			t.Logf("删除测试文件失败: %v", err)
 		}
+	}
+
+	userFolderPath := filepath.Join("resources", "user-data", config.AppConfig.CurrentLanguage, practice.Words, testFolderName)
+	if err := os.Remove(userFolderPath); err != nil && !os.IsNotExist(err) {
+		t.Logf("删除测试文件夹失败: %v", err)
 	}
 
 	// 删除导入测试文件
@@ -156,13 +163,13 @@ func TestImportResource(t *testing.T) {
 	// 测试导入资源
 	importFilePath := filepath.Join(os.TempDir(), "import_test_words.txt")
 	// 使用测试专用的导入函数，不需要用户确认
-	err := ImportResourceForTest(practice.Words, importFilePath)
+	err := ImportResourceForTest(practice.Words, testFolderName, importFilePath)
 	if err != nil {
 		t.Errorf("导入资源失败: %v", err)
 	}
 
 	// 验证文件已导入
-	filePath := filepath.Join("resources", config.AppConfig.CurrentLanguage, practice.Words, "import_test_words.txt")
+	filePath := filepath.Join("resources", "user-data", config.AppConfig.CurrentLanguage, practice.Words, testFolderName, "import_test_words.txt")
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		t.Error("文件未被导入")
 	}

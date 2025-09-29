@@ -78,7 +78,7 @@ func TestGetResourcePath(t *testing.T) {
 
 	// 测试获取资源路径
 	path := GetResourcePath(Words, "test.txt")
-	expectedPath := filepath.Join("resources", config.AppConfig.CurrentLanguage, Words, "test.txt")
+	expectedPath := filepath.Join("resources", "user-data", config.AppConfig.CurrentLanguage, Words, DefaultFolderDir, "test.txt")
 
 	if path != expectedPath {
 		t.Errorf("资源路径不匹配，期望 %s，实际 %s", expectedPath, path)
