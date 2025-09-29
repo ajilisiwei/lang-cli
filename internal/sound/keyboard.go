@@ -14,7 +14,7 @@ import (
 var (
 	soundMutex  sync.Mutex
 	runningCmds []*exec.Cmd
-	maxRunning  = 8
+	maxRunning  = 2
 )
 
 func getKeyboardSoundPath() string {
