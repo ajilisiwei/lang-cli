@@ -74,6 +74,23 @@ go install github.com/daiweiwei/lang-cli@latest
 ### 启动终端界面
 直接运行 `lang-cli` 可进入主菜单，使用上下箭头选择模块，`Enter` 确认，`Esc` 可返回上一级，`Ctrl+C` 随时退出。
 
+### 界面预览
+- **主菜单**：列出语言管理、练习、资源管理、设置与统计等入口，顶部标题展示“多语言打字学习终端工具”。
+
+  ![主菜单界面](static/images/1.homepage.png)
+
+- **练习模块入口**：按照单词、短语、句子、文章分类展示练习选项，可随时返回主菜单。
+
+  ![练习菜单](static/images/2.practice-homepage.png)
+
+- **练习命令提示**：在打字练习过程中于界面下方提示可用命令（例如 `> mark`、`> favorite`），同时显示当前进度与待输入内容。
+
+  ![练习命令提示](static/images/2.practice-commands.png)
+
+- **文章练习视图**：呈现长文本逐句输入的界面，顶部为资源路径与进度，正文区域显示当前需要输入的句子，底部保留快捷键提示。
+
+  ![文章练习界面](static/images/2.practice-article.png)
+
 ### 常用命令
 | 命令 | 说明 | 示例 |
 | --- | --- | --- |
