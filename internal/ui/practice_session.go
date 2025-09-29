@@ -10,6 +10,7 @@ import (
 	"github.com/charmbracelet/bubbles/progress"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 
 	"github.com/daiweiwei/lang-cli/internal/bookmark"
 	"github.com/daiweiwei/lang-cli/internal/config"
@@ -67,23 +68,23 @@ func sessionCommandOptions(resourceType string) []commandOption {
 
 // PracticeSession 练习会话模型
 type PracticeSession struct {
-	resourceType string
-	fileName     string
-	items        []string        // 练习项目
-	currentIndex int             // 当前项目索引
-	textInput    textinput.Model // 文本输入
-	progress     progress.Model  // 进度条
-	width        int             // 窗口宽度
-	height       int             // 窗口高度
-	startTime    time.Time       // 开始时间
-	endTime      time.Time       // 结束时间
-	correct      int             // 正确数量
-	incorrect    int             // 错误数量
-	displayFileName string       // 用于展示的文件名
-	orderMode    string          // 练习顺序模式
-	state        string          // 状态："practicing", "finished"
-	result       string          // 结果信息
-	quitting     bool
+	resourceType    string
+	fileName        string
+	items           []string        // 练习项目
+	currentIndex    int             // 当前项目索引
+	textInput       textinput.Model // 文本输入
+	progress        progress.Model  // 进度条
+	width           int             // 窗口宽度
+	height          int             // 窗口高度
+	startTime       time.Time       // 开始时间
+	endTime         time.Time       // 结束时间
+	correct         int             // 正确数量
+	incorrect       int             // 错误数量
+	displayFileName string          // 用于展示的文件名
+	orderMode       string          // 练习顺序模式
+	state           string          // 状态："practicing", "finished"
+	result          string          // 结果信息
+	quitting        bool
 	// v0.2 新增：错误状态跟踪
 	lastInputWrong bool   // 上次输入是否错误
 	wrongInput     string // 错误的输入内容
@@ -96,13 +97,15 @@ type PracticeSession struct {
 	srsSchedule      *srs.Schedule
 	statsLogged      bool
 	// v0.5 新增：命令模式支持
-	commandOptions         []commandOption
-	filteredCommands       []commandOption
-	selectedCommandIndex   int
-	commandDropdownVisible bool
-	inCommandMode          bool
-	commandFeedback        string
-	commandFeedbackIsError bool
+	commandOptions          []commandOption
+	filteredCommands        []commandOption
+	selectedCommandIndex    int
+	commandDropdownVisible  bool
+	inCommandMode           bool
+	commandFeedback         string
+	commandFeedbackIsError  bool
+	inputDefaultTextStyle   lipgloss.Style
+	inputDefaultCursorStyle lipgloss.Style
 }
 
 // 创建新的练习会话
@@ -179,26 +182,28 @@ func NewPracticeSession(resourceType, fileName string) *PracticeSession {
 	sessionOptions := sessionCommandOptions(resourceType)
 
 	session := &PracticeSession{
-		resourceType:           resourceType,
-		fileName:               fileName,
-		items:                  normalizedItems,
-		currentIndex:           0,
-		textInput:              ti,
-		progress:               p,
-		startTime:              time.Now(),
-		orderMode:              orderMode,
-		state:                  "practicing",
-		practiceOrder:          practiceOrder,
-		completedCount:         0,
-		initialItemCount:       len(practiceOrder),
-		srsEnabled:             srsEnabled,
-		srsSchedule:            schedule,
-		displayFileName:        practice.FormatResourceDisplayName(fileName),
-		commandOptions:         sessionOptions,
-		filteredCommands:       cloneCommandOptions(sessionOptions),
-		selectedCommandIndex:   0,
-		commandDropdownVisible: false,
-		inCommandMode:          false,
+		resourceType:            resourceType,
+		fileName:                fileName,
+		items:                   normalizedItems,
+		currentIndex:            0,
+		textInput:               ti,
+		progress:                p,
+		startTime:               time.Now(),
+		orderMode:               orderMode,
+		state:                   "practicing",
+		practiceOrder:           practiceOrder,
+		completedCount:          0,
+		initialItemCount:        len(practiceOrder),
+		srsEnabled:              srsEnabled,
+		srsSchedule:             schedule,
+		displayFileName:         practice.FormatResourceDisplayName(fileName),
+		commandOptions:          sessionOptions,
+		filteredCommands:        cloneCommandOptions(sessionOptions),
+		selectedCommandIndex:    0,
+		commandDropdownVisible:  false,
+		inCommandMode:           false,
+		inputDefaultTextStyle:   ti.TextStyle,
+		inputDefaultCursorStyle: ti.CursorStyle,
 	}
 
 	if len(normalizedItems) == 0 {
@@ -759,6 +764,7 @@ func (m PracticeSession) View() string {
 		}
 
 		s.WriteString(RenderHighlight("请输入:") + "\n")
+		m.applyInputHighlight()
 		s.WriteString(m.textInput.View() + "\n")
 		dropdown := m.renderCommandDropdown()
 		if dropdown != "" {
@@ -847,6 +853,69 @@ func (m PracticeSession) renderCommandHelpDetail() string {
 	}
 	builder.WriteString(`提示：输入"> "后可使用↑↓选择命令，Tab 自动填充。`)
 	return builder.String()
+}
+
+func (m *PracticeSession) applyInputHighlight() {
+	if m.state != "practicing" {
+		m.resetInputHighlight()
+		return
+	}
+
+	value := m.textInput.Value()
+	trimmed := strings.TrimSpace(value)
+	if trimmed == "" {
+		m.resetInputHighlight()
+		return
+	}
+
+	if strings.HasPrefix(trimmed, ">") {
+		m.resetInputHighlight()
+		return
+	}
+
+	item := m.getCurrentRawItem()
+	if item == "" {
+		m.resetInputHighlight()
+		return
+	}
+
+	expected := strings.TrimSpace(m.getExpectedInput(item))
+	if expected == "" {
+		m.resetInputHighlight()
+		return
+	}
+
+	if m.shouldHighlightInputMismatch(value, expected) {
+		m.textInput.TextStyle = ErrorStyle
+		m.textInput.CursorStyle = ErrorStyle
+	} else {
+		m.resetInputHighlight()
+	}
+}
+
+func (m *PracticeSession) resetInputHighlight() {
+	m.textInput.TextStyle = m.inputDefaultTextStyle
+	m.textInput.CursorStyle = m.inputDefaultCursorStyle
+}
+
+func (m *PracticeSession) shouldHighlightInputMismatch(value, expected string) bool {
+	trimmed := strings.TrimSpace(value)
+	if trimmed == "" {
+		return false
+	}
+
+	matchMode := strings.ToLower(config.AppConfig.CorrectnessMatchMode)
+	switch matchMode {
+	case "word_match":
+		expectedPrefix := m.normalizeForWordMatch(expected)
+		inputPrefix := m.normalizeForWordMatch(value)
+		if inputPrefix == "" {
+			return false
+		}
+		return !strings.HasPrefix(expectedPrefix, inputPrefix)
+	default:
+		return !strings.HasPrefix(expected, value)
+	}
 }
 
 // 获取当前项目
