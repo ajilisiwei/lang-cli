@@ -5,11 +5,12 @@ import (
 	"os"
 
 	"github.com/charmbracelet/bubbletea"
-	"github.com/daiweiwei/lang-cli/internal/config"
-	"github.com/daiweiwei/lang-cli/internal/lang"
-	"github.com/daiweiwei/lang-cli/internal/manage"
-	"github.com/daiweiwei/lang-cli/internal/practice"
-	"github.com/daiweiwei/lang-cli/internal/ui"
+	langcli "github.com/ajilisiwei/lang-cli"
+	"github.com/ajilisiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/lang-cli/internal/lang"
+	"github.com/ajilisiwei/lang-cli/internal/manage"
+	"github.com/ajilisiwei/lang-cli/internal/practice"
+	"github.com/ajilisiwei/lang-cli/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -470,6 +471,11 @@ var settingTranslationCmd = &cobra.Command{
 }
 
 func init() {
+	// 确保默认资源与配置已初始化
+	if err := langcli.EnsureAssets(); err != nil {
+		fmt.Println("警告: 初始化默认资源失败:", err)
+	}
+
 	// 加载配置文件
 	if err := config.LoadConfig(); err != nil {
 		fmt.Println("警告: 加载配置文件失败:", err)

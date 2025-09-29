@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/daiweiwei/lang-cli/internal/practice"
+	"github.com/ajilisiwei/lang-cli/internal/practice"
 )
 
 // Special list names

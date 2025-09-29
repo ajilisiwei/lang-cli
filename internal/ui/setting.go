@@ -3,7 +3,7 @@ package ui
 import (
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbletea"
-	"github.com/daiweiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/lang-cli/internal/config"
 )
 
 // SettingMenuItem 设置菜单项

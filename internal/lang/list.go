@@ -3,7 +3,7 @@ package lang
 import (
 	"fmt"
 
-	"github.com/daiweiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/lang-cli/internal/config"
 )
 
 // ListLanguages 列出支持的语言列表

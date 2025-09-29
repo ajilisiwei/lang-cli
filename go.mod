@@ -1,4 +1,4 @@
-module github.com/daiweiwei/lang-cli
+module github.com/ajilisiwei/lang-cli
 
 go 1.24.0
 

@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/daiweiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/lang-cli/internal/config"
 )
 
 // PhrasePractice 短语练习

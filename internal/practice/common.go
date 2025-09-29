@@ -12,7 +12,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/daiweiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/lang-cli/internal/config"
 )
 
 // 资源类型

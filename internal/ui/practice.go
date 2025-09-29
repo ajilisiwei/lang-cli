@@ -5,7 +5,7 @@ import (
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbletea"
-	"github.com/daiweiwei/lang-cli/internal/practice"
+	"github.com/ajilisiwei/lang-cli/internal/practice"
 )
 
 // PracticeMenu 练习菜单模型

@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/daiweiwei/lang-cli/internal/config"
+	"github.com/ajilisiwei/lang-cli/internal/config"
 )
 
 func TestListLanguages(t *testing.T) {
