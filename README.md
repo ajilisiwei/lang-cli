@@ -27,8 +27,8 @@
    - macOS/Linux/Windows 终端环境
 2. 安装可执行文件
    ```bash
-   go install github.com/ajilisiwei/mllt-cli/cmd/mllt-cli@latest
    # GOPATH/bin 需要在 PATH 中
+   go install github.com/ajilisiwei/mllt-cli/cmd/mllt-cli@latest
    ```
 3. 运行工具
    ```bash
