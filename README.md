@@ -27,7 +27,7 @@
    - macOS/Linux/Windows 终端环境
 2. 安装可执行文件
    ```bash
-   go install github.com/ajilisiwei/lang-cli@latest
+   go install github.com/ajilisiwei/lang-cli/cmd/lang-cli@latest
    # GOPATH/bin 需要在 PATH 中
    ```
 3. 运行工具
@@ -40,7 +40,7 @@
 ### 使用 go install
 最简单的方式是通过 `go install` 获取最新版：
 ```bash
-go install github.com/ajilisiwei/lang-cli@latest
+go install github.com/ajilisiwei/lang-cli/cmd/lang-cli@latest
 ```
 `lang-cli` 会被安装到 `$GOPATH/bin`（或 `$GOBIN`）。首次运行时工具会自动在 `~/.lang-cli` 下创建配置、资源与用户数据目录，并解压内置的默认教材与音效文件，无需额外脚本。
 
