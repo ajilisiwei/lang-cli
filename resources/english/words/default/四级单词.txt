@@ -491,8 +491,8 @@ coat / kəut / n.外套，上衣；表皮
 cock / kɔk / n.公鸡；雄禽；旋塞 
 code / kəud / n.准则；法典；代码  
 coffee / ‘kɔfi / n.咖啡，咖啡茶  
-cɔil / kɔil / n.(一)卷；线圈 vt.卷  
-cɔin / kɔin / n.硬币；铸造(硬币)  
+coil / kɔil / n.(一)卷；线圈 vt.卷  
+coin / kɔin / n.硬币；铸造(硬币)  
 cold / kəuld / a.冷的；冷淡的 n.冷  
 collapse / kə’læps / vi.倒坍；崩溃，瓦解 
 collar / ‘kɔlə/ n.衣领，项圈  
@@ -891,7 +891,7 @@ expert / ‘ekspə:t / n.专家 a.熟练的
 explain / iks’plein / vt.解释；为…辩解 
 explanation / eksplə’neiʃən / n.解释，说明；辩解  
 explode / iks’pləud / vt.使爆炸 vi.爆炸 
-explɔit / ‘eksplɔit, iks’plɔit / vt.剥削；利用；开拓 
+exploit / ‘eksplɔit, iks’plɔit / vt.剥削；利用；开拓 
 explore / iks’plɔ:/ vt.&vi.探险，探索  
 explosion / iks’pləuʒən / n.爆炸，爆发，炸裂 
 explosive / iks’pləusiv / n.炸药 a.爆炸的  
