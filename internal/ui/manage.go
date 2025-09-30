@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/ajilisiwei/mllt-cli/internal/manage"
+	"github.com/ajilisiwei/mllt-cli/internal/practice"
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/ajilisiwei/mllt-cli/internal/manage"
-	"github.com/ajilisiwei/mllt-cli/internal/practice"
 )
 
 // ManageMenu 资源管理菜单模型
@@ -559,6 +559,7 @@ type ImportView struct {
 	filteredFileOptions   []fileOption
 	selectedFileIndex     int
 	fileDropdownVisible   bool
+	fileVisibleOffset     int
 }
 
 type folderOption struct {
@@ -571,6 +572,8 @@ type fileOption struct {
 	label string
 	isDir bool
 }
+
+const maxFileSuggestionDisplay = 10
 
 func buildFolderOptions(resourceType string) []folderOption {
 	folders, err := manage.ListResourceFolders(resourceType)
@@ -613,6 +616,7 @@ func NewImportView(resourceType string) *ImportView {
 		filteredFileOptions:   []fileOption{},
 		selectedFileIndex:     0,
 		fileDropdownVisible:   false,
+		fileVisibleOffset:     0,
 	}
 }
 
@@ -827,6 +831,7 @@ func (m *ImportView) updateFileSuggestions() {
 		m.filteredFileOptions = nil
 		m.fileDropdownVisible = false
 		m.selectedFileIndex = 0
+		m.fileVisibleOffset = 0
 		return
 	}
 
@@ -834,6 +839,7 @@ func (m *ImportView) updateFileSuggestions() {
 	m.filteredFileOptions = options
 	m.selectedFileIndex = 0
 	m.fileDropdownVisible = true
+	m.fileVisibleOffset = 0
 }
 
 func (m *ImportView) moveFileSelection(delta int) {
@@ -842,6 +848,20 @@ func (m *ImportView) moveFileSelection(delta int) {
 	}
 	count := len(m.filteredFileOptions)
 	m.selectedFileIndex = (m.selectedFileIndex + delta + count) % count
+
+	if m.selectedFileIndex < m.fileVisibleOffset {
+		m.fileVisibleOffset = m.selectedFileIndex
+	} else if m.selectedFileIndex >= m.fileVisibleOffset+maxFileSuggestionDisplay {
+		m.fileVisibleOffset = m.selectedFileIndex - (maxFileSuggestionDisplay - 1)
+	}
+
+	maxOffset := count - maxFileSuggestionDisplay
+	if maxOffset < 0 {
+		maxOffset = 0
+	}
+	if m.fileVisibleOffset > maxOffset {
+		m.fileVisibleOffset = maxOffset
+	}
 }
 
 func (m *ImportView) applySelectedFileSuggestion() {
@@ -970,12 +990,27 @@ func (m ImportView) View() string {
 	s.WriteString(RenderHighlight("请输入文件路径:") + "\n")
 	s.WriteString(m.fileInput.View() + "\n\n")
 	if m.fileDropdownVisible && len(m.filteredFileOptions) > 0 {
-		for idx, option := range m.filteredFileOptions {
+		start := m.fileVisibleOffset
+		if start < 0 {
+			start = 0
+		}
+		end := start + maxFileSuggestionDisplay
+		if end > len(m.filteredFileOptions) {
+			end = len(m.filteredFileOptions)
+		}
+		if start > 0 {
+			s.WriteString("  ...\n")
+		}
+		for idx := start; idx < end; idx++ {
+			option := m.filteredFileOptions[idx]
 			marker := "  "
 			if idx == m.selectedFileIndex {
 				marker = "> "
 			}
 			s.WriteString(marker + option.label + "\n")
+		}
+		if end < len(m.filteredFileOptions) {
+			s.WriteString("  ...\n")
 		}
 		s.WriteString("\n")
 	}
